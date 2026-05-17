@@ -72,7 +72,11 @@ exports.adminManageUser = functions.https.onCall(async (data, context) => {
         throw new functions.https.HttpsError('permission-denied', 'Only admins can perform this action.');
     }
 
-    const { action, targetUid, newPassword, displayName, email, disabled } = data;
+    // firebase-functions v4 may wrap data differently
+    const payload = data.data || data;
+    const { action, targetUid, newPassword, displayName, email, disabled } = payload;
+
+    console.log('adminManageUser called:', { action, targetUid, callerUid: context.auth.uid });
 
     try {
         if (action === 'delete') {
@@ -141,7 +145,10 @@ exports.adminGetUserDetails = functions.https.onCall(async (data, context) => {
         throw new functions.https.HttpsError('permission-denied', 'Only admins can perform this action.');
     }
 
-    const { targetUid } = data;
+    // firebase-functions v4 may wrap data differently
+    const payload = data.data || data;
+    const { targetUid } = payload;
+    console.log('adminGetUserDetails called:', { targetUid, callerUid: context.auth.uid });
     if (!targetUid) {
         throw new functions.https.HttpsError('invalid-argument', 'targetUid is required.');
     }
