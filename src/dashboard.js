@@ -1,8 +1,9 @@
 import { auth, db, storage } from './firebase.js';
 import { onAuthStateChanged, updateProfile, updatePassword, signOut, deleteUser, EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
-import { doc, updateDoc, collection, addDoc, query, where, onSnapshot, serverTimestamp, deleteDoc, orderBy, getDoc } from 'firebase/firestore';
+import { doc, updateDoc, collection, addDoc, query, where, onSnapshot, serverTimestamp, deleteDoc, orderBy, getDoc, writeBatch, limit } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { showToast, showConfirm, showPrompt } from './toast.js';
+import { setupNotificationsListener } from './notifications.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     // ═══════════════════════════════════════════
@@ -15,8 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             // User is logged in, show dashboard and populate data
             document.getElementById('dashboard-wrapper').style.display = 'flex';
+            const notifWidget = document.getElementById('global-notif-widget');
+            if (notifWidget) notifWidget.style.display = 'block';
             populateUserData(user);
             setupHistoryListener(user.uid);
+            setupNotificationsListener(user.uid);
         }
     });
 
@@ -495,20 +499,19 @@ window.cancelAppointment = async (id) => {
     const { db } = await import('./firebase.js');
     const { showConfirm, showToast } = await import('./toast.js');
 
-    showConfirm("Are you sure you want to cancel this service request?", async (confirmed) => {
-        if (confirmed) {
-            try {
-                await updateDoc(doc(db, "appointments", id), {
-                    status: 'Cancelled',
-                    updatedAt: serverTimestamp()
-                });
-                showToast("Service successfully cancelled.");
-            } catch (error) {
-                console.error("Cancel error:", error);
-                showToast("Failed to cancel: " + error.message, "error");
-            }
+    const confirmed = await showConfirm("Are you sure you want to cancel this service request?");
+    if (confirmed) {
+        try {
+            await updateDoc(doc(db, "appointments", id), {
+                status: 'Cancelled',
+                updatedAt: serverTimestamp()
+            });
+            showToast("Service successfully cancelled.");
+        } catch (error) {
+            console.error("Cancel error:", error);
+            showToast("Failed to cancel: " + error.message, "error");
         }
-    });
+    }
 };
 
 // Global chat variables
@@ -597,4 +600,5 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
 });

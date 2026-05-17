@@ -1,7 +1,8 @@
 import { auth, db } from './firebase.js';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { collection, query, onSnapshot, doc, updateDoc, serverTimestamp, orderBy, getDoc, getDocs, addDoc } from 'firebase/firestore';
+import { collection, query, onSnapshot, doc, updateDoc, serverTimestamp, orderBy, getDoc, getDocs, addDoc, deleteDoc } from 'firebase/firestore';
 import { showToast, showConfirm } from './toast.js';
+import { setupNotificationsListener } from './notifications.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     // ═══════════════════════════════════════════
@@ -23,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Initialize Listeners
                 setupAppointmentsListener();
                 setupUsersListener();
+                setupNotificationsListener('admin');
             } else {
                 showToast("Unauthorized. You are not an admin.", "error");
                 await signOut(auth);
@@ -388,17 +390,16 @@ window.viewAppointment = (id) => {
 };
 
 window.deleteAppointment = async (id) => {
-    showConfirm("Are you sure you want to completely delete this record? This action cannot be undone.", async (confirmed) => {
-        if (confirmed) {
-            try {
-                await deleteDoc(doc(db, "appointments", id));
-                showToast("Record deleted successfully.", "success");
-            } catch (error) {
-                console.error(error);
-                showToast("Failed to delete record.", "error");
-            }
+    const confirmed = await showConfirm("Are you sure you want to completely delete this record? This action cannot be undone.");
+    if (confirmed) {
+        try {
+            await deleteDoc(doc(db, "appointments", id));
+            showToast("Record deleted successfully.", "success");
+        } catch (error) {
+            console.error(error);
+            showToast("Failed to delete record.", "error");
         }
-    });
+    }
 };
 
 window.banUser = async (uid) => {
