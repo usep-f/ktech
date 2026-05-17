@@ -1,0 +1,698 @@
+<!doctype html>
+
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Services - KTech Solutions</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700;800&amp;family=Geist:wght@400;500;600&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-error-container": "#ffdad6",
+              "surface-container-low": "#151b2d",
+              "on-error": "#690005",
+              "on-primary": "#00363d",
+              "on-primary-fixed": "#001f24",
+              error: "#ffb4ab",
+              "on-surface": "#dce1fb",
+              "on-tertiary-fixed-variant": "#3a485c",
+              "surface-variant": "#2e3447",
+              "outline-variant": "#3b494c",
+              "tertiary-fixed": "#d5e3fd",
+              "on-surface-variant": "#bac9cc",
+              surface: "#0c1324",
+              "surface-tint": "#00daf3",
+              "on-tertiary": "#233144",
+              outline: "#849396",
+              "on-tertiary-fixed": "#0d1c2f",
+              "on-secondary-fixed": "#131b2e",
+              "on-background": "#dce1fb",
+              primary: "#c3f5ff",
+              "on-primary-fixed-variant": "#004f58",
+              "primary-container": "#00e5ff",
+              "tertiary-container": "#c3d1ea",
+              "surface-dim": "#0c1324",
+              "error-container": "#93000a",
+              "on-secondary": "#283044",
+              "inverse-primary": "#006875",
+              "inverse-on-surface": "#2a3043",
+              "surface-bright": "#33394c",
+              secondary: "#bec6e0",
+              "surface-container": "#191f31",
+              "surface-container-highest": "#2e3447",
+              "secondary-container": "#3f465c",
+              background: "#0c1324",
+              "tertiary-fixed-dim": "#b9c7e0",
+              "on-tertiary-container": "#4c5a6f",
+              "on-secondary-container": "#adb4ce",
+              "secondary-fixed-dim": "#bec6e0",
+              "secondary-fixed": "#dae2fd",
+              tertiary: "#e4edff",
+              "on-primary-container": "#00626e",
+              "primary-fixed-dim": "#00daf3",
+              "on-secondary-fixed-variant": "#3f465c",
+              "surface-container-high": "#23293c",
+              "inverse-surface": "#dce1fb",
+              "surface-container-lowest": "#070d1f",
+              "primary-fixed": "#9cf0ff",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              "margin-mobile": "20px",
+              gutter: "24px",
+              "margin-desktop": "64px",
+              base: "8px",
+              "nav-height": "80px",
+              "container-max": "1280px",
+              "margin-tablet": "32px",
+            },
+            fontFamily: {
+              "headline-xl": ["Hanken Grotesk"],
+              "body-md": ["Geist"],
+              "headline-md": ["Hanken Grotesk"],
+              "label-sm": ["Geist"],
+              "label-md": ["Geist"],
+              "headline-sm": ["Hanken Grotesk"],
+              "body-lg": ["Geist"],
+              "body-sm": ["Geist"],
+              "headline-lg": ["Hanken Grotesk"],
+              "headline-xl-mobile": ["Hanken Grotesk"],
+            },
+            fontSize: {
+              "headline-xl": [
+                "60px",
+                {
+                  lineHeight: "72px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "800",
+                },
+              ],
+              "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "headline-md": [
+                "32px",
+                { lineHeight: "40px", fontWeight: "700" },
+              ],
+              "label-sm": [
+                "12px",
+                {
+                  lineHeight: "14px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "500",
+                },
+              ],
+              "label-md": [
+                "14px",
+                {
+                  lineHeight: "16px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                },
+              ],
+              "headline-sm": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+              "body-sm": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+              "headline-lg": [
+                "48px",
+                {
+                  lineHeight: "56px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "700",
+                },
+              ],
+              "headline-xl-mobile": [
+                "40px",
+                {
+                  lineHeight: "48px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "800",
+                },
+              ],
+            },
+            animation: {
+              "pulse-fast": "pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+              "fade-in-up": "fadeInUp 0.8s ease-out forwards",
+              "scan-line": "scan 4s linear infinite",
+            },
+            keyframes: {
+              fadeInUp: {
+                "0%": { opacity: "0", transform: "translateY(40px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+              scan: {
+                "0%": { transform: "translateY(-100%)" },
+                "100%": { transform: "translateY(400%)" },
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .reveal-on-scroll {
+        opacity: 0;
+      }
+      .reveal-on-scroll.active {
+        animation: fadeInUp 0.8s ease-out forwards;
+      }
+      .parallax-container {
+        perspective: 1000px;
+      }
+      .parallax-bg {
+        transition: transform 0.2s ease-out;
+      }
+      .hover-glow:hover {
+        border-color: #00e5ff;
+        box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+      }
+      .scanner-overlay {
+        background: linear-gradient(
+          to bottom,
+          transparent,
+          rgba(0, 229, 255, 0.1),
+          transparent
+        );
+        height: 100px;
+        width: 100%;
+        position: absolute;
+        pointer-events: none;
+      }
+      .group:hover .arrow-slide {
+        transform: translateX(6px);
+      }
+      .ease-out-button {
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background text-on-background font-body-md min-h-screen flex flex-col pt-nav-height overflow-x-hidden"
+  >
+    <div id="navbar-root"></div>
+    <div id="modal-root"></div>
+    <main class="flex-grow flex flex-col gap-y-[120px] pb-[120px]">
+      <!-- Hero Section -->
+      <section
+        class="pt-[120px] px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto w-full text-center animate-fade-in-up"
+      >
+        <h1
+          class="font-headline-xl text-headline-xl-mobile md:text-headline-xl mb-6 text-on-surface"
+        >
+          Our Capabilities
+        </h1>
+        <p
+          class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl mx-auto"
+        >
+          High-performance infrastructure, precision development, and resilient
+          hardware solutions tailored for the modern enterprise.
+        </p>
+      </section>
+      <!-- Services Directory -->
+      <section
+        class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto w-full flex flex-col gap-y-[80px]"
+      >
+        <!-- App Development -->
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 gap-gutter items-center reveal-on-scroll group"
+          style="animation-delay: 100ms"
+        >
+          <div class="order-2 md:order-1 flex flex-col items-start gap-y-6">
+            <div
+              class="bg-surface-container border border-outline-variant rounded-lg p-2 flex items-center justify-center w-12 h-12"
+            >
+              <span
+                class="material-symbols-outlined text-primary"
+                style="font-variation-settings: &quot;FILL&quot; 0"
+                >smartphone</span
+              >
+            </div>
+            <h2 class="font-headline-md text-headline-md text-on-surface">
+              App Development
+            </h2>
+            <p class="font-body-md text-body-md text-on-surface-variant">
+              We architect and deploy resilient, scalable mobile applications.
+              Our process integrates stringent security protocols with
+              high-performance native and cross-platform frameworks, ensuring
+              your enterprise app operates flawlessly under heavy concurrent
+              loads.
+            </p>
+            <a
+              class="group border border-primary text-primary px-6 py-3 rounded font-label-md text-label-md hover:bg-primary/10 ease-out-button flex items-center gap-2"
+              href="#"
+            >
+              View Full Service Documentation
+              <span
+                class="material-symbols-outlined text-[18px] arrow_slide transition-transform duration-300"
+                >arrow_forward</span
+              >
+            </a>
+          </div>
+          <div
+            class="order-1 md:order-2 h-[400px] rounded-xl overflow-hidden border border-outline-variant bg-surface-container shadow-[0_0_40px_-10px_rgba(195,245,255,0.05)] transition-all duration-500 hover-glow relative parallax-container"
+          >
+            <div class="scanner-overlay animate-scan-line"></div>
+            <img
+              class="w-full h-full object-cover opacity-80 transition-transform duration-700 group-hover:scale-110 parallax-bg"
+              data-alt="A close-up shot of a smartphone screen displaying a complex, dark-mode dashboard with neon blue data visualizations."
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOoJcQREr5l1dKYvC9oSVituWACfgd_QzvGdBLLV5fwGY9EiZ85FHb94F022C56JODJ123jamFDOb_UInETsWqUToQoiE_MUiFR3ZQ4zMz-aYccDpQd1yo2ebxRlKgLTbZG3xu25aGykJ7xy8Ix7Cv7AI2HOMyy9PHXxAufnmvS2Jc8WTBlxH5k1xog2g12dRz9PGMABG8AUaEdRWS8kwjrcUhc3XSXiXQ_e6tC9l9jsrhmHjudLCh1VUyIQWSNsIetrnuxMcIY8qY"
+            />
+          </div>
+        </div>
+        <!-- Web Development -->
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 gap-gutter items-center reveal-on-scroll group"
+          style="animation-delay: 200ms"
+        >
+          <div
+            class="order-1 h-[400px] rounded-xl overflow-hidden border border-outline-variant bg-surface-container shadow-[0_0_40px_-10px_rgba(195,245,255,0.05)] transition-all duration-500 hover-glow relative parallax-container"
+          >
+            <div
+              class="scanner-overlay animate-scan-line"
+              style="animation-delay: 1s"
+            ></div>
+            <img
+              class="w-full h-full object-cover opacity-80 transition-transform duration-700 group-hover:scale-110 parallax-bg"
+              data-alt="A sleek laptop sits open on a pristine, dark charcoal desk, displaying lines of glowing code."
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDa29D-oU6Cflxc2rv7T0uRm7zslft68278Paa88IQGK7h7j2qGwfeh1_BU1ZrpJlahPQkrUl7i-2acJ-QatXWgLV6zhL5kE8glkiCp3HeIgy_W_Hr2_ZQLOLS0ezMW5X8N_RywiRutxuMukw3cpyd2WeQWEdGlL_bTWiB_VjGhBI5uFbep5Wuj_nHxFRAK7ituVzkqHJ3nVxoxz5aLJgqfaz3bMJxIxQAIHyObj7yGmYc5JC2AfC9kC84M7uLhO7ysmAI5ujF8XcEq"
+            />
+          </div>
+          <div class="order-2 flex flex-col items-start gap-y-6 md:pl-12">
+            <div
+              class="bg-surface-container border border-outline-variant rounded-lg p-2 flex items-center justify-center w-12 h-12"
+            >
+              <span
+                class="material-symbols-outlined text-primary"
+                style="font-variation-settings: &quot;FILL&quot; 0"
+                >web</span
+              >
+            </div>
+            <h2 class="font-headline-md text-headline-md text-on-surface">
+              Web Development
+            </h2>
+            <p class="font-body-md text-body-md text-on-surface-variant">
+              Constructing complex web platforms engineered for speed and
+              reliability. Our development lifecycle prioritizes optimized core
+              web vitals, robust backend integrations, and airtight data
+              handling to support mission-critical business operations.
+            </p>
+            <a
+              class="group border border-primary text-primary px-6 py-3 rounded font-label-md text-label-md hover:bg-primary/10 ease-out-button flex items-center gap-2"
+              href="#"
+            >
+              View Full Service Documentation
+              <span
+                class="material-symbols-outlined text-[18px] arrow_slide transition-transform duration-300"
+                >arrow_forward</span
+              >
+            </a>
+          </div>
+        </div>
+        <!-- Infrastructure Setup -->
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 gap-gutter items-center reveal-on-scroll group"
+          style="animation-delay: 100ms"
+        >
+          <div class="order-2 md:order-1 flex flex-col items-start gap-y-6">
+            <div
+              class="bg-surface-container border border-outline-variant rounded-lg p-2 flex items-center justify-center w-12 h-12"
+            >
+              <span
+                class="material-symbols-outlined text-primary"
+                style="font-variation-settings: &quot;FILL&quot; 0"
+                >dns</span
+              >
+            </div>
+            <h2 class="font-headline-md text-headline-md text-on-surface">
+              Infrastructure Setup
+            </h2>
+            <p class="font-body-md text-body-md text-on-surface-variant">
+              Design and deployment of highly available cloud and on-premise
+              infrastructure. We implement containerization, automated CI/CD
+              pipelines, and rigorous load-balancing to ensure your digital
+              backbone remains unyielding during peak demand.
+            </p>
+            <a
+              class="group border border-primary text-primary px-6 py-3 rounded font-label-md text-label-md hover:bg-primary/10 ease-out-button flex items-center gap-2"
+              href="#"
+            >
+              View Full Service Documentation
+              <span
+                class="material-symbols-outlined text-[18px] arrow_slide transition-transform duration-300"
+                >arrow_forward</span
+              >
+            </a>
+          </div>
+          <div
+            class="order-1 md:order-2 h-[400px] rounded-xl overflow-hidden border border-outline-variant bg-surface-container shadow-[0_0_40px_-10px_rgba(195,245,255,0.05)] transition-all duration-500 hover-glow relative parallax-container"
+          >
+            <div
+              class="scanner-overlay animate-scan-line"
+              style="animation-delay: 0.5s"
+            ></div>
+            <img
+              class="w-full h-full object-cover opacity-80 transition-transform duration-700 group-hover:scale-110 parallax-bg"
+              data-alt="A long corridor inside a modern data center, lined with massive, dark server racks."
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9OUaroacqbzgS9rN6j1PnbBIOlWPJW28f8n14V1-whgYpyihA2yGQzHg2SMKCmPd6BHLiXfmsVbQeYrDEao_RDieY-H4MnH7wRJBjhwDuyzBepR29h4ysbqBpDdfDWYHpe-VFRw0mqwSh0xzjdYGwnuGbbR7Ju63xQ-vD2wyg_0oZZ-NIDvD4JpDEsMod3CTyziT-7aNqxHQfa9-VXyKG9jJy6JE408GdDU7tJmv958OhdXUfkhapLE_uNOHfn2oYJsqXfMKcbUqe"
+            />
+          </div>
+        </div>
+        <!-- Hardware Diagnostics -->
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 gap-gutter items-center reveal-on-scroll group"
+          style="animation-delay: 200ms"
+        >
+          <div
+            class="order-1 h-[400px] rounded-xl overflow-hidden border border-outline-variant bg-surface-container shadow-[0_0_40px_-10px_rgba(195,245,255,0.05)] transition-all duration-500 hover-glow relative parallax-container"
+          >
+            <div
+              class="scanner-overlay animate-scan-line"
+              style="animation-delay: 1.5s"
+            ></div>
+            <img
+              class="w-full h-full object-cover opacity-80 transition-transform duration-700 group-hover:scale-110 parallax-bg"
+              data-alt="A detailed macro shot of a complex circuit board."
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzkO46xQpxPeEHxgsY6GfUrxjSwlkFsgRMsEK3CUba88_qOeaaLVbVkmnXmrtGEtHYh0dDBkJlnmDd9WQawBfS64b8eoGRVPehYn4o74n8hA0hPC7_rDQiHy3i2HxRecRJGUlcAbq2h32l37NcqX1iohOtpz6LuBni4haWnEMksHWh5PipZGeamgNvvjA0NxCKUnTvNVm9rDOc-ttuhcBk099IurUuHf39LuNSF0Z5JjIe00g5h0EmC1XdMVsUDiFYXoB7rXrFsQ6C"
+            />
+          </div>
+          <div class="order-2 flex flex-col items-start gap-y-6 md:pl-12">
+            <div
+              class="bg-surface-container border border-outline-variant rounded-lg p-2 flex items-center justify-center w-12 h-12"
+            >
+              <span
+                class="material-symbols-outlined text-primary"
+                style="font-variation-settings: &quot;FILL&quot; 0"
+                >memory</span
+              >
+            </div>
+            <h2 class="font-headline-md text-headline-md text-on-surface">
+              Hardware Diagnostics
+            </h2>
+            <p class="font-body-md text-body-md text-on-surface-variant">
+              Comprehensive telemetry and physical layer analysis. We utilize
+              advanced diagnostic tools to preemptively identify hardware
+              degradation, optimize power consumption, and maintain the physical
+              integrity of your critical computing nodes.
+            </p>
+            <a
+              class="group border border-primary text-primary px-6 py-3 rounded font-label-md text-label-md hover:bg-primary/10 ease-out-button flex items-center gap-2"
+              href="#"
+            >
+              View Full Service Documentation
+              <span
+                class="material-symbols-outlined text-[18px] arrow_slide transition-transform duration-300"
+                >arrow_forward</span
+              >
+            </a>
+          </div>
+        </div>
+      </section>
+      <!-- Service Tier Comparison -->
+      <section
+        class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto w-full reveal-on-scroll"
+      >
+        <div class="text-center mb-12">
+          <h2 class="font-headline-md text-headline-md text-on-surface mb-4">
+            Service Tier Matrix
+          </h2>
+          <p class="font-body-md text-body-md text-on-surface-variant">
+            Select the engagement model that aligns with your operational
+            requirements.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+          <!-- Standard -->
+          <div
+            class="bg-surface-container-low border border-outline-variant rounded-xl p-8 flex flex-col gap-y-6 relative overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-primary/30"
+          >
+            <h3
+              class="font-headline-sm text-headline-sm text-on-surface border-b border-outline-variant/30 pb-4"
+            >
+              Standard Project Deployments
+            </h3>
+            <ul class="space-y-4 flex-grow">
+              <li class="flex items-start gap-3">
+                <span
+                  class="material-symbols-outlined text-outline mt-1 text-[20px]"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >check_circle</span
+                >
+                <span class="font-body-sm text-body-sm text-on-surface-variant"
+                  >Defined scope and timeline execution</span
+                >
+              </li>
+              <li class="flex items-start gap-3">
+                <span
+                  class="material-symbols-outlined text-outline mt-1 text-[20px]"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >check_circle</span
+                >
+                <span class="font-body-sm text-body-sm text-on-surface-variant"
+                  >Standard 9x5 technical support</span
+                >
+              </li>
+              <li class="flex items-start gap-3">
+                <span
+                  class="material-symbols-outlined text-outline mt-1 text-[20px]"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >check_circle</span
+                >
+                <span class="font-body-sm text-body-sm text-on-surface-variant"
+                  >Post-deployment documentation handoff</span
+                >
+              </li>
+              <li class="flex items-start gap-3">
+                <span
+                  class="material-symbols-outlined text-outline mt-1 text-[20px]"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >check_circle</span
+                >
+                <span class="font-body-sm text-body-sm text-on-surface-variant"
+                  >Quarterly system health reviews</span
+                >
+              </li>
+            </ul>
+          </div>
+          <!-- Enterprise -->
+          <div
+            class="bg-surface-container border border-outline-variant border-t-2 border-t-primary rounded-xl p-8 flex flex-col gap-y-6 relative shadow-[0_0_30px_-5px_rgba(195,245,255,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_20px_40px_-10px_rgba(195,245,255,0.2)]"
+          >
+            <div
+              class="absolute top-0 right-0 bg-primary text-on-primary font-label-sm text-label-sm px-3 py-1 rounded-bl-lg animate-pulse-fast"
+            >
+              Recommended
+            </div>
+            <h3
+              class="font-headline-sm text-headline-sm text-primary border-b border-outline-variant/30 pb-4"
+            >
+              Enterprise Managed Services
+            </h3>
+            <ul class="space-y-4 flex-grow">
+              <li class="flex items-start gap-3">
+                <span
+                  class="material-symbols-outlined text-primary mt-1 text-[20px]"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >check_circle</span
+                >
+                <span class="font-body-sm text-body-sm text-on-surface"
+                  >Continuous integration and deployment pipelines</span
+                >
+              </li>
+              <li class="flex items-start gap-3">
+                <span
+                  class="material-symbols-outlined text-primary mt-1 text-[20px]"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >check_circle</span
+                >
+                <span class="font-body-sm text-body-sm text-on-surface"
+                  >24/7/365 proactive monitoring &amp; incident response</span
+                >
+              </li>
+              <li class="flex items-start gap-3">
+                <span
+                  class="material-symbols-outlined text-primary mt-1 text-[20px]"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >check_circle</span
+                >
+                <span class="font-body-sm text-body-sm text-on-surface"
+                  >Dedicated infrastructure architect</span
+                >
+              </li>
+              <li class="flex items-start gap-3">
+                <span
+                  class="material-symbols-outlined text-primary mt-1 text-[20px]"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >check_circle</span
+                >
+                <span class="font-body-sm text-body-sm text-on-surface"
+                  >SLA-backed uptime guarantees (99.99%)</span
+                >
+              </li>
+              <li class="flex items-start gap-3">
+                <span
+                  class="material-symbols-outlined text-primary mt-1 text-[20px]"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >check_circle</span
+                >
+                <span class="font-body-sm text-body-sm text-on-surface"
+                  >Automated vulnerability scanning &amp; patching</span
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer
+      class="w-full py-16 bg-surface-container-lowest border-t border-outline-variant/20"
+    >
+      <div
+        class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto"
+      >
+        <div class="space-y-4 col-span-1 md:col-span-1">
+          <div
+            class="text-headline-sm font-headline-sm font-bold text-on-surface"
+          >
+            KTech Solutions
+          </div>
+          <p class="font-body-sm text-body-sm text-on-surface-variant">
+            © 2024 KTech Solutions. High-performance infrastructure for modern
+            enterprise.
+          </p>
+        </div>
+        <div class="space-y-4">
+          <h4 class="font-label-md text-label-md text-on-surface">Platform</h4>
+          <ul class="space-y-2">
+            <li>
+              <a
+                class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-all"
+                href="index.html"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a
+                class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-all"
+                href="services.html"
+                >Services</a
+              >
+            </li>
+            <li>
+              <a
+                class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-all"
+                href="aboutus.html"
+                >About Us</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="space-y-4">
+          <h4 class="font-label-md text-label-md text-on-surface">Support</h4>
+          <ul class="space-y-2">
+            <li>
+              <a
+                class="font-body-sm text-body-sm text-primary hover:text-primary transition-all"
+                href="contact.html"
+                >Contact</a
+              >
+            </li>
+            <li>
+              <a
+                class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-all"
+                href="#"
+                >Documentation</a
+              >
+            </li>
+            <li>
+              <a
+                class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-all"
+                href="#"
+                >System Status</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="space-y-4">
+          <h4 class="font-label-md text-label-md text-on-surface">Network</h4>
+          <div class="flex space-x-4">
+            <a
+              aria-label="GitHub"
+              class="text-on-surface-variant hover:text-primary transition-all"
+              href="#"
+              ><span class="font-body-sm text-body-sm">GitHub</span></a
+            >
+            <a
+              aria-label="LinkedIn"
+              class="text-on-surface-variant hover:text-primary transition-all"
+              href="#"
+              ><span class="font-body-sm text-body-sm">LinkedIn</span></a
+            >
+            <a
+              aria-label="X"
+              class="text-on-surface-variant hover:text-primary transition-all"
+              href="#"
+              ><span class="font-body-sm text-body-sm">X</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script src="navbar.js"></script>
+    <script>
+      // Intersection Observer for Entrance Animations
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
+
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      document
+        .querySelectorAll(".reveal-on-scroll")
+        .forEach((el) => revealObserver.observe(el));
+
+      // Simple Parallax Effect
+      window.addEventListener("scroll", () => {
+        const scrolled = window.pageYOffset;
+        document
+          .querySelectorAll(".parallax-container")
+          .forEach((container) => {
+            const speed = 0.05;
+            const rect = container.getBoundingClientRect();
+            const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+
+            if (isInView) {
+              const img = container.querySelector(".parallax-bg");
+              const offset = (rect.top - window.innerHeight / 2) * speed;
+              img.style.transform = `translateY(${offset}px) scale(1.1)`;
+            }
+          });
+      });
+    </script>
+  </body>
+</html>

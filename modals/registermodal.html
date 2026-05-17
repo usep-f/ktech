@@ -1,0 +1,272 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>KTech Solutions - Registration Modal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Hanken+Grotesk:wght@600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-error-container": "#ffdad6",
+                      "surface-container-low": "#151b2d",
+                      "on-error": "#690005",
+                      "on-primary": "#00363d",
+                      "on-primary-fixed": "#001f24",
+                      "error": "#ffb4ab",
+                      "on-surface": "#dce1fb",
+                      "on-tertiary-fixed-variant": "#3a485c",
+                      "surface-variant": "#2e3447",
+                      "outline-variant": "#3b494c",
+                      "tertiary-fixed": "#d5e3fd",
+                      "on-surface-variant": "#bac9cc",
+                      "surface": "#0c1324",
+                      "surface-tint": "#00daf3",
+                      "on-tertiary": "#233144",
+                      "outline": "#849396",
+                      "on-tertiary-fixed": "#0d1c2f",
+                      "on-secondary-fixed": "#131b2e",
+                      "on-background": "#dce1fb",
+                      "primary": "#c3f5ff",
+                      "on-primary-fixed-variant": "#004f58",
+                      "primary-container": "#00e5ff",
+                      "tertiary-container": "#c3d1ea",
+                      "surface-dim": "#0c1324",
+                      "error-container": "#93000a",
+                      "on-secondary": "#283044",
+                      "inverse-primary": "#006875",
+                      "inverse-on-surface": "#2a3043",
+                      "surface-bright": "#33394c",
+                      "secondary": "#bec6e0",
+                      "surface-container": "#191f31",
+                      "surface-container-highest": "#2e3447",
+                      "secondary-container": "#3f465c",
+                      "background": "#0c1324",
+                      "tertiary-fixed-dim": "#b9c7e0",
+                      "on-tertiary-container": "#4c5a6f",
+                      "on-secondary-container": "#adb4ce",
+                      "secondary-fixed-dim": "#bec6e0",
+                      "secondary-fixed": "#dae2fd",
+                      "tertiary": "#e4edff",
+                      "on-primary-container": "#00626e",
+                      "primary-fixed-dim": "#00daf3",
+                      "on-secondary-fixed-variant": "#3f465c",
+                      "surface-container-high": "#23293c",
+                      "inverse-surface": "#dce1fb",
+                      "surface-container-lowest": "#070d1f",
+                      "primary-fixed": "#9cf0ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-mobile": "20px",
+                      "gutter": "24px",
+                      "margin-desktop": "64px",
+                      "base": "8px",
+                      "nav-height": "80px",
+                      "container-max": "1280px",
+                      "margin-tablet": "32px"
+              },
+              "fontFamily": {
+                      "headline-xl": [
+                              "Hanken Grotesk"
+                      ],
+                      "body-md": [
+                              "Geist"
+                      ],
+                      "headline-md": [
+                              "Hanken Grotesk"
+                      ],
+                      "label-sm": [
+                              "Geist"
+                      ],
+                      "label-md": [
+                              "Geist"
+                      ],
+                      "headline-sm": [
+                              "Hanken Grotesk"
+                      ],
+                      "body-lg": [
+                              "Geist"
+                      ],
+                      "body-sm": [
+                              "Geist"
+                      ],
+                      "headline-lg": [
+                              "Hanken Grotesk"
+                      ],
+                      "headline-xl-mobile": [
+                              "Hanken Grotesk"
+                      ]
+              },
+              "fontSize": {
+                      "headline-xl": [
+                              "60px",
+                              {
+                                      "lineHeight": "72px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "14px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-sm": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-xl-mobile": [
+                              "40px",
+                              {
+                                      "lineHeight": "48px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "800"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+</head>
+<body class="bg-background text-on-background min-h-screen flex items-center justify-center p-4">
+<!-- Modal Backdrop -->
+<div class="fixed inset-0 bg-surface-container-lowest/80 backdrop-blur-sm z-40 flex items-center justify-center">
+<!-- Modal Container -->
+<div class="relative w-full max-w-md bg-surface-container border border-outline-variant/30 rounded-xl shadow-2xl shadow-primary-container/5 overflow-hidden z-50">
+<!-- Modal Header -->
+<div class="px-8 pt-8 pb-6 border-b border-outline-variant/20 relative">
+<button class="absolute top-6 right-6 text-on-surface-variant hover:text-primary transition-colors focus:outline-none">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="dns">dns</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">KTech Solutions</h2>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Create Account</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2">Deploy your high-performance infrastructure today.</p>
+</div>
+<!-- Modal Body (Form) -->
+<form class="px-8 py-6 space-y-5">
+<!-- Full Name Field -->
+<div class="space-y-1">
+<label class="font-label-md text-label-md text-on-surface" for="fullName">Full Name</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="person">person</span>
+</div>
+<input class="w-full bg-surface-container-high border border-outline-variant text-on-surface font-body-md text-body-md rounded-lg py-3 pl-10 pr-4 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary focus:shadow-[0_0_10px_rgba(0,229,255,0.1)] transition-all placeholder-on-surface-variant/50" id="fullName" placeholder="Jane Doe" type="text">
+</div>
+</div>
+<!-- Business Email Field -->
+<div class="space-y-1">
+<label class="font-label-md text-label-md text-on-surface" for="email">Business Email</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="mail">mail</span>
+</div>
+<input class="w-full bg-surface-container-high border border-outline-variant text-on-surface font-body-md text-body-md rounded-lg py-3 pl-10 pr-4 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary focus:shadow-[0_0_10px_rgba(0,229,255,0.1)] transition-all placeholder-on-surface-variant/50" id="email" placeholder="jane@company.com" type="email">
+</div>
+</div>
+<!-- Password Field -->
+<div class="space-y-1">
+<label class="font-label-md text-label-md text-on-surface" for="password">Password</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="lock">lock</span>
+</div>
+<input class="w-full bg-surface-container-high border border-outline-variant text-on-surface font-body-md text-body-md rounded-lg py-3 pl-10 pr-10 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary focus:shadow-[0_0_10px_rgba(0,229,255,0.1)] transition-all placeholder-on-surface-variant/50" id="password" placeholder="••••••••" type="password">
+<button class="absolute inset-y-0 right-0 pr-3 flex items-center text-on-surface-variant hover:text-primary transition-colors focus:outline-none" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span>
+</button>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Must be at least 12 characters and include a number.</p>
+</div>
+<!-- Terms of Service Checkbox -->
+<div class="flex items-start mt-4 pt-2">
+<div class="flex items-center h-5">
+<input class="w-4 h-4 rounded border-outline-variant bg-surface-container-high text-primary focus:ring-primary focus:ring-offset-surface-container focus:ring-offset-2" id="terms" type="checkbox">
+</div>
+<div class="ml-3 text-sm">
+<label class="font-body-sm text-body-sm text-on-surface-variant" for="terms">
+                            I agree to the <a class="text-primary hover:text-primary-container underline underline-offset-2 transition-colors" href="#">Terms of Service</a> and <a class="text-primary hover:text-primary-container underline underline-offset-2 transition-colors" href="#">Privacy Policy</a>.
+                        </label>
+</div>
+</div>
+<!-- Submit Button -->
+<div class="pt-4 pb-2">
+<button class="w-full h-14 bg-primary text-on-primary-container font-label-md text-label-md rounded-lg hover:bg-primary-container focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-surface-container transition-all flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(0,229,255,0.2)]" type="submit">
+                        Create Account
+                        <span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</form>
+<!-- Modal Footer -->
+<div class="px-8 py-4 border-t border-outline-variant/20 bg-surface-container-lowest text-center">
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                    Already have an account? <a class="text-primary font-label-md text-label-md hover:text-primary-container underline underline-offset-2 transition-colors" href="#">Log in</a>
+</p>
+</div>
+</div>
+</div>
+</body></html>

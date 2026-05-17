@@ -1,0 +1,684 @@
+<!doctype html>
+
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>About Us | KTech Solutions</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&amp;family=Geist:wght@400;500;600&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-error-container": "#ffdad6",
+              "surface-container-low": "#151b2d",
+              "on-error": "#690005",
+              "on-primary": "#00363d",
+              "on-primary-fixed": "#001f24",
+              error: "#ffb4ab",
+              "on-surface": "#dce1fb",
+              "on-tertiary-fixed-variant": "#3a485c",
+              "surface-variant": "#2e3447",
+              "outline-variant": "#3b494c",
+              "tertiary-fixed": "#d5e3fd",
+              "on-surface-variant": "#bac9cc",
+              surface: "#0c1324",
+              "surface-tint": "#00daf3",
+              "on-tertiary": "#233144",
+              outline: "#849396",
+              "on-tertiary-fixed": "#0d1c2f",
+              "on-secondary-fixed": "#131b2e",
+              "on-background": "#dce1fb",
+              primary: "#c3f5ff",
+              "on-primary-fixed-variant": "#004f58",
+              "primary-container": "#00e5ff",
+              "tertiary-container": "#c3d1ea",
+              "surface-dim": "#0c1324",
+              "error-container": "#93000a",
+              "on-secondary": "#283044",
+              "inverse-primary": "#006875",
+              "inverse-on-surface": "#2a3043",
+              "surface-bright": "#33394c",
+              secondary: "#bec6e0",
+              "surface-container": "#191f31",
+              "surface-container-highest": "#2e3447",
+              "secondary-container": "#3f465c",
+              background: "#0c1324",
+              "tertiary-fixed-dim": "#b9c7e0",
+              "on-tertiary-container": "#4c5a6f",
+              "on-secondary-container": "#adb4ce",
+              "secondary-fixed-dim": "#bec6e0",
+              "secondary-fixed": "#dae2fd",
+              tertiary: "#e4edff",
+              "on-primary-container": "#00626e",
+              "primary-fixed-dim": "#00daf3",
+              "on-secondary-fixed-variant": "#3f465c",
+              "surface-container-high": "#23293c",
+              "inverse-surface": "#dce1fb",
+              "surface-container-lowest": "#070d1f",
+              "primary-fixed": "#9cf0ff",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              "margin-mobile": "20px",
+              gutter: "24px",
+              "margin-desktop": "64px",
+              base: "8px",
+              "nav-height": "80px",
+              "container-max": "1280px",
+              "margin-tablet": "32px",
+            },
+            fontFamily: {
+              "headline-xl": ["Hanken Grotesk"],
+              "body-md": ["Geist"],
+              "headline-md": ["Hanken Grotesk"],
+              "label-sm": ["Geist"],
+              "label-md": ["Geist"],
+              "headline-sm": ["Hanken Grotesk"],
+              "body-lg": ["Geist"],
+              "body-sm": ["Geist"],
+              "headline-lg": ["Hanken Grotesk"],
+              "headline-xl-mobile": ["Hanken Grotesk"],
+            },
+            fontSize: {
+              "headline-xl": [
+                "60px",
+                {
+                  lineHeight: "72px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "800",
+                },
+              ],
+              "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "headline-md": [
+                "32px",
+                { lineHeight: "40px", fontWeight: "700" },
+              ],
+              "label-sm": [
+                "12px",
+                {
+                  lineHeight: "14px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "500",
+                },
+              ],
+              "label-md": [
+                "14px",
+                {
+                  lineHeight: "16px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                },
+              ],
+              "headline-sm": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+              "body-sm": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+              "headline-lg": [
+                "48px",
+                {
+                  lineHeight: "56px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "700",
+                },
+              ],
+              "headline-xl-mobile": [
+                "40px",
+                {
+                  lineHeight: "48px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "800",
+                },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      @keyframes scan {
+        0% {
+          top: -10%;
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.8;
+        }
+        90% {
+          opacity: 0.8;
+        }
+        100% {
+          top: 110%;
+          opacity: 0;
+        }
+      }
+      .scan-line {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #00e5ff, transparent);
+        box-shadow: 0 0 15px #00e5ff;
+        z-index: 20;
+        animation: scan 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+      .reveal-on-scroll {
+        opacity: 0;
+        transform: translateY(30px);
+        transition:
+          opacity 0.6s cubic-bezier(0.2, 0.8, 0.2, 1),
+          transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+      .reveal-on-scroll.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .stagger-item {
+        opacity: 0;
+        transform: translateY(20px);
+        transition:
+          opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+          transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+      .reveal-on-scroll.active .stagger-item {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .stagger-item:nth-child(1) {
+        transition-delay: 0.1s;
+      }
+      .stagger-item:nth-child(2) {
+        transition-delay: 0.2s;
+      }
+      .stagger-item:nth-child(3) {
+        transition-delay: 0.3s;
+      }
+      .stagger-item:nth-child(4) {
+        transition-delay: 0.4s;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background text-on-background antialiased selection:bg-primary selection:text-on-primary"
+  >
+    <!-- TopNavBar -->
+    <div id="navbar-root"></div>
+    <div id="modal-root"></div>
+    <main class="pt-[160px] pb-24">
+      <div
+        class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop flex flex-col gap-y-[120px]"
+      >
+        <!-- Hero Section -->
+        <section
+          class="grid grid-cols-1 lg:grid-cols-2 gap-gutter items-center reveal-on-scroll"
+        >
+          <div class="flex flex-col gap-6">
+            <h1
+              class="font-headline-xl text-headline-xl-mobile md:text-headline-xl text-on-surface"
+            >
+              Architecting the Modern Enterprise.
+            </h1>
+            <p
+              class="font-body-lg text-body-lg text-on-surface-variant max-w-xl"
+            >
+              We engineer high-performance infrastructure solutions that provide
+              stability, scale, and uncompromising security for tomorrow's
+              digital demands.
+            </p>
+          </div>
+          <div
+            class="aspect-video w-full rounded border border-outline-variant/30 overflow-hidden relative shadow-[0_0_40px_rgba(0,229,255,0.05)]"
+          >
+            <div class="scan-line"></div>
+            <div
+              class="absolute inset-0 bg-surface-container-high/80 mix-blend-multiply z-10"
+            ></div>
+            <img
+              alt="Server room"
+              class="w-full h-full object-cover z-0"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIhSIrfblcxQ1OHxbDl7POjE65QnAydLFSk4g8_fhzzn-hDcw--3sHMvX2VgGtYU0QqR6SMg_N5vvwdC1ns8cn5b1D60OCHvdF6MDwZ8xIjkXj4_rxfX0koBQNe5jr112MVsqanneDCp8lRT0lCT_Mj9p2k-cXMcFZ1LJ00uSYYMHxLYqKSAb_0vGHtzAZD-iASU6WhJSqVnzglEc5-zJrdU7lzzwvIfAk-2NxdTIk51kjFL2nwilnhKoPynuw75bxFZD1_UPCxWps"
+            />
+          </div>
+        </section>
+        <!-- Mission & Vision Dashboards -->
+        <section
+          class="grid grid-cols-1 md:grid-cols-2 gap-gutter reveal-on-scroll"
+        >
+          <!-- Mission Dashboard -->
+          <div
+            class="bg-surface-container p-8 rounded border border-outline-variant/50 relative overflow-hidden group hover:border-primary/50 transition-all duration-300 stagger-item"
+          >
+            <div
+              class="absolute top-0 left-0 w-full h-[2px] bg-primary/20 group-hover:bg-primary transition-colors"
+            ></div>
+            <div class="flex items-center gap-4 mb-6">
+              <span class="material-symbols-outlined text-primary text-3xl"
+                >rocket_launch</span
+              >
+              <h2 class="font-headline-sm text-headline-sm text-on-surface">
+                Mission Statement
+              </h2>
+            </div>
+            <blockquote
+              class="font-headline-md text-headline-md text-on-surface-variant leading-tight mb-6 transition-colors group-hover:text-on-surface"
+            >
+              "To deliver technical precision and absolute reliability, ensuring
+              our clients' digital infrastructure is an unbreakable foundation
+              for growth."
+            </blockquote>
+            <p class="font-body-md text-body-md text-on-surface-variant">
+              We view every system architecture not just as code and hardware,
+              but as the lifeblood of our clients' operations. Our focus remains
+              unyielding on maximizing uptime, enhancing security postures, and
+              engineering for invisible excellence.
+            </p>
+          </div>
+          <!-- Vision Dashboard -->
+          <div
+            class="bg-surface-container p-8 rounded border border-outline-variant/50 relative overflow-hidden group hover:border-primary/50 transition-all duration-300 stagger-item"
+          >
+            <div
+              class="absolute top-0 left-0 w-full h-[2px] bg-primary/20 group-hover:bg-primary transition-colors"
+            ></div>
+            <div class="flex items-center gap-4 mb-6">
+              <span class="material-symbols-outlined text-primary text-3xl"
+                >visibility</span
+              >
+              <h2 class="font-headline-sm text-headline-sm text-on-surface">
+                Vision Horizon
+              </h2>
+            </div>
+            <blockquote
+              class="font-headline-md text-headline-md text-on-surface-variant leading-tight mb-6 transition-colors group-hover:text-on-surface"
+            >
+              "A future where enterprise technology operates with zero friction,
+              empowering human innovation without operational constraints."
+            </blockquote>
+            <p class="font-body-md text-body-md text-on-surface-variant">
+              We are anticipating the infrastructure needs of the next
+              decade—proactively adopting resilient frameworks and automated
+              scaling solutions so our partners can focus entirely on market
+              disruption, completely trusting the systems beneath them.
+            </p>
+          </div>
+        </section>
+        <!-- Core Values Bento -->
+        <section class="reveal-on-scroll">
+          <div class="mb-12 stagger-item">
+            <h2 class="font-headline-lg text-headline-lg text-on-surface mb-4">
+              Core Operating Principles
+            </h2>
+            <p
+              class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl"
+            >
+              The ethical and operational frameworks that define our engineering
+              culture.
+            </p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+            <!-- Principles Card 1 -->
+            <div
+              class="bg-surface-container-low p-6 rounded border border-outline-variant/30 flex flex-col gap-4 transition-all duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-[0_0_20px_rgba(0,229,255,0.1)] stagger-item"
+            >
+              <span
+                class="material-symbols-outlined text-primary"
+                style="font-variation-settings: &quot;FILL&quot; 1"
+                >shield</span
+              >
+              <h3 class="font-headline-sm text-headline-sm text-on-surface">
+                Uncompromising Security
+              </h3>
+              <p class="font-body-md text-body-md text-on-surface-variant">
+                Security is not an add-on; it is the foundational layer of every
+                solution. We operate on zero-trust architectures and continuous
+                verification.
+              </p>
+            </div>
+            <!-- Principles Card 2 -->
+            <div
+              class="bg-surface-container-low p-6 rounded border border-outline-variant/30 flex flex-col gap-4 transition-all duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-[0_0_20px_rgba(0,229,255,0.1)] stagger-item"
+            >
+              <span
+                class="material-symbols-outlined text-primary"
+                style="font-variation-settings: &quot;FILL&quot; 1"
+                >speed</span
+              >
+              <h3 class="font-headline-sm text-headline-sm text-on-surface">
+                High-Performance Delivery
+              </h3>
+              <p class="font-body-md text-body-md text-on-surface-variant">
+                Speed to market paired with execution excellence. We optimize
+                for low latency, high throughput, and rapid issue resolution.
+              </p>
+            </div>
+            <!-- Principles Card 3 -->
+            <div
+              class="bg-surface-container-low p-6 rounded border border-outline-variant/30 flex flex-col gap-4 transition-all duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-[0_0_20px_rgba(0,229,255,0.1)] stagger-item"
+            >
+              <span
+                class="material-symbols-outlined text-primary"
+                style="font-variation-settings: &quot;FILL&quot; 1"
+                >handshake</span
+              >
+              <h3 class="font-headline-sm text-headline-sm text-on-surface">
+                Radical Transparency
+              </h3>
+              <p class="font-body-md text-body-md text-on-surface-variant">
+                Clear communication, explicit SLA definitions, and open-book
+                reporting on system health and project milestones.
+              </p>
+            </div>
+          </div>
+        </section>
+        <!-- Team Framework Grid -->
+        <section class="reveal-on-scroll">
+          <div
+            class="mb-12 flex justify-between items-end border-b border-outline-variant/30 pb-6 stagger-item"
+          >
+            <div>
+              <h2
+                class="font-headline-lg text-headline-lg text-on-surface mb-2"
+              >
+                The Architecture Team
+              </h2>
+              <p class="font-body-lg text-body-lg text-on-surface-variant">
+                Lead engineers and strategists powering KTech Solutions.
+              </p>
+            </div>
+          </div>
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter"
+          >
+            <!-- Team Member 1 -->
+            <div
+              class="bg-surface-container p-6 rounded border border-outline-variant/30 flex flex-col items-center text-center group transition-all duration-300 hover:bg-surface-container-high stagger-item"
+            >
+              <div
+                class="relative w-24 h-24 mb-4 overflow-hidden rounded-full border-2 border-surface-variant group-hover:border-primary transition-colors"
+              >
+                <img
+                  alt="Marcus Thorne"
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxOl3x_mr_zH29wmgpjOioldF3ZZDfYx-LUUSqaSiT7ty0v5dvae0usho56WR4ea7KkM6jO5-tOUTeh9U06KWrw2_S8j7FQ2i3F_jHKMToz0qKIaNVPgJDZd3hhmoDdUWAJRebm9giPcCJQ894l5cbE-yIfCJVDHcbxFuNhw6rf9OvCt50V4jIYJs65a6hc6fPl0Y7nExlYur9QHv37ofM_FZ3i64ktjbrRQdPINx8E-7kip7AU-WbaZiYVPIIFcH10BFMbNAypKtF"
+                />
+              </div>
+              <h3
+                class="font-headline-sm text-headline-sm text-on-surface mb-1"
+              >
+                Marcus Thorne
+              </h3>
+              <p
+                class="font-label-md text-label-md text-primary mb-4 uppercase tracking-wider"
+              >
+                Chief Executive Officer
+              </p>
+              <div
+                class="flex gap-3 opacity-0 transform translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"
+              >
+                <a
+                  class="text-on-surface-variant hover:text-primary transition-colors"
+                  href="#"
+                  ><span class="material-symbols-outlined">link</span></a
+                >
+                <a
+                  class="text-on-surface-variant hover:text-primary transition-colors"
+                  href="#"
+                  ><span class="material-symbols-outlined">code</span></a
+                >
+              </div>
+            </div>
+            <!-- Team Member 2 -->
+            <div
+              class="bg-surface-container p-6 rounded border border-outline-variant/30 flex flex-col items-center text-center group transition-all duration-300 hover:bg-surface-container-high stagger-item"
+            >
+              <div
+                class="relative w-24 h-24 mb-4 overflow-hidden rounded-full border-2 border-surface-variant group-hover:border-primary transition-colors"
+              >
+                <img
+                  alt="Elena Rostova"
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKidBYAmTFAosfraBplrTv6_mObMfs3gEMRenzKD-diaW_rle-3pc_o1TgFqNxUGxla6-9IuBrY6tFxfySDju-Gtx-2BS4az_AfvPnG1lPkMFkoCTlcN4pF2kpWl3AUlyReGOzO6tOj6lvMM5wZ6RVYYQ31X43PgEyEMgMqyDPUzlEGQBN__fQdr40UDp0uqWDHQZc2H2Ng25ZjnEfYaDA8Lr7vtEUXYGIfUIJZ1Q57m_uwjYQC034-l78blbdiT2b3TvNLxZqx4hq"
+                />
+              </div>
+              <h3
+                class="font-headline-sm text-headline-sm text-on-surface mb-1"
+              >
+                Elena Rostova
+              </h3>
+              <p
+                class="font-label-md text-label-md text-primary mb-4 uppercase tracking-wider"
+              >
+                Chief Technology Officer
+              </p>
+              <div
+                class="flex gap-3 opacity-0 transform translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"
+              >
+                <a
+                  class="text-on-surface-variant hover:text-primary transition-colors"
+                  href="#"
+                  ><span class="material-symbols-outlined">link</span></a
+                >
+                <a
+                  class="text-on-surface-variant hover:text-primary transition-colors"
+                  href="#"
+                  ><span class="material-symbols-outlined">code</span></a
+                >
+              </div>
+            </div>
+            <!-- Team Member 3 -->
+            <div
+              class="bg-surface-container p-6 rounded border border-outline-variant/30 flex flex-col items-center text-center group transition-all duration-300 hover:bg-surface-container-high stagger-item"
+            >
+              <div
+                class="relative w-24 h-24 mb-4 overflow-hidden rounded-full border-2 border-surface-variant group-hover:border-primary transition-colors"
+              >
+                <img
+                  alt="David Chen"
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_g7F9bbjEKGJoYXq08srlvTakLQud1M8yuK2LxiMXOwvfz7ow4NtC4RUeoN3XU1249Dqcqu8kJeD5QqApWTzr0ao6IB0X1aRwc9nrnnq8lvApBTXot7IAMQKOAWPlfHhoJcZX9VmBcqXLusSK0Qt62PP8f_9JAgo3z5QnqVD5e8mhSI_M3IbCSC9aS2XXBW2KBTI19S5hqVeQV3hQs9D06BWxFPdSje7QB2-TlgO6JkHhvenWe9opY63C3QS8OE0ubXgZWKsJ-cd7"
+                />
+              </div>
+              <h3
+                class="font-headline-sm text-headline-sm text-on-surface mb-1"
+              >
+                David Chen
+              </h3>
+              <p
+                class="font-label-md text-label-md text-primary mb-4 uppercase tracking-wider"
+              >
+                Lead Infrastructure Architect
+              </p>
+              <div
+                class="flex gap-3 opacity-0 transform translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"
+              >
+                <a
+                  class="text-on-surface-variant hover:text-primary transition-colors"
+                  href="#"
+                  ><span class="material-symbols-outlined">link</span></a
+                >
+                <a
+                  class="text-on-surface-variant hover:text-primary transition-colors"
+                  href="#"
+                  ><span class="material-symbols-outlined">code</span></a
+                >
+              </div>
+            </div>
+            <!-- Team Member 4 -->
+            <div
+              class="bg-surface-container p-6 rounded border border-outline-variant/30 flex flex-col items-center text-center group transition-all duration-300 hover:bg-surface-container-high stagger-item"
+            >
+              <div
+                class="relative w-24 h-24 mb-4 overflow-hidden rounded-full border-2 border-surface-variant group-hover:border-primary transition-colors"
+              >
+                <img
+                  alt="Sarah Jenkins"
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaa2ntPLUaX_ObPqmLvEVbx33eFmMui9fBgOu4x5hTD1bcAV_Q7luU3_EtSc35NSOx4-bvp1Bi0o8tV3dHvBC0GA_ZMKw01PAwGXD5S0e3jb6Lq2Fby9gSY3Wihth4tAvX3pSkaloR0DoPPmikkYUJFXrtB3p0DKHDz1p5dl9vlpxkAs1H10IbE3AJdSKENqwiiVIxRksmseJMC0lZG2WDtNhKxC2fGef0XG1ecOm3BO2B1RU8PvFtYAK6jXfeKN5OAgTyNQXZR_UM"
+                />
+              </div>
+              <h3
+                class="font-headline-sm text-headline-sm text-on-surface mb-1"
+              >
+                Sarah Jenkins
+              </h3>
+              <p
+                class="font-label-md text-label-md text-primary mb-4 uppercase tracking-wider"
+              >
+                Head of Cybersecurity
+              </p>
+              <div
+                class="flex gap-3 opacity-0 transform translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"
+              >
+                <a
+                  class="text-on-surface-variant hover:text-primary transition-colors"
+                  href="#"
+                  ><span class="material-symbols-outlined">link</span></a
+                >
+                <a
+                  class="text-on-surface-variant hover:text-primary transition-colors"
+                  href="#"
+                  ><span class="material-symbols-outlined">code</span></a
+                >
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+    <!-- Footer -->
+    <footer
+      class="w-full py-16 bg-surface-container-lowest border-t border-outline-variant/20"
+    >
+      <div
+        class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto"
+      >
+        <div class="space-y-4 col-span-1 md:col-span-1">
+          <div
+            class="text-headline-sm font-headline-sm font-bold text-on-surface"
+          >
+            KTech Solutions
+          </div>
+          <p class="font-body-sm text-body-sm text-on-surface-variant">
+            © 2024 KTech Solutions. High-performance infrastructure for modern
+            enterprise.
+          </p>
+        </div>
+        <div class="space-y-4">
+          <h4 class="font-label-md text-label-md text-on-surface">Platform</h4>
+          <ul class="space-y-2">
+            <li>
+              <a
+                class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-all"
+                href="index.html"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a
+                class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-all"
+                href="services.html"
+                >Services</a
+              >
+            </li>
+            <li>
+              <a
+                class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-all"
+                href="aboutus.html"
+                >About Us</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="space-y-4">
+          <h4 class="font-label-md text-label-md text-on-surface">Support</h4>
+          <ul class="space-y-2">
+            <li>
+              <a
+                class="font-body-sm text-body-sm text-primary hover:text-primary transition-all"
+                href="contact.html"
+                >Contact</a
+              >
+            </li>
+            <li>
+              <a
+                class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-all"
+                href="#"
+                >Documentation</a
+              >
+            </li>
+            <li>
+              <a
+                class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-all"
+                href="#"
+                >System Status</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="space-y-4">
+          <h4 class="font-label-md text-label-md text-on-surface">Network</h4>
+          <div class="flex space-x-4">
+            <a
+              aria-label="GitHub"
+              class="text-on-surface-variant hover:text-primary transition-all"
+              href="#"
+              ><span class="font-body-sm text-body-sm">GitHub</span></a
+            >
+            <a
+              aria-label="LinkedIn"
+              class="text-on-surface-variant hover:text-primary transition-all"
+              href="#"
+              ><span class="font-body-sm text-body-sm">LinkedIn</span></a
+            >
+            <a
+              aria-label="X"
+              class="text-on-surface-variant hover:text-primary transition-all"
+              href="#"
+              ><span class="font-body-sm text-body-sm">X</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script src="navbar.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const observerOptions = {
+          threshold: 0.1,
+          rootMargin: "0px 0px -50px 0px",
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("active");
+              // Once animated, we don't need to observe it anymore
+              observer.unobserve(entry.target);
+            }
+          });
+        }, observerOptions);
+
+        document.querySelectorAll(".reveal-on-scroll").forEach((el) => {
+          observer.observe(el);
+        });
+      });
+    </script>
+  </body>
+</html>

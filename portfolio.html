@@ -1,0 +1,384 @@
+<!doctype html>
+<html class="dark" lang="en" style="">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>KTech Solutions - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700;800&amp;family=Geist:wght@400;500;600&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-error-container": "#ffdad6",
+              "surface-container-low": "#151b2d",
+              "on-error": "#690005",
+              "on-primary": "#00363d",
+              "on-primary-fixed": "#001f24",
+              error: "#ffb4ab",
+              "on-surface": "#dce1fb",
+              "on-tertiary-fixed-variant": "#3a485c",
+              "surface-variant": "#2e3447",
+              "outline-variant": "#3b494c",
+              "tertiary-fixed": "#d5e3fd",
+              "on-surface-variant": "#bac9cc",
+              surface: "#0c1324",
+              "surface-tint": "#00daf3",
+              "on-tertiary": "#233144",
+              outline: "#849396",
+              "on-tertiary-fixed": "#0d1c2f",
+              "on-secondary-fixed": "#131b2e",
+              "on-background": "#dce1fb",
+              primary: "#c3f5ff",
+              "on-primary-fixed-variant": "#004f58",
+              "primary-container": "#00e5ff",
+              "tertiary-container": "#c3d1ea",
+              "surface-dim": "#0c1324",
+              "error-container": "#93000a",
+              "on-secondary": "#283044",
+              "inverse-primary": "#006875",
+              "inverse-on-surface": "#2a3043",
+              "surface-bright": "#33394c",
+              secondary: "#bec6e0",
+              "surface-container": "#191f31",
+              "surface-container-highest": "#2e3447",
+              "secondary-container": "#3f465c",
+              background: "#0c1324",
+              "tertiary-fixed-dim": "#b9c7e0",
+              "on-tertiary-container": "#4c5a6f",
+              "on-secondary-container": "#adb4ce",
+              "secondary-fixed-dim": "#bec6e0",
+              "secondary-fixed": "#dae2fd",
+              tertiary: "#e4edff",
+              "on-primary-container": "#00626e",
+              "primary-fixed-dim": "#00daf3",
+              "on-secondary-fixed-variant": "#3f465c",
+              "surface-container-high": "#23293c",
+              "inverse-surface": "#dce1fb",
+              "surface-container-lowest": "#070d1f",
+              "primary-fixed": "#9cf0ff",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              "margin-mobile": "20px",
+              gutter: "24px",
+              "margin-desktop": "64px",
+              base: "8px",
+              "nav-height": "80px",
+              "container-max": "1280px",
+              "margin-tablet": "32px",
+            },
+            fontFamily: {
+              "headline-xl": ["Hanken Grotesk"],
+              "body-md": ["Geist"],
+              "headline-md": ["Hanken Grotesk"],
+              "label-sm": ["Geist"],
+              "label-md": ["Geist"],
+              "headline-sm": ["Hanken Grotesk"],
+              "body-lg": ["Geist"],
+              "body-sm": ["Geist"],
+              "headline-lg": ["Hanken Grotesk"],
+              "headline-xl-mobile": ["Hanken Grotesk"],
+            },
+            fontSize: {
+              "headline-xl": [
+                "60px",
+                {
+                  lineHeight: "72px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "800",
+                },
+              ],
+              "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "headline-md": [
+                "32px",
+                { lineHeight: "40px", fontWeight: "700" },
+              ],
+              "label-sm": [
+                "12px",
+                {
+                  lineHeight: "14px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "500",
+                },
+              ],
+              "label-md": [
+                "14px",
+                {
+                  lineHeight: "16px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                },
+              ],
+              "headline-sm": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+              "body-sm": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+              "headline-lg": [
+                "48px",
+                {
+                  lineHeight: "56px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "700",
+                },
+              ],
+              "headline-xl-mobile": [
+                "40px",
+                {
+                  lineHeight: "48px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "800",
+                },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-background text-on-background min-h-screen flex flex-col">
+    <!-- TopNavBar -->
+    <div id="navbar-root"></div>
+    <div id="modal-root"></div>
+    <!-- Main Content -->
+    <main
+      class="flex-grow pt-[120px] pb-[120px] px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto w-full"
+    >
+      <!-- Header -->
+      <header class="mb-16">
+        <h1
+          class="font-headline-xl text-headline-xl-mobile md:text-headline-xl text-on-surface mb-4"
+        >
+          Our Portfolio
+        </h1>
+        <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+          Showcasing high-performance digital infrastructure and enterprise
+          software solutions designed for scale, speed, and reliability.
+        </p>
+      </header>
+      <!-- Category Filter Rail -->
+      <div class="flex flex-wrap gap-4 mb-12">
+        <button
+          class="px-6 py-2 rounded-full border border-primary bg-primary text-on-primary font-label-md text-label-md transition-colors"
+        >
+          All Work
+        </button>
+        <button
+          class="px-6 py-2 rounded-full border border-outline text-on-surface-variant hover:border-primary hover:text-primary font-label-md text-label-md transition-colors"
+        >
+          App Development
+        </button>
+        <button
+          class="px-6 py-2 rounded-full border border-outline text-on-surface-variant hover:border-primary hover:text-primary font-label-md text-label-md transition-colors"
+        >
+          Web Development
+        </button>
+        <button
+          class="px-6 py-2 rounded-full border border-outline text-on-surface-variant hover:border-primary hover:text-primary font-label-md text-label-md transition-colors"
+        >
+          Hardware Repair
+        </button>
+        <button
+          class="px-6 py-2 rounded-full border border-outline text-on-surface-variant hover:border-primary hover:text-primary font-label-md text-label-md transition-colors"
+        >
+          System Setups
+        </button>
+      </div>
+      <!-- Gallery Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter mb-16">
+        <!-- Project Card 1 -->
+        <article
+          class="border border-[#334155] border-t-2 border-t-primary rounded-lg overflow-hidden bg-surface-container flex flex-col group relative"
+        >
+          <div class="h-64 w-full bg-surface-variant relative overflow-hidden">
+            <img
+              alt="FinTech Analytics Platform"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5gPKdszulKLRAivxiMPT1UCUfKsle9KlWTZOvxdb2tKY7zpa3F7leKSRA44PNQD1Us2y5KrdzY4MIA9r52ZmS3aGzOfqO1eCUj4lo5xms5bQv6yklrz2mIzCd7ha7HVvq_zBPtTeSifYtNm1iX0g3BY3h-faxrkcK71BpnXebKECPyBwosn-Po46ZjcGlCjWe6_XLCvmFnOrN_bHuFi4k6z114MGRQSBnxZiXO-Z0L3HYp53PBFt2PHTQYH9K8FTJGt7U-uAq9fKz"
+            />
+          </div>
+          <div class="p-6 flex-grow flex flex-col">
+            <div class="flex justify-between items-start mb-4">
+              <h2 class="font-headline-sm text-headline-sm text-on-surface">
+                FinTech Analytics Platform
+              </h2>
+              <div class="flex gap-2 text-on-surface-variant">
+                <a class="hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined text-[20px]">language</span></a>
+                <a class="hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined text-[20px]">code</span></a>
+              </div>
+            </div>
+            <p class="font-body-md text-body-md text-on-surface-variant mb-6 flex-grow">
+              A high-frequency trading analytics dashboard built for real-time
+              data processing and sub-millisecond visualization.
+            </p>
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="px-3 py-1 rounded-full bg-surface-container-high border border-outline-variant font-label-sm text-label-sm text-primary">React</span>
+              <span class="px-3 py-1 rounded-full bg-surface-container-high border border-outline-variant font-label-sm text-label-sm text-primary">Node.js</span>
+              <span class="px-3 py-1 rounded-full bg-surface-container-high border border-outline-variant font-label-sm text-label-sm text-primary">AWS</span>
+            </div>
+          </div>
+        </article>
+        <!-- Project Card 2 -->
+        <article
+          class="border border-[#334155] rounded-lg overflow-hidden bg-surface-container flex flex-col group relative"
+        >
+          <div class="h-64 w-full bg-surface-variant relative overflow-hidden">
+            <img
+              alt="Logistics Routing App"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZetFF9eX_Aqdq6h5evobtxocIgqmyPJ1ytyGrStdg537B2Xdl6ebo95N6YhnoZvIiCcWI5dJzV1Cgt3g_DNqNlEoXkNknZPPWtp08YqXUCM6LSbemF14TzAfGG5o-wsp1zjGSQUBCcS1AThd-5ozgiZyFduRvRlJI8EOaXQ4O4xXLf64ijdtG3TY0h_6M-TyglafmDl7IvbwcM8YrcAl6ioVx-HGW391hC8ttjAa0O--T6eCmVOz0sbnN5MBG0l10u7WKVg8fwFMr"
+            />
+          </div>
+          <div class="p-6 flex-grow flex flex-col">
+            <div class="flex justify-between items-start mb-4">
+              <h2 class="font-headline-sm text-headline-sm text-on-surface">
+                Logistics Routing App
+              </h2>
+              <div class="flex gap-2 text-on-surface-variant">
+                <a class="hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined text-[20px]">language</span></a>
+              </div>
+            </div>
+            <p class="font-body-md text-body-md text-on-surface-variant mb-6 flex-grow">
+              Cross-platform mobile application for fleet management, featuring
+              real-time GPS tracking and AI-driven route optimization.
+            </p>
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="px-3 py-1 rounded-full bg-surface-container-high border border-outline-variant font-label-sm text-label-sm text-primary">Flutter</span>
+              <span class="px-3 py-1 rounded-full bg-surface-container-high border border-outline-variant font-label-sm text-label-sm text-primary">Google Maps API</span>
+              <span class="px-3 py-1 rounded-full bg-surface-container-high border border-outline-variant font-label-sm text-label-sm text-primary">Python</span>
+            </div>
+          </div>
+        </article>
+        <!-- Project Card 3 -->
+        <article
+          class="border border-[#334155] rounded-lg overflow-hidden bg-surface-container flex flex-col group relative"
+        >
+          <div class="h-64 w-full bg-surface-variant relative overflow-hidden">
+            <img
+              alt="Enterprise Data Center Setup"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAagg7LP3Sy7ZsxvdQMSaId8x3YGi1NvMeDtoLIBNrKUI-ux45BKFk4-BmSVlG3FjemjuxkFqMHu0Iatdrpbyxl7Uxz0_2aoZHusb_WSF_RYvPmPchtXR24ijmPCCt3XA3se76yXCQvRqd1plsJb_xC8TyiUXiFYYlJUUMVX0rIANYLQtwaQUD4MKxywnLp0yN1zQynL2muPTiBiHjrB5vK7STmTAjrulwZ8WD4ZZYC6z004p3dE-wCXbzx2OtM5mJFv2TPJsCdQGuH"
+            />
+          </div>
+          <div class="p-6 flex-grow flex flex-col">
+            <div class="flex justify-between items-start mb-4">
+              <h2 class="font-headline-sm text-headline-sm text-on-surface">
+                Enterprise Data Center Setup
+              </h2>
+            </div>
+            <p class="font-body-md text-body-md text-on-surface-variant mb-6 flex-grow">
+              Full-scale hardware deployment and network topology design for a
+              Tier 3 compliant enterprise data facility.
+            </p>
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="px-3 py-1 rounded-full bg-surface-container-high border border-outline-variant font-label-sm text-label-sm text-primary">Cisco</span>
+              <span class="px-3 py-1 rounded-full bg-surface-container-high border border-outline-variant font-label-sm text-label-sm text-primary">VMware</span>
+              <span class="px-3 py-1 rounded-full bg-surface-container-high border border-outline-variant font-label-sm text-label-sm text-primary">Fiber Optics</span>
+            </div>
+          </div>
+        </article>
+        <!-- Project Card 4 -->
+        <article
+          class="border border-[#334155] rounded-lg overflow-hidden bg-surface-container flex flex-col group relative"
+        >
+          <div class="h-64 w-full bg-surface-variant relative overflow-hidden">
+            <img
+              alt="SaaS Platform Migration"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuD09Hr58rLfkn-jwaoPsQVErKYn5ZsLTL1BAxsIXPL7q71SQ1i5vT9ISNxYLFYKHkvgveC43qybAPXNKu3n4qww0kbDc9F9wO5WORXrltLy_cQ1GAO0DXnB8R2OJn-7tHWbt1FDy8QspBtUVuW-cegT02eDNfjmUjpVUHpTzTYQcQ37fElFsDBjEVaMF7iiqn-oGquhTHA3fDTz-0oL1qo0MvCjsT0A432EUiTZlcF_Dti6BtKLH7WlOLtKwNMwTO5AWRfGAB8WFz_K"
+            />
+          </div>
+          <div class="p-6 flex-grow flex flex-col">
+            <div class="flex justify-between items-start mb-4">
+              <h2 class="font-headline-sm text-headline-sm text-on-surface">
+                SaaS Platform Migration
+              </h2>
+              <div class="flex gap-2 text-on-surface-variant">
+                <a class="hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined text-[20px]">code</span></a>
+              </div>
+            </div>
+            <p class="font-body-md text-body-md text-on-surface-variant mb-6 flex-grow">
+              Migrated a legacy monolithic architecture to a highly scalable,
+              containerized microservices environment.
+            </p>
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="px-3 py-1 rounded-full bg-surface-container-high border border-outline-variant font-label-sm text-label-sm text-primary">Kubernetes</span>
+              <span class="px-3 py-1 rounded-full bg-surface-container-high border border-outline-variant font-label-sm text-label-sm text-primary">Docker</span>
+              <span class="px-3 py-1 rounded-full bg-surface-container-high border border-outline-variant font-label-sm text-label-sm text-primary">Go</span>
+            </div>
+          </div>
+        </article>
+      </div>
+      <!-- Pagination -->
+      <div class="flex justify-center items-center gap-4 mt-12 border-t border-outline-variant/30 pt-8">
+        <button class="flex items-center gap-2 px-4 py-2 border border-outline-variant text-on-surface-variant rounded hover:text-primary hover:border-primary transition-colors font-label-md text-label-md disabled:opacity-50 disabled:cursor-not-allowed">
+          <span class="material-symbols-outlined text-[18px]">chevron_left</span>
+          Previous
+        </button>
+        <div class="flex items-center gap-2">
+          <button class="w-10 h-10 rounded bg-primary text-on-primary font-label-md text-label-md flex items-center justify-center">1</button>
+          <button class="w-10 h-10 rounded border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary transition-colors font-label-md text-label-md flex items-center justify-center">2</button>
+          <button class="w-10 h-10 rounded border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary transition-colors font-label-md text-label-md flex items-center justify-center">3</button>
+          <span class="text-on-surface-variant mx-1">...</span>
+          <button class="w-10 h-10 rounded border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary transition-colors font-label-md text-label-md flex items-center justify-center">8</button>
+        </div>
+        <button class="flex items-center gap-2 px-4 py-2 border border-outline-variant text-on-surface-variant rounded hover:text-primary hover:border-primary transition-colors font-label-md text-label-md">
+          Next
+          <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+        </button>
+      </div>
+    </main>
+    <!-- Footer -->
+    <footer class="w-full py-16 bg-surface-container-lowest border-t border-outline-variant/20">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+        <div class="space-y-4 col-span-1 md:col-span-1">
+          <div class="text-headline-sm font-headline-sm font-bold text-on-surface">KTech Solutions</div>
+          <p class="font-body-sm text-body-sm text-on-surface-variant">
+            © 2024 KTech Solutions. High-performance infrastructure for modern enterprise.
+          </p>
+        </div>
+        <div class="space-y-4">
+          <h4 class="font-label-md text-label-md text-on-surface">Platform</h4>
+          <ul class="space-y-2">
+            <li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-all" href="index.html">Home</a></li>
+            <li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-all" href="services.html">Services</a></li>
+            <li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-all" href="aboutus.html">About Us</a></li>
+          </ul>
+        </div>
+        <div class="space-y-4">
+          <h4 class="font-label-md text-label-md text-on-surface">Support</h4>
+          <ul class="space-y-2">
+            <li><a class="font-body-sm text-body-sm text-primary hover:text-primary transition-all" href="contact.html">Contact</a></li>
+            <li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-all" href="#">Documentation</a></li>
+            <li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-all" href="#">System Status</a></li>
+          </ul>
+        </div>
+        <div class="space-y-4">
+          <h4 class="font-label-md text-label-md text-on-surface">Network</h4>
+          <div class="flex space-x-4">
+            <a aria-label="GitHub" class="text-on-surface-variant hover:text-primary transition-all" href="#"><span class="font-body-sm text-body-sm">GitHub</span></a>
+            <a aria-label="LinkedIn" class="text-on-surface-variant hover:text-primary transition-all" href="#"><span class="font-body-sm text-body-sm">LinkedIn</span></a>
+            <a aria-label="X" class="text-on-surface-variant hover:text-primary transition-all" href="#"><span class="font-body-sm text-body-sm">X</span></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script src="navbar.js"></script>
+  </body>
+</html>

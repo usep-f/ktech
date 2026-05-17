@@ -1,0 +1,1285 @@
+<!doctype html>
+
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>KTech Solutions | Home</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700;800&amp;family=Geist:wght@400;500;600&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-error-container": "#ffdad6",
+              "surface-container-low": "#151b2d",
+              "on-error": "#690005",
+              "on-primary": "#00363d",
+              "on-primary-fixed": "#001f24",
+              error: "#ffb4ab",
+              "on-surface": "#dce1fb",
+              "on-tertiary-fixed-variant": "#3a485c",
+              "surface-variant": "#2e3447",
+              "outline-variant": "#3b494c",
+              "tertiary-fixed": "#d5e3fd",
+              "on-surface-variant": "#bac9cc",
+              surface: "#0c1324",
+              "surface-tint": "#00daf3",
+              "on-tertiary": "#233144",
+              outline: "#849396",
+              "on-tertiary-fixed": "#0d1c2f",
+              "on-secondary-fixed": "#131b2e",
+              "on-background": "#dce1fb",
+              primary: "#c3f5ff",
+              "on-primary-fixed-variant": "#004f58",
+              "primary-container": "#00e5ff",
+              "tertiary-container": "#c3d1ea",
+              "surface-dim": "#0c1324",
+              "error-container": "#93000a",
+              "on-secondary": "#283044",
+              "inverse-primary": "#006875",
+              "inverse-on-surface": "#2a3043",
+              "surface-bright": "#33394c",
+              secondary: "#bec6e0",
+              "surface-container": "#191f31",
+              "surface-container-highest": "#2e3447",
+              "secondary-container": "#3f465c",
+              background: "#0c1324",
+              "tertiary-fixed-dim": "#b9c7e0",
+              "on-tertiary-container": "#4c5a6f",
+              "on-secondary-container": "#adb4ce",
+              "secondary-fixed-dim": "#bec6e0",
+              "secondary-fixed": "#dae2fd",
+              tertiary: "#e4edff",
+              "on-primary-container": "#00626e",
+              "primary-fixed-dim": "#00daf3",
+              "on-secondary-fixed-variant": "#3f465c",
+              "surface-container-high": "#23293c",
+              "inverse-surface": "#dce1fb",
+              "surface-container-lowest": "#070d1f",
+              "primary-fixed": "#9cf0ff",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              "margin-mobile": "20px",
+              gutter: "24px",
+              "margin-desktop": "64px",
+              base: "8px",
+              "nav-height": "80px",
+              "container-max": "1280px",
+              "margin-tablet": "32px",
+            },
+            fontFamily: {
+              "headline-xl": ["Hanken Grotesk"],
+              "body-md": ["Geist"],
+              "headline-md": ["Hanken Grotesk"],
+              "label-sm": ["Geist"],
+              "label-md": ["Geist"],
+              "headline-sm": ["Hanken Grotesk"],
+              "body-lg": ["Geist"],
+              "body-sm": ["Geist"],
+              "headline-lg": ["Hanken Grotesk"],
+              "headline-xl-mobile": ["Hanken Grotesk"],
+            },
+            fontSize: {
+              "headline-xl": [
+                "60px",
+                {
+                  lineHeight: "72px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "800",
+                },
+              ],
+              "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "headline-md": [
+                "32px",
+                { lineHeight: "40px", fontWeight: "700" },
+              ],
+              "label-sm": [
+                "12px",
+                {
+                  lineHeight: "14px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "500",
+                },
+              ],
+              "label-md": [
+                "14px",
+                {
+                  lineHeight: "16px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                },
+              ],
+              "headline-sm": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+              "body-sm": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+              "headline-lg": [
+                "48px",
+                {
+                  lineHeight: "56px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "700",
+                },
+              ],
+              "headline-xl-mobile": [
+                "40px",
+                {
+                  lineHeight: "48px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "800",
+                },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .ambient-glow {
+        box-shadow: 0 0 40px rgba(0, 218, 243, 0.05);
+      }
+      .hover-ambient-glow:hover {
+        box-shadow: 0 0 60px rgba(0, 218, 243, 0.15);
+        border-color: rgba(0, 218, 243, 0.4);
+      }
+
+      @keyframes scroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+      .animate-scroll {
+        animation: scroll 30s linear infinite;
+        display: flex;
+        width: max-content;
+      }
+
+      /* ── Scroll Progress Bar ── */
+      #scroll-progress {
+        position: fixed; top: 0; left: 0; height: 3px; z-index: 9999;
+        background: linear-gradient(90deg, #00e5ff, #00daf3, #9cf0ff);
+        width: 0%; transition: width 0.05s linear;
+        box-shadow: 0 0 8px rgba(0,229,255,0.6);
+      }
+
+      /* ── Reveal Variants ── */
+      .reveal {
+        opacity: 0; transform: translateY(40px);
+        transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                    filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform, filter;
+        filter: blur(4px);
+      }
+      .reveal.active { opacity: 1; transform: translateY(0); filter: blur(0); }
+
+      .reveal-left {
+        opacity: 0; transform: translateX(-60px);
+        transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                    filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform, filter;
+        filter: blur(3px);
+      }
+      .reveal-left.active { opacity: 1; transform: translateX(0); filter: blur(0); }
+
+      .reveal-right {
+        opacity: 0; transform: translateX(60px);
+        transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                    filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform, filter;
+        filter: blur(3px);
+      }
+      .reveal-right.active { opacity: 1; transform: translateX(0); filter: blur(0); }
+
+      .reveal-scale {
+        opacity: 0; transform: scale(0.85);
+        transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                    filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform, filter;
+        filter: blur(6px);
+      }
+      .reveal-scale.active { opacity: 1; transform: scale(1); filter: blur(0); }
+
+      /* ── Staggered Children ── */
+      .stagger-children > * {
+        opacity: 0; transform: translateY(30px);
+        transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                    filter 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        filter: blur(3px);
+      }
+      .stagger-children.active > * { opacity: 1; transform: translateY(0); filter: blur(0); }
+      .stagger-children.active > *:nth-child(1) { transition-delay: 0s; }
+      .stagger-children.active > *:nth-child(2) { transition-delay: 0.12s; }
+      .stagger-children.active > *:nth-child(3) { transition-delay: 0.24s; }
+      .stagger-children.active > *:nth-child(4) { transition-delay: 0.36s; }
+
+      /* ── Hero Entrance ── */
+      .hero-entrance {
+        opacity: 0; transform: scale(1.08); filter: blur(12px);
+        animation: heroIn 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+      }
+      @keyframes heroIn {
+        to { opacity: 1; transform: scale(1); filter: blur(0); }
+      }
+
+      /* ── Heading Shimmer ── */
+      .shimmer-text {
+        background: linear-gradient(
+          120deg,
+          #dce1fb 0%, #dce1fb 40%,
+          #00e5ff 50%,
+          #dce1fb 60%, #dce1fb 100%
+        );
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: shimmer 4s ease-in-out infinite;
+      }
+      @keyframes shimmer {
+        0%, 100% { background-position: 200% center; }
+        50% { background-position: -200% center; }
+      }
+
+      /* ── Hero Image Pulse ── */
+      @keyframes subtle-pulse {
+        0%, 100% { opacity: 0.2; transform: scale(1); }
+        50% { opacity: 0.25; transform: scale(1.05); }
+      }
+      .animate-pulse-slow { animation: subtle-pulse 10s ease-in-out infinite; }
+
+      /* ── Scanning Line ── */
+      .scanline {
+        position: absolute; width: 100%; height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(0,229,255,0.5), transparent);
+        top: 0; left: 0; z-index: 5;
+        animation: scan 4s linear infinite;
+        pointer-events: none;
+      }
+      @keyframes scan {
+        0% { top: 0%; opacity: 0; }
+        50% { opacity: 1; }
+        100% { top: 100%; opacity: 0; }
+      }
+
+      /* ── Stagger Items (hero words) ── */
+      .stagger-item {
+        opacity: 0; display: inline-block;
+        transform: translateY(20px);
+        filter: blur(6px);
+      }
+
+      /* ── Floating Particles ── */
+      .particle {
+        position: absolute; border-radius: 50%;
+        background: rgba(0, 229, 255, 0.25);
+        pointer-events: none; z-index: 2;
+        animation: float linear infinite;
+      }
+      @keyframes float {
+        0% { transform: translateY(0) scale(1); opacity: 0; }
+        10% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { transform: translateY(-100vh) scale(0.3); opacity: 0; }
+      }
+
+      /* ── Magnetic Button ── */
+      .btn-magnetic {
+        position: relative; overflow: hidden; transition: transform 0.3s ease;
+      }
+      .btn-magnetic::after {
+        content: ''; position: absolute; inset: 0;
+        background: radial-gradient(circle at var(--mx,50%) var(--my,50%),
+                    rgba(0,229,255,0.2) 0%, transparent 60%);
+        opacity: 0; transition: opacity 0.3s ease;
+      }
+      .btn-magnetic:hover::after { opacity: 1; }
+
+      /* ── Card 3D Tilt ── */
+      .tilt-card {
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+        transform-style: preserve-3d;
+      }
+
+      /* ── Cursor Glow ── */
+      .cursor-glow {
+        width: 400px; height: 400px;
+        background: radial-gradient(circle, rgba(0,218,243,0.07) 0%, transparent 70%);
+        border-radius: 50%; position: absolute;
+        pointer-events: none; z-index: 1;
+        transform: translate(-50%, -50%);
+        transition: left 0.15s ease, top 0.15s ease;
+      }
+
+      /* ── Counter Animation ── */
+      .count-up { font-variant-numeric: tabular-nums; }
+    </style>
+  </head>
+  <body
+    class="bg-background text-on-background font-body-md min-h-screen flex flex-col overflow-x-hidden"
+  >
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress"></div>
+    <div id="navbar-root"></div>
+    <div id="modal-root"></div>
+    <main class="flex-grow pt-[80px]">
+      <!-- Hero Section -->
+      <section
+        class="relative w-full min-h-[819px] flex items-center justify-center py-[120px] px-margin-mobile md:px-margin-desktop overflow-hidden"
+        id="hero-section"
+      >
+        <!-- Floating Particles Container -->
+        <div id="particle-container" class="absolute inset-0 z-[3] pointer-events-none overflow-hidden"></div>
+        <div class="absolute inset-0 z-0">
+          <img
+            alt="Tech Background"
+            class="w-full h-full object-cover animate-pulse-slow"
+            data-alt="A dark, sophisticated server room interior..."
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoh2VgvjPaok6Elxdri6XvAigWp8BNBUrsv-g6Kq-ynG2MIAqBpWPK_srK0wULpM3Ka28jPyQS_Mvqoia1NDmY2SH5xLiVap10q7-AvzsrqffhAehTg0xFk8HYz-YSn51GHQo9OU0EL7-1QKsyMuVkMLJEv1hi7SxalxBbTCBlVJUKBbYLIp4zdYnDH8Fv3Rj3dma9vGwD5P5GvWNNfeZqzqyWdbPP_mFRODBJiw0y-jSzh21Cdsq0mWJZQ4myXa1i19pgMtIOfoEN"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent"
+          ></div>
+          <div class="scanline"></div>
+        </div>
+        <div
+          class="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center gap-gutter hero-entrance"
+        >
+          <h1
+            class="font-headline-xl-mobile md:font-headline-xl text-headline-xl-mobile md:text-headline-xl text-on-surface"
+            id="hero-title"
+          >
+            High-Performance Infrastructure for Modern Enterprise
+          </h1>
+          <p
+            class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto reveal"
+          >
+            KTech Solutions delivers mission-critical software, web
+            architectures, and robust hardware setups designed for the precision
+            and scale demanded by today's leading organizations.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-base mt-[32px] reveal">
+            <button
+              class="btn-magnetic font-label-md text-label-md bg-primary-container text-on-primary-container px-8 py-4 rounded h-[56px] flex items-center justify-center hover:bg-primary hover:scale-[1.04] transition-all duration-300"
+            >
+              Get Started
+            </button>
+            <button
+              class="btn-magnetic font-label-md text-label-md text-primary border border-primary px-8 py-4 rounded h-[56px] flex items-center justify-center hover:bg-primary/10 hover:scale-[1.04] transition-all duration-300"
+            >
+              Explore Capabilities
+            </button>
+          </div>
+        </div>
+      </section>
+      <!-- Services Brief -->
+      <section
+        class="py-[120px] px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto border-t border-outline-variant/20 reveal"
+      >
+        <div class="mb-[64px] text-center md:text-left">
+          <h2 class="font-headline-lg text-headline-lg text-on-surface mb-base shimmer-text">
+            Core Competencies
+          </h2>
+          <p class="font-body-md text-body-md text-on-surface-variant">
+            Engineered solutions for complex digital ecosystems.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter stagger-children">
+          <!-- Service Card 1 -->
+          <div
+            class="tilt-card group bg-surface-variant/20 border border-outline-variant rounded-lg p-gutter hover-ambient-glow transition-all duration-500 flex flex-col h-full border-t-2 border-t-primary hover:-translate-y-2"
+          >
+            <span
+              class="material-symbols-outlined text-primary text-4xl mb-base group-hover:scale-110 transition-transform duration-300"
+              style="font-variation-settings: &quot;wght&quot; 200"
+              >app_shortcut</span
+            >
+            <h3
+              class="font-headline-sm text-headline-sm text-on-surface mb-base group-hover:text-primary transition-colors duration-300"
+            >
+              App Dev
+            </h3>
+            <p
+              class="font-body-sm text-body-sm text-on-surface-variant mb-gutter flex-grow"
+            >
+              Scalable, cross-platform mobile and desktop applications built for
+              enterprise performance.
+            </p>
+            <a
+              class="font-label-md text-label-md text-primary flex items-center gap-2 hover:underline mt-auto"
+              href="#"
+            >
+              Explore This Service
+              <span class="material-symbols-outlined text-sm"
+                >arrow_forward</span
+              >
+            </a>
+          </div>
+          <!-- Service Card 2 -->
+          <div
+            class="tilt-card group bg-transparent border border-outline-variant rounded-lg p-gutter hover-ambient-glow transition-all duration-500 flex flex-col h-full hover:-translate-y-2"
+          >
+            <span
+              class="material-symbols-outlined text-on-surface text-4xl mb-base group-hover:text-primary group-hover:scale-110 transition-all duration-300"
+              style="font-variation-settings: &quot;wght&quot; 200"
+              >language</span
+            >
+            <h3
+              class="font-headline-sm text-headline-sm text-on-surface mb-base group-hover:text-primary transition-colors duration-300"
+            >
+              Web Builds
+            </h3>
+            <p
+              class="font-body-sm text-body-sm text-on-surface-variant mb-gutter flex-grow"
+            >
+              High-availability web architectures utilizing modern frameworks
+              and cloud-native patterns.
+            </p>
+            <a
+              class="font-label-md text-label-md text-primary flex items-center gap-2 hover:underline mt-auto"
+              href="#"
+            >
+              Explore This Service
+              <span class="material-symbols-outlined text-sm"
+                >arrow_forward</span
+              >
+            </a>
+          </div>
+          <!-- Service Card 3 -->
+          <div
+            class="tilt-card group bg-surface-variant/20 border border-outline-variant rounded-lg p-gutter hover-ambient-glow transition-all duration-500 flex flex-col h-full border-t-2 border-t-primary hover:-translate-y-2"
+          >
+            <span
+              class="material-symbols-outlined text-primary text-4xl mb-base group-hover:scale-110 transition-transform duration-300"
+              style="font-variation-settings: &quot;wght&quot; 200"
+              >dns</span
+            >
+            <h3
+              class="font-headline-sm text-headline-sm text-on-surface mb-base group-hover:text-primary transition-colors duration-300"
+            >
+              Infrastructure
+            </h3>
+            <p
+              class="font-body-sm text-body-sm text-on-surface-variant mb-gutter flex-grow"
+            >
+              Resilient cloud infrastructure design, deployment, and continuous
+              management services.
+            </p>
+            <a
+              class="font-label-md text-label-md text-primary flex items-center gap-2 hover:underline mt-auto"
+              href="#"
+            >
+              Explore This Service
+              <span class="material-symbols-outlined text-sm"
+                >arrow_forward</span
+              >
+            </a>
+          </div>
+          <!-- Service Card 4 -->
+          <div
+            class="tilt-card group bg-transparent border border-outline-variant rounded-lg p-gutter hover-ambient-glow transition-all duration-500 flex flex-col h-full hover:-translate-y-2"
+          >
+            <span
+              class="material-symbols-outlined text-on-surface text-4xl mb-base group-hover:text-primary group-hover:scale-110 transition-all duration-300"
+              style="font-variation-settings: &quot;wght&quot; 200"
+              >memory</span
+            >
+            <h3
+              class="font-headline-sm text-headline-sm text-on-surface mb-base group-hover:text-primary transition-colors duration-300"
+            >
+              Hardware
+            </h3>
+            <p
+              class="font-body-sm text-body-sm text-on-surface-variant mb-gutter flex-grow"
+            >
+              Enterprise-grade hardware procurement, configuration, and physical
+              network optimization.
+            </p>
+            <a
+              class="font-label-md text-label-md text-primary flex items-center gap-2 hover:underline mt-auto"
+              href="#"
+            >
+              Explore This Service
+              <span class="material-symbols-outlined text-sm"
+                >arrow_forward</span
+              >
+            </a>
+          </div>
+        </div>
+      </section>
+      <!-- Portfolio Showcase -->
+      <section
+        class="py-[120px] px-margin-mobile md:px-margin-desktop bg-surface-container-low border-t border-outline-variant/20 reveal"
+      >
+        <div class="max-w-container-max mx-auto">
+          <div
+            class="flex flex-col md:flex-row justify-between items-end mb-[64px] gap-gutter"
+          >
+            <div>
+              <h2
+                class="font-headline-lg text-headline-lg text-on-surface mb-base shimmer-text"
+              >
+                System Deployments
+              </h2>
+              <p class="font-body-md text-body-md text-on-surface-variant">
+                A selection of recently architected environments.
+              </p>
+            </div>
+            <button
+              class="font-label-md text-label-md text-primary border border-primary px-6 py-3 rounded h-[48px] flex items-center justify-center hover:bg-primary hover:text-on-primary-container hover:scale-[1.02] transition-all duration-300 whitespace-nowrap"
+            >
+              View Complete Portfolio
+            </button>
+          </div>
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter stagger-children"
+          >
+            <div
+              class="group relative overflow-hidden rounded-lg border border-outline-variant bg-surface aspect-[4/3] hover-ambient-glow transition-all duration-500 hover:-translate-y-2"
+            >
+              <img
+                alt="FinTech Analytics"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJAN_pM8MrJ6sQcLdi87OLmkCnfUIRnJvM8WcAKxV--SNSLU8tn2dmBKmS5fQXOe7edVWuv9c5Ks8NEFc0cCpo_V0F7ByriIeEjziQexRgsAlZDPwbXCbJdMxGFm9wB6H14dEuo11b405Pdi5f4Dc9wpjkVddkrO_90Hb852Nn9znnMx7xGqU-xgQNqfurmNt7ntXrnm32BNez4lcSry35hyCFvh3oAQXBi_nG-yWD8vkMZCYc_Dl3qXoXOl4C8zilJpVvudbV8-v-"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent p-base flex flex-col justify-end"
+              >
+                <h4
+                  class="font-label-md text-label-md text-on-surface group-hover:text-primary transition-colors"
+                >
+                  Global FinTech Analytics
+                </h4>
+              </div>
+            </div>
+            <div
+              class="group relative overflow-hidden rounded-lg border border-outline-variant bg-surface aspect-[4/3] hover-ambient-glow transition-all duration-500 hover:-translate-y-2"
+            >
+              <img
+                alt="Cloud Migration"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7XHnwtBuxKK-W5yvtnOwPcyZljML79F2Q2oDSn30NF_s5S6ZugipRvXbDFaj2v5DdDsDg0OwQn4lqCEr_Co8WliWwMTO2RDkScY_s9SXZHSDzO72YoY0cZ52-CPJoMdfgen35PmjLntQzUcAtCBd-_ltItPUGapiv3azYmyxDPZd1dDVvkl2cKZxyB8mlKyrSooFtZYnMzupCeNfvcdhhscJeB0CF8lGPvoSamygYJq4uyxYOvSwyQMeZ60AZTyv0IWlmZq5A7y9F"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent p-base flex flex-col justify-end"
+              >
+                <h4
+                  class="font-label-md text-label-md text-on-surface group-hover:text-primary transition-colors"
+                >
+                  Enterprise Cloud Migration
+                </h4>
+              </div>
+            </div>
+            <div
+              class="group relative overflow-hidden rounded-lg border border-outline-variant bg-surface aspect-[4/3] hover-ambient-glow transition-all duration-500 hover:-translate-y-2"
+            >
+              <img
+                alt="Data Center Outfitting"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUhkoESsSuYpT5c0I-20-9SMUG1EmizKhPRehOsrHXKMBKmMlKJ3HFUV0WMt8ASnWmE3DEuu1E_ExlGs-f6qzHBfU4cHkFCXMexOZyB8eXKrzpm4t6uW3YxrinPpuSX_Mtcuyvj8hCDVOKuWA7_7vdNyab1zkeHjEB3p2Flyi66wkG4-Kbwkux03tua2hBXP6997AfDJF5N-M0t_zdUZRfXaVW29tS1mSZBP5OyfORIUx6Lk7Y0CYjkhSNmEeR2AhbgVKl1cNJxjsc"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent p-base flex flex-col justify-end"
+              >
+                <h4
+                  class="font-label-md text-label-md text-on-surface group-hover:text-primary transition-colors"
+                >
+                  Data Center Outfitting
+                </h4>
+              </div>
+            </div>
+            <div
+              class="group relative overflow-hidden rounded-lg border border-outline-variant bg-surface aspect-[4/3] hover-ambient-glow transition-all duration-500 hover:-translate-y-2"
+            >
+              <img
+                alt="Security Protocol Overhaul"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQI1puNscU5lduB7w7kyTuomXeL4g8CRxeQSE1RME6ZsTVVxQNHDeb9v82G6pAawDoPtbll-7IXQEyoCnSX2L9TWQ8Yeusp9RR9MsKqMUU8i8btx6iC1eLLWz7n7U81eNy0Aj7hgXenGAVWHEUW3GPN4YGhUoIi2VUm2BtjCCalberZTCgP6iiqzZJUqus4wVqRoJJsRCECjVLVOgkvXz8Y1WqZ9mtULyKCi1jrVWbNEPdXDhLvW3CcyllEZMYSX3aEw4d0Fk4qeGM"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent p-base flex flex-col justify-end"
+              >
+                <h4
+                  class="font-label-md text-label-md text-on-surface group-hover:text-primary transition-colors"
+                >
+                  Security Protocol Overhaul
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Tech Stack Carousel -->
+      <section
+        class="py-[80px] bg-background border-t border-b border-outline-variant/20 overflow-hidden reveal"
+      >
+        <div
+          class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-base text-center"
+        >
+          <p
+            class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest"
+          >
+            Technologies We Master
+          </p>
+        </div>
+        <div class="relative w-full overflow-hidden py-8">
+          <div class="animate-scroll">
+            <div class="flex items-center space-x-[80px] px-[40px]">
+              <span
+                class="font-headline-md text-headline-md text-outline-variant opacity-50 font-bold tracking-tighter hover:opacity-100 hover:text-primary transition-all duration-300 cursor-default"
+                >AWS</span
+              >
+              <span
+                class="font-headline-md text-headline-md text-outline-variant opacity-50 font-bold tracking-tighter hover:opacity-100 hover:text-primary transition-all duration-300 cursor-default"
+                >AZURE</span
+              >
+              <span
+                class="font-headline-md text-headline-md text-outline-variant opacity-50 font-bold tracking-tighter hover:opacity-100 hover:text-primary transition-all duration-300 cursor-default"
+                >REACT</span
+              >
+              <span
+                class="font-headline-md text-headline-md text-outline-variant opacity-50 font-bold tracking-tighter hover:opacity-100 hover:text-primary transition-all duration-300 cursor-default"
+                >NODE</span
+              >
+              <span
+                class="font-headline-md text-headline-md text-outline-variant opacity-50 font-bold tracking-tighter hover:opacity-100 hover:text-primary transition-all duration-300 cursor-default"
+                >DOCKER</span
+              >
+              <span
+                class="font-headline-md text-headline-md text-outline-variant opacity-50 font-bold tracking-tighter hover:opacity-100 hover:text-primary transition-all duration-300 cursor-default"
+                >KUBERNETES</span
+              >
+              <span
+                class="font-headline-md text-headline-md text-outline-variant opacity-50 font-bold tracking-tighter hover:opacity-100 hover:text-primary transition-all duration-300 cursor-default"
+                >CISCO</span
+              >
+              <span
+                class="font-headline-md text-headline-md text-outline-variant opacity-50 font-bold tracking-tighter hover:opacity-100 hover:text-primary transition-all duration-300 cursor-default"
+                >LINUX</span
+              >
+            </div>
+            <div class="flex items-center space-x-[80px] px-[40px]">
+              <span
+                class="font-headline-md text-headline-md text-outline-variant opacity-50 font-bold tracking-tighter hover:opacity-100 hover:text-primary transition-all duration-300 cursor-default"
+                >AWS</span
+              >
+              <span
+                class="font-headline-md text-headline-md text-outline-variant opacity-50 font-bold tracking-tighter hover:opacity-100 hover:text-primary transition-all duration-300 cursor-default"
+                >AZURE</span
+              >
+              <span
+                class="font-headline-md text-headline-md text-outline-variant opacity-50 font-bold tracking-tighter hover:opacity-100 hover:text-primary transition-all duration-300 cursor-default"
+                >REACT</span
+              >
+              <span
+                class="font-headline-md text-headline-md text-outline-variant opacity-50 font-bold tracking-tighter hover:opacity-100 hover:text-primary transition-all duration-300 cursor-default"
+                >NODE</span
+              >
+              <span
+                class="font-headline-md text-headline-md text-outline-variant opacity-50 font-bold tracking-tighter hover:opacity-100 hover:text-primary transition-all duration-300 cursor-default"
+                >DOCKER</span
+              >
+              <span
+                class="font-headline-md text-headline-md text-outline-variant opacity-50 font-bold tracking-tighter hover:opacity-100 hover:text-primary transition-all duration-300 cursor-default"
+                >KUBERNETES</span
+              >
+              <span
+                class="font-headline-md text-headline-md text-outline-variant opacity-50 font-bold tracking-tighter hover:opacity-100 hover:text-primary transition-all duration-300 cursor-default"
+                >CISCO</span
+              >
+              <span
+                class="font-headline-md text-headline-md text-outline-variant opacity-50 font-bold tracking-tighter hover:opacity-100 hover:text-primary transition-all duration-300 cursor-default"
+                >LINUX</span
+              >
+            </div>
+          </div>
+          <div
+            class="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none"
+          ></div>
+          <div
+            class="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none"
+          ></div>
+        </div>
+      </section>
+      <!-- Why Choose KTech -->
+      <section
+        class="py-[120px] px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto relative"
+        id="interactive-section"
+      >
+        <div class="cursor-glow hidden lg:block" id="glow-element"></div>
+        <div
+          class="grid grid-cols-1 lg:grid-cols-2 gap-[80px] items-center relative z-10"
+        >
+          <div class="reveal-left">
+            <h2
+              class="font-headline-lg text-headline-lg text-on-surface mb-gutter shimmer-text"
+            >
+              The Infrastructure Advantage
+            </h2>
+            <p
+              class="font-body-lg text-body-lg text-on-surface-variant mb-[48px]"
+            >
+              Partnering with KTech means securing a foundation built for
+              extreme reliability and seamless scalability. We engineer out
+              points of failure.
+            </p>
+            <ul class="space-y-gutter">
+              <li class="group flex gap-gutter items-start">
+                <div
+                  class="w-12 h-12 rounded bg-surface-variant/50 border border-outline-variant flex items-center justify-center shrink-0 group-hover:border-primary transition-colors duration-300"
+                >
+                  <span
+                    class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform"
+                    >security</span
+                  >
+                </div>
+                <div>
+                  <h4
+                    class="font-headline-sm text-headline-sm text-on-surface mb-1 group-hover:text-primary transition-colors"
+                  >
+                    Zero-Trust Architecture
+                  </h4>
+                  <p class="font-body-md text-body-md text-on-surface-variant">
+                    Implementation of rigorous security protocols at every
+                    network layer.
+                  </p>
+                </div>
+              </li>
+              <li class="group flex gap-gutter items-start">
+                <div
+                  class="w-12 h-12 rounded bg-surface-variant/50 border border-outline-variant flex items-center justify-center shrink-0 group-hover:border-primary transition-colors duration-300"
+                >
+                  <span
+                    class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform"
+                    >speed</span
+                  >
+                </div>
+                <div>
+                  <h4
+                    class="font-headline-sm text-headline-sm text-on-surface mb-1 group-hover:text-primary transition-colors"
+                  >
+                    High-Availability SLA
+                  </h4>
+                  <p class="font-body-md text-body-md text-on-surface-variant">
+                    Guaranteed 99.99% uptime for mission-critical enterprise
+                    systems.
+                  </p>
+                </div>
+              </li>
+              <li class="group flex gap-gutter items-start">
+                <div
+                  class="w-12 h-12 rounded bg-surface-variant/50 border border-outline-variant flex items-center justify-center shrink-0 group-hover:border-primary transition-colors duration-300"
+                >
+                  <span
+                    class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform"
+                    >group</span
+                  >
+                </div>
+                <div>
+                  <h4
+                    class="font-headline-sm text-headline-sm text-on-surface mb-1 group-hover:text-primary transition-colors"
+                  >
+                    Dedicated Elite Teams
+                  </h4>
+                  <p class="font-body-md text-body-md text-on-surface-variant">
+                    Direct access to senior engineers, bypassing standard
+                    support tiers.
+                  </p>
+                </div>
+              </li>
+              <li class="group flex gap-gutter items-start">
+                <div
+                  class="w-12 h-12 rounded bg-surface-variant/50 border border-outline-variant flex items-center justify-center shrink-0 group-hover:border-primary transition-colors duration-300"
+                >
+                  <span
+                    class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform"
+                    >update</span
+                  >
+                </div>
+                <div>
+                  <h4
+                    class="font-headline-sm text-headline-sm text-on-surface mb-1 group-hover:text-primary transition-colors"
+                  >
+                    Continuous Integration
+                  </h4>
+                  <p class="font-body-md text-body-md text-on-surface-variant">
+                    Automated deployment pipelines ensuring rapid, safe feature
+                    rollouts.
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div
+            class="reveal-right relative aspect-square rounded-lg border border-outline-variant bg-surface-container-low overflow-hidden flex items-center justify-center group"
+          >
+            <img
+              alt="Tech Expert Working"
+              class="w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-105"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDm3phyxKHZpBUATYzHSsF81p9hbOU28bfnajcUP1q0x82mKvbwOTEgm8ZcsDf9ZijUhRIxRa6_2lZJXyvHuMwhsZj_smA_VKgUZUD8XaTdsoSVgVHwWQwVAwwFHYrB7b68av3fdN4trzDBsx96H5I9ZaXvVeoA5Z2lNnAbKRFj9GTTLqHQXNvkqJvNsMIGPmkf9lkNdBpwdBoYrDwzZfWpW6zB4IfNegG4JEW64gbm1b3-rUAzKy_xuRIHqxxJgmB7Pev07ViMGv5"
+            />
+            <div class="scanline"></div>
+            <!-- Glassmorphism overlay card -->
+            <div
+              class="absolute bottom-margin-desktop left-margin-desktop right-margin-desktop bg-surface/80 backdrop-blur-md border border-outline-variant p-gutter rounded shadow-lg ambient-glow"
+            >
+              <div class="flex items-center gap-base mb-2">
+                <span
+                  class="material-symbols-outlined text-primary animate-pulse"
+                  >verified</span
+                >
+                <span class="font-label-md text-label-md text-on-surface"
+                  >System Status: Optimal</span
+                >
+              </div>
+              <div
+                class="w-full bg-background h-2 rounded-full overflow-hidden"
+              >
+                <div
+                  class="bg-primary w-full h-full animate-[pulse_2s_infinite]"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Social Proof Grid -->
+      <section
+        class="py-[120px] px-margin-mobile md:px-margin-desktop bg-surface-container-low border-t border-outline-variant/20 reveal-scale"
+      >
+        <div class="max-w-container-max mx-auto">
+          <div class="text-center mb-[80px]">
+            <h2
+              class="font-headline-lg text-headline-lg text-on-surface mb-base"
+            >
+              Client Validation
+            </h2>
+            <p class="font-body-md text-body-md text-on-surface-variant">
+              Trusted by leading enterprises to manage their critical
+              operations.
+            </p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter stagger-children">
+            <!-- Testimonial 1 -->
+            <div
+              class="group bg-surface border border-outline-variant p-gutter rounded-lg relative mt-[24px] transition-all duration-500 hover:-translate-y-2 hover-ambient-glow"
+            >
+              <div
+                class="absolute -top-[24px] left-gutter w-12 h-12 bg-primary-container text-on-primary-container rounded flex items-center justify-center font-headline-md font-bold group-hover:scale-110 transition-transform"
+              >
+                ”
+              </div>
+              <div class="flex gap-1 mb-gutter pt-4">
+                <span
+                  class="material-symbols-outlined text-primary text-sm"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >star</span
+                >
+                <span
+                  class="material-symbols-outlined text-primary text-sm"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >star</span
+                >
+                <span
+                  class="material-symbols-outlined text-primary text-sm"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >star</span
+                >
+                <span
+                  class="material-symbols-outlined text-primary text-sm"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >star</span
+                >
+                <span
+                  class="material-symbols-outlined text-primary text-sm"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >star</span
+                >
+              </div>
+              <p
+                class="font-body-md text-body-md text-on-surface-variant mb-gutter italic"
+              >
+                "KTech's restructuring of our cloud architecture reduced latency
+                by 40% and drastically improved our operational stability during
+                peak loads."
+              </p>
+              <div>
+                <p
+                  class="font-label-md text-label-md text-on-surface group-hover:text-primary transition-colors"
+                >
+                  Sarah Jenkins
+                </p>
+                <p class="font-label-sm text-label-sm text-outline">
+                  CTO, Nexus Financial
+                </p>
+              </div>
+            </div>
+            <!-- Testimonial 2 -->
+            <div
+              class="group bg-surface border border-outline-variant p-gutter rounded-lg relative mt-[24px] transition-all duration-500 hover:-translate-y-2 hover-ambient-glow"
+            >
+              <div
+                class="absolute -top-[24px] left-gutter w-12 h-12 bg-primary-container text-on-primary-container rounded flex items-center justify-center font-headline-md font-bold group-hover:scale-110 transition-transform"
+              >
+                ”
+              </div>
+              <div class="flex gap-1 mb-gutter pt-4">
+                <span
+                  class="material-symbols-outlined text-primary text-sm"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >star</span
+                >
+                <span
+                  class="material-symbols-outlined text-primary text-sm"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >star</span
+                >
+                <span
+                  class="material-symbols-outlined text-primary text-sm"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >star</span
+                >
+                <span
+                  class="material-symbols-outlined text-primary text-sm"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >star</span
+                >
+                <span
+                  class="material-symbols-outlined text-primary text-sm"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >star</span
+                >
+              </div>
+              <p
+                class="font-body-md text-body-md text-on-surface-variant mb-gutter italic"
+              >
+                "Their hardware procurement and initial setup was flawless. The
+                dedicated engineering team felt like an extension of our own
+                staff."
+              </p>
+              <div>
+                <p
+                  class="font-label-md text-label-md text-on-surface group-hover:text-primary transition-colors"
+                >
+                  David Chen
+                </p>
+                <p class="font-label-sm text-label-sm text-outline">
+                  VP Engineering, DataCore
+                </p>
+              </div>
+            </div>
+            <!-- Testimonial 3 -->
+            <div
+              class="group bg-surface border border-outline-variant p-gutter rounded-lg relative mt-[24px] transition-all duration-500 hover:-translate-y-2 hover-ambient-glow"
+            >
+              <div
+                class="absolute -top-[24px] left-gutter w-12 h-12 bg-primary-container text-on-primary-container rounded flex items-center justify-center font-headline-md font-bold group-hover:scale-110 transition-transform"
+              >
+                ”
+              </div>
+              <div class="flex gap-1 mb-gutter pt-4">
+                <span
+                  class="material-symbols-outlined text-primary text-sm"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >star</span
+                >
+                <span
+                  class="material-symbols-outlined text-primary text-sm"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >star</span
+                >
+                <span
+                  class="material-symbols-outlined text-primary text-sm"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >star</span
+                >
+                <span
+                  class="material-symbols-outlined text-primary text-sm"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >star</span
+                >
+                <span
+                  class="material-symbols-outlined text-primary text-sm"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >star</span
+                >
+              </div>
+              <p
+                class="font-body-md text-body-md text-on-surface-variant mb-gutter italic"
+              >
+                "The transition to a zero-trust architecture was handled with
+                incredible precision. No downtime, and immediate compliance
+                improvements."
+              </p>
+              <div>
+                <p
+                  class="font-label-md text-label-md text-on-surface group-hover:text-primary transition-colors"
+                >
+                  Elena Rodriguez
+                </p>
+                <p class="font-label-sm text-label-sm text-outline">
+                  Director of IT, HealthSync
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Final CTA -->
+      <section
+        class="py-[120px] px-margin-mobile md:px-margin-desktop bg-surface border-t border-outline-variant/20 relative overflow-hidden reveal-scale"
+      >
+        <div class="absolute inset-0 z-0 opacity-10 pointer-events-none">
+          <div
+            class="absolute w-[600px] h-[600px] bg-primary rounded-full blur-[120px] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+          ></div>
+        </div>
+        <div
+          class="max-w-3xl mx-auto text-center relative z-10 flex flex-col items-center gap-gutter"
+        >
+          <h2 class="font-headline-lg text-headline-lg text-on-surface">
+            Ready to Upgrade Your Infrastructure?
+          </h2>
+          <p class="font-body-lg text-body-lg text-on-surface-variant">
+            Schedule a technical consultation to discuss your specific
+            enterprise needs and discover how KTech can optimize your stack.
+          </p>
+          <div class="mt-[32px]">
+            <button
+              class="btn-magnetic font-label-md text-label-md bg-primary-container text-on-primary-container px-10 py-4 rounded h-[56px] flex items-center justify-center hover:bg-primary hover:scale-[1.04] transition-all duration-300 ambient-glow"
+            >
+              Book a Consultation
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer
+      class="w-full py-16 bg-surface-container-lowest border-t border-outline-variant/20"
+    >
+      <div
+        class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto"
+      >
+        <div class="space-y-4 col-span-1 md:col-span-1">
+          <div
+            class="text-headline-sm font-headline-sm font-bold text-on-surface"
+          >
+            KTech Solutions
+          </div>
+          <p class="font-body-sm text-body-sm text-on-surface-variant">
+            © 2024 KTech Solutions. High-performance infrastructure for modern
+            enterprise.
+          </p>
+        </div>
+        <div class="space-y-4">
+          <h4 class="font-label-md text-label-md text-on-surface">Platform</h4>
+          <ul class="space-y-2">
+            <li>
+              <a
+                class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-all"
+                href="index.html"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a
+                class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-all"
+                href="services.html"
+                >Services</a
+              >
+            </li>
+            <li>
+              <a
+                class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-all"
+                href="aboutus.html"
+                >About Us</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="space-y-4">
+          <h4 class="font-label-md text-label-md text-on-surface">Support</h4>
+          <ul class="space-y-2">
+            <li>
+              <a
+                class="font-body-sm text-body-sm text-primary hover:text-primary transition-all"
+                href="contact.html"
+                >Contact</a
+              >
+            </li>
+            <li>
+              <a
+                class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-all"
+                href="#"
+                >Documentation</a
+              >
+            </li>
+            <li>
+              <a
+                class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-all"
+                href="#"
+                >System Status</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="space-y-4">
+          <h4 class="font-label-md text-label-md text-on-surface">Network</h4>
+          <div class="flex space-x-4">
+            <a
+              aria-label="GitHub"
+              class="text-on-surface-variant hover:text-primary transition-all"
+              href="#"
+              ><span class="font-body-sm text-body-sm">GitHub</span></a
+            >
+            <a
+              aria-label="LinkedIn"
+              class="text-on-surface-variant hover:text-primary transition-all"
+              href="#"
+              ><span class="font-body-sm text-body-sm">LinkedIn</span></a
+            >
+            <a
+              aria-label="X"
+              class="text-on-surface-variant hover:text-primary transition-all"
+              href="#"
+              ><span class="font-body-sm text-body-sm">X</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script src="navbar.js"></script>
+    <script>
+      // ── 1. Unified Intersection Observer for all reveal variants ──
+      const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -40px 0px' };
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".reveal, .reveal-left, .reveal-right, .reveal-scale, .stagger-children")
+        .forEach((el) => observer.observe(el));
+
+      // ── 2. Hero Title Staggered Animation (with blur) ──
+      const heroTitle = document.getElementById("hero-title");
+      if (heroTitle) {
+        const text = heroTitle.innerText;
+        heroTitle.innerHTML = text
+          .split(" ")
+          .map(
+            (word, i) =>
+              `<span class="stagger-item" style="transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1) ${i * 0.08}s, transform 0.7s cubic-bezier(0.16,1,0.3,1) ${i * 0.08}s, filter 0.7s cubic-bezier(0.16,1,0.3,1) ${i * 0.08}s">${word}&nbsp;</span>`,
+          )
+          .join("");
+
+        setTimeout(() => {
+          document.querySelectorAll(".stagger-item").forEach((span) => {
+            span.style.opacity = "1";
+            span.style.transform = "translateY(0)";
+            span.style.filter = "blur(0)";
+          });
+        }, 400);
+      }
+
+      // ── 3. Interactive Glow effect ──
+      const interactiveSection = document.getElementById("interactive-section");
+      const glow = document.getElementById("glow-element");
+      if (interactiveSection && glow) {
+        interactiveSection.addEventListener("mousemove", (e) => {
+          const rect = interactiveSection.getBoundingClientRect();
+          glow.style.left = `${e.clientX - rect.left}px`;
+          glow.style.top = `${e.clientY - rect.top}px`;
+        });
+      }
+
+      // ── 4. Parallax + Scroll Progress ──
+      const progressBar = document.getElementById("scroll-progress");
+      window.addEventListener("scroll", () => {
+        const scrolled = window.pageYOffset;
+        const heroImg = document.querySelector(".animate-pulse-slow");
+        if (heroImg) {
+          heroImg.style.transform = `scale(1.05) translateY(${scrolled * 0.15}px)`;
+        }
+        // Scroll progress
+        const docH = document.documentElement.scrollHeight - window.innerHeight;
+        if (progressBar && docH > 0) {
+          progressBar.style.width = `${(scrolled / docH) * 100}%`;
+        }
+      });
+
+      // ── 5. Hero reveals on load ──
+      document.addEventListener("DOMContentLoaded", () => {
+        setTimeout(() => {
+          document.querySelectorAll("section:first-of-type .reveal")
+            .forEach((el) => el.classList.add("active"));
+        }, 300);
+      });
+
+      // ── 6. Floating Particles ──
+      const particleContainer = document.getElementById("particle-container");
+      if (particleContainer) {
+        function spawnParticle() {
+          const p = document.createElement("div");
+          p.classList.add("particle");
+          const size = Math.random() * 4 + 2;
+          p.style.width = size + "px";
+          p.style.height = size + "px";
+          p.style.left = Math.random() * 100 + "%";
+          p.style.bottom = "-10px";
+          p.style.animationDuration = (Math.random() * 6 + 6) + "s";
+          particleContainer.appendChild(p);
+          p.addEventListener("animationend", () => p.remove());
+        }
+        setInterval(spawnParticle, 600);
+      }
+
+      // ── 7. 3D Tilt on Service Cards ──
+      document.querySelectorAll(".tilt-card").forEach((card) => {
+        card.addEventListener("mousemove", (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width - 0.5;
+          const y = (e.clientY - rect.top) / rect.height - 0.5;
+          card.style.transform = `perspective(600px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateY(-8px)`;
+        });
+        card.addEventListener("mouseleave", () => {
+          card.style.transform = "perspective(600px) rotateY(0) rotateX(0) translateY(0)";
+        });
+      });
+
+      // ── 8. Magnetic Button Glow Tracking ──
+      document.querySelectorAll(".btn-magnetic").forEach((btn) => {
+        btn.addEventListener("mousemove", (e) => {
+          const rect = btn.getBoundingClientRect();
+          const mx = ((e.clientX - rect.left) / rect.width) * 100;
+          const my = ((e.clientY - rect.top) / rect.height) * 100;
+          btn.style.setProperty("--mx", mx + "%");
+          btn.style.setProperty("--my", my + "%");
+        });
+      });
+    </script>
+  </body>
+</html>
