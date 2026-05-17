@@ -11,8 +11,10 @@
  *   The onAuthStateChanged pattern mirrors Firebase's API deliberately.
  */
 
-import { auth } from './firebase.js';
+import { auth, db } from './firebase.js';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from 'firebase/auth';
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { showToast } from './toast.js';
 
   // ═══════════════════════════════════════════
   // 2. DETECT ACTIVE PAGE
@@ -225,6 +227,10 @@ import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, on
               <div class="email">${user.email || ""}</div>
             </div>
             <div class="ktech-dropdown-divider"></div>
+            <a href="dashboard.html" class="ktech-dropdown-item" style="text-decoration: none;">
+              <span class="material-symbols-outlined" style="font-size:18px">dashboard</span>
+              Dashboard
+            </a>
             <div class="ktech-dropdown-item" id="signout-btn">
               <span class="material-symbols-outlined" style="font-size:18px">logout</span>
               Sign Out
@@ -310,7 +316,7 @@ import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, on
           closeAll();
           loginForm.reset();
         })
-        .catch(err => alert("Login failed: " + err.message));
+        .catch(err => showToast("Login failed: " + err.message, 'error'));
     });
   }
 
@@ -323,15 +329,27 @@ import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, on
       const email = document.getElementById("reg-email").value;
       const password = document.getElementById("reg-password").value;
       createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          return updateProfile(userCredential.user, { displayName: name });
+        .then(async (userCredential) => {
+          const user = userCredential.user;
+          await updateProfile(user, { displayName: name });
+          
+          // Create user document in Firestore
+          await setDoc(doc(db, "users", user.uid), {
+            uid: user.uid,
+            name: name,
+            email: email,
+            role: 'client',
+            createdAt: serverTimestamp()
+          });
+
+          return user;
         })
         .then(() => {
           closeAll();
           regForm.reset();
           updateAuthUI(auth.currentUser);
         })
-        .catch(err => alert("Registration failed: " + err.message));
+        .catch(err => showToast("Registration failed: " + err.message, 'error'));
     });
   }
 

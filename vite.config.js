@@ -13,7 +13,8 @@ export default defineConfig({
         aboutus: resolve(__dirname, 'src/aboutus.html'),
         contact: resolve(__dirname, 'src/contact.html'),
         portfolio: resolve(__dirname, 'src/portfolio.html'),
-        services: resolve(__dirname, 'src/services.html')
+        services: resolve(__dirname, 'src/services.html'),
+        dashboard: resolve(__dirname, 'src/dashboard.html')
       }
     }
   }

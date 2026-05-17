@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>KTech Solutions | Notification System Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0c1324;
+            color: #dce1fb;
+            font-family: 'Geist', sans-serif;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-12">
+    <div class="max-w-2xl mx-auto space-y-8">
+        <div>
+            <h1 class="text-3xl font-bold font-['Hanken_Grotesk'] mb-2">Notification System Template</h1>
+            <p class="text-[#bac9cc]">Use this file as a reference for integrating custom toasts and modals in future KTech applications.</p>
+        </div>
+
+        <div class="bg-[#151b2d] border border-[#3b494c] rounded-xl p-8 space-y-6">
+            <div>
+                <h2 class="text-xl font-semibold mb-4">Toast Notifications</h2>
+                <div class="flex flex-wrap gap-4">
+                    <button id="btn-toast-success" class="bg-[#00e5ff] text-[#001f24] px-4 py-2 rounded font-medium shadow-lg hover:bg-[#9cf0ff] transition-colors">Success Toast</button>
+                    <button id="btn-toast-error" class="bg-[#ffb4ab] text-[#690005] px-4 py-2 rounded font-medium shadow-lg hover:bg-[#ffdad6] transition-colors">Error Toast</button>
+                    <button id="btn-toast-warning" class="bg-[#c3d1ea] text-[#233144] px-4 py-2 rounded font-medium shadow-lg hover:bg-[#dce1fb] transition-colors">Warning Toast</button>
+                    <button id="btn-toast-info" class="bg-[#2e3447] text-[#dce1fb] border border-[#3b494c] px-4 py-2 rounded font-medium hover:bg-[#3f465c] transition-colors">Info Toast</button>
+                </div>
+            </div>
+
+            <div class="pt-6 border-t border-[#3b494c]">
+                <h2 class="text-xl font-semibold mb-4">Interactive Modals</h2>
+                <div class="flex flex-wrap gap-4">
+                    <button id="btn-modal-confirm" class="bg-[#00e5ff] text-[#001f24] px-4 py-2 rounded font-medium shadow-lg hover:bg-[#9cf0ff] transition-colors">Show Confirm</button>
+                    <button id="btn-modal-prompt" class="bg-[#00e5ff] text-[#001f24] px-4 py-2 rounded font-medium shadow-lg hover:bg-[#9cf0ff] transition-colors">Show Prompt</button>
+                </div>
+            </div>
+            
+            <div id="modal-result" class="p-4 bg-[#0c1324] border border-[#3b494c] rounded-lg text-sm font-mono text-[#00daf3] hidden">
+                // Results will appear here
+            </div>
+        </div>
+    </div>
+
+    <!-- Integrate the system -->
+    <script type="module">
+        import { showToast, showConfirm, showPrompt } from './toast.js';
+
+        // Toasts
+        document.getElementById('btn-toast-success').addEventListener('click', () => {
+            showToast('Action completed successfully!', 'success');
+        });
+        document.getElementById('btn-toast-error').addEventListener('click', () => {
+            showToast('Failed to connect to the server.', 'error');
+        });
+        document.getElementById('btn-toast-warning').addEventListener('click', () => {
+            showToast('Storage space is running low.', 'warning');
+        });
+        document.getElementById('btn-toast-info').addEventListener('click', () => {
+            showToast('A new system update is available.', 'info');
+        });
+
+        // Modals
+        const resultBox = document.getElementById('modal-result');
+        const showResult = (text) => {
+            resultBox.classList.remove('hidden');
+            resultBox.textContent = `Result: ${text}`;
+        };
+
+        document.getElementById('btn-modal-confirm').addEventListener('click', async () => {
+            const result = await showConfirm('Are you sure you want to delete this resource? This action cannot be undone.');
+            showResult(result ? 'User confirmed action.' : 'User cancelled action.');
+        });
+
+        document.getElementById('btn-modal-prompt').addEventListener('click', async () => {
+            const result = await showPrompt('Please enter your password to continue:', 'password');
+            if (result !== null) {
+                showResult(`User submitted: "${result}"`);
+            } else {
+                showResult('User cancelled prompt.');
+            }
+        });
+    </script>
+</body>
+</html>
