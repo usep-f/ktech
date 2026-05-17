@@ -14,7 +14,8 @@ export default defineConfig({
         contact: resolve(__dirname, 'src/contact.html'),
         portfolio: resolve(__dirname, 'src/portfolio.html'),
         services: resolve(__dirname, 'src/services.html'),
-        dashboard: resolve(__dirname, 'src/dashboard.html')
+        dashboard: resolve(__dirname, 'src/dashboard.html'),
+        admin: resolve(__dirname, 'src/admin.html')
       }
     }
   }
