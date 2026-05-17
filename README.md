@@ -77,6 +77,35 @@ npm run preview
 
 ---
 
+## ☁️ Deploying to Firebase Hosting
+
+This application is configured for direct deployment to **Firebase Hosting**. Because the system uses Vite, Firebase is pre-configured to upload and serve optimized assets from the compiled [dist](file:///c:/Users/venre/Desktop/ktech/dist) directory.
+
+### First-Time Workspace Setup
+The core configurations (`firebase.json` and `.firebaserc`) are checked into version control. If you are setting up the project on a new workstation, you do **not** need to run `firebase init`. 
+
+Simply follow these steps:
+
+1. **Install Firebase CLI** globally on your system:
+   ```bash
+   npm install -g firebase-tools
+   ```
+
+2. **Log in to Firebase** to authenticate your terminal:
+   ```bash
+   firebase login
+   ```
+   *(Ensure your Google/Firebase account has been added to the project console permissions).*
+
+3. **Compile & Deploy** your updates in one step:
+   ```bash
+   npm run build && firebase deploy
+   ```
+
+Once completed, the Firebase CLI will provide your live URL (e.g., `https://ktech-solutions.web.app`).
+
+---
+
 ## Architecture Notes
 
 - **Source Code**: All active development files (HTML, JS) are housed within the `src/` directory.
