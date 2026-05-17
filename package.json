@@ -1,0 +1,25 @@
+{
+  "name": "ktech",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/usep-f/ktech.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/usep-f/ktech/issues"
+  },
+  "homepage": "https://github.com/usep-f/ktech#readme",
+  "description": "",
+  "devDependencies": {
+    "vite": "^8.0.13"
+  }
+}
