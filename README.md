@@ -47,7 +47,24 @@ This application requires Firebase credentials to handle authentication.
 
 > **Note:** Do not remove the `VITE_` prefix from the variable names, as Vite requires this prefix to safely expose the keys to the frontend JavaScript.
 
-### 4. Run the Development Server
+### 4. Setup Firebase Backend (Cloud Functions)
+
+The system relies on Firebase Cloud Functions to handle secure operations like account deletion and notifications.
+
+1. Navigate to the functions directory:
+   ```bash
+   cd functions
+   ```
+2. Install the backend dependencies (Firebase Admin SDK):
+   ```bash
+   npm install
+   ```
+3. Return to the root directory:
+   ```bash
+   cd ..
+   ```
+
+### 5. Run the Development Server
 
 Start the local Vite development server:
 
@@ -55,7 +72,17 @@ Start the local Vite development server:
 npm run dev
 ```
 
-Open your browser and navigate to the URL provided in your terminal (usually `http://localhost:5173`). Vite provides instant hot-reloading, so any changes you make to the HTML or JS files will instantly reflect in the browser.
+Open your browser and navigate to the URL provided in your terminal (usually `http://localhost:5174`). Vite provides instant hot-reloading.
+
+### 6. Admin Account Provisioning (For Developers)
+
+If you are setting this project up on a completely new Firebase project, you will need to grant your account Admin access to view the Admin Dashboard and bypass security rules. Because our `firestore.rules` reads directly from the database, no complicated scripts are required:
+
+1. Register an account normally through the local website UI.
+2. Open your [Firebase Console](https://console.firebase.google.com/) and go to **Firestore Database**.
+3. Open the `users` collection and find your user document.
+4. Add or change the `role` field from `"client"` to `"admin"`.
+5. Log out and log back into the local website to refresh your permissions.
 
 ---
 
