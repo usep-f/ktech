@@ -13,7 +13,8 @@
 
 import { auth, db } from './firebase.js';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from 'firebase/auth';
-import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, setDoc, serverTimestamp, getDoc } from 'firebase/firestore';
+import { getFunctions, httpsCallable } from 'firebase/functions';
 import { showToast } from './toast.js';
 
   // ═══════════════════════════════════════════
@@ -312,10 +313,20 @@ import { showToast } from './toast.js';
       const email = document.getElementById("login-email").value;
       const password = document.getElementById("login-password").value;
       signInWithEmailAndPassword(auth, email, password)
-        .then(() => {
+        .then(async (userCredential) => {
           closeAll();
           loginForm.reset();
-          window.location.href = "dashboard.html#appointments";
+          
+          try {
+              const userDoc = await getDoc(doc(db, "users", userCredential.user.uid));
+              if (userDoc.exists() && userDoc.data().role === 'admin') {
+                  window.location.href = "admin.html#appointments";
+              } else {
+                  window.location.href = "dashboard.html#appointments";
+              }
+          } catch (e) {
+              window.location.href = "dashboard.html#appointments";
+          }
         })
         .catch(err => showToast("Login failed: " + err.message, 'error'));
     });
@@ -367,9 +378,19 @@ import { showToast } from './toast.js';
   if (heroGetStartedBtn) {
     heroGetStartedBtn.addEventListener("click", () => {
       if (auth.currentUser) {
-        window.location.href = "dashboard.html#appointments";
+        getDoc(doc(db, "users", auth.currentUser.uid)).then(docSnap => {
+            if (docSnap.exists() && docSnap.data().role === 'admin') {
+                window.location.href = "admin.html#appointments";
+            } else {
+                window.location.href = "dashboard.html#appointments";
+            }
+        }).catch(() => {
+            window.location.href = "dashboard.html#appointments";
+        });
       } else {
         openModal(loginModal);
       }
     });
   }
+
+

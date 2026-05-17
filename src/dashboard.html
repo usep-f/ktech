@@ -138,6 +138,13 @@
             background: #334155;
             border-radius: 3px;
         }
+        
+        /* Modal Styles */
+        .modal-overlay {position:fixed;inset:0;z-index:9999;background:rgba(7,13,31,.85);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .35s ease}
+        .modal-overlay.open {opacity:1;pointer-events:auto}
+        .modal-card {transform:translateY(30px) scale(.96);filter:blur(4px);transition:transform .4s cubic-bezier(.16,1,.3,1),filter .4s cubic-bezier(.16,1,.3,1)}
+        .modal-overlay.open .modal-card {transform:translateY(0) scale(1);filter:blur(0)}
+
         /* Active sidebar link styles */
         .sidebar-link-active {
             background-color: rgba(0, 229, 255, 0.1);
@@ -151,6 +158,17 @@
         .sidebar-link-inactive:hover {
             background-color: #23293c;
         }
+
+        /* Notification Panel */
+        .notif-panel { position:absolute;top:calc(100% + 8px);right:0;width:360px;max-height:480px;background:#191f31;border:1px solid rgba(59,73,76,.5);border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);overflow:hidden;display:flex;flex-direction:column;z-index:200;opacity:0;pointer-events:none;transform:translateY(-8px) scale(.98);transition:all .2s cubic-bezier(.16,1,.3,1); }
+        .notif-panel.open { opacity:1;pointer-events:auto;transform:translateY(0) scale(1); }
+        .notif-bell-btn { position:relative; }
+        .notif-badge { position:absolute;top:4px;right:4px;min-width:18px;height:18px;background:#00e5ff;color:#001f24;border-radius:9999px;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px;line-height:1;border:2px solid #0c1324;display:none; }
+        .notif-badge.visible { display:flex; }
+        .notif-item { padding:12px 16px;border-bottom:1px solid rgba(59,73,76,.3);transition:background .15s;cursor:pointer; }
+        .notif-item:hover { background:rgba(35,41,60,.6); }
+        .notif-item.unread { border-left:3px solid #00e5ff; }
+        .notif-item.read { border-left:3px solid transparent;opacity:.65; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col overflow-hidden bg-background text-on-background">
@@ -207,10 +225,7 @@
                         <h1 class="font-headline-md text-headline-md text-on-surface">Account Settings</h1>
                     </div>
                     <div class="flex items-center gap-6">
-                        <button class="relative p-2 text-on-surface-variant hover:text-primary transition-colors">
-                            <span class="material-symbols-outlined">notifications</span>
-                            <span class="absolute top-2 right-2 w-2 h-2 bg-primary-container rounded-full ring-2 ring-surface"></span>
-                        </button>
+                        <!-- Bell is global; see fixed overlay below -->
                     </div>
                 </header>
                 <div class="max-w-4xl mx-auto px-margin-mobile md:px-margin-desktop py-12">
@@ -265,10 +280,7 @@
                         <h1 class="font-headline-md text-headline-md text-on-surface">Set Appointment</h1>
                     </div>
                     <div class="flex items-center gap-6">
-                        <button class="relative p-2 text-on-surface-variant hover:text-primary transition-colors">
-                            <span class="material-symbols-outlined">notifications</span>
-                            <span class="absolute top-2 right-2 w-2 h-2 bg-primary-container rounded-full ring-2 ring-surface"></span>
-                        </button>
+                        <!-- Bell is global; see fixed overlay below -->
                     </div>
                 </header>
                 <div class="p-margin-desktop max-w-[1200px] mx-auto w-full grid grid-cols-1 lg:grid-cols-3 gap-gutter items-start">
@@ -386,10 +398,7 @@
                         <h1 class="font-headline-md text-headline-md text-on-surface">System History</h1>
                     </div>
                     <div class="flex items-center gap-6">
-                        <button class="relative p-2 text-on-surface-variant hover:text-primary transition-colors">
-                            <span class="material-symbols-outlined">notifications</span>
-                            <span class="absolute top-2 right-2 w-2 h-2 bg-primary-container rounded-full ring-2 ring-surface"></span>
-                        </button>
+                        <!-- Bell is global; see fixed overlay -->
                     </div>
                 </header>
                 <div class="p-margin-desktop space-y-gutter max-w-container-max mx-auto w-full">
@@ -439,6 +448,68 @@
                 <span class="material-symbols-outlined">manage_accounts</span>
                 <span class="text-[10px] font-label-sm">Profile</span>
             </a>
+        </div>
+    </div>
+
+    <!-- View Service Modal -->
+    <div class="modal-overlay" id="appt-details-modal">
+        <div class="modal-card bg-surface-container-low border border-outline-variant/50 rounded-lg w-full max-w-[600px] shadow-2xl relative overflow-hidden flex flex-col">
+            <div class="h-[2px] bg-primary w-full"></div>
+            <div class="px-gutter pt-gutter pb-6 flex justify-between items-start border-b border-outline-variant/30">
+                <div>
+                    <h2 class="font-headline-md text-headline-md text-on-surface mb-2">Service Details</h2>
+                </div>
+                <button class="modal-close-btn text-on-surface-variant hover:text-primary transition-colors p-2 rounded-full hover:bg-surface-variant/50" onclick="document.getElementById('appt-details-modal').classList.remove('open')">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="p-gutter flex flex-col gap-6" id="appt-details-content">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat/Correspondence Modal -->
+    <div class="modal-overlay" id="chat-modal">
+        <div class="modal-card bg-surface-container-low border border-outline-variant/50 rounded-lg w-full max-w-[600px] shadow-2xl relative overflow-hidden flex flex-col h-[600px] max-h-[90vh]">
+            <div class="h-[2px] bg-primary w-full"></div>
+            <div class="px-gutter pt-gutter pb-4 flex justify-between items-start border-b border-outline-variant/30">
+                <div>
+                    <h2 class="font-headline-md text-headline-md text-on-surface">Correspondence</h2>
+                    <p class="font-label-sm text-on-surface-variant mt-1" id="chat-subtitle">Loading...</p>
+                </div>
+                <button class="modal-close-btn text-on-surface-variant hover:text-primary transition-colors p-2 rounded-full hover:bg-surface-variant/50" onclick="document.getElementById('chat-modal').classList.remove('open')">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="flex-grow p-gutter overflow-y-auto flex flex-col gap-4 bg-surface" id="chat-messages-container">
+                <!-- Messages Injected Here -->
+            </div>
+            <div class="p-4 border-t border-outline-variant/30 bg-surface-container">
+                <form id="chat-form" class="flex gap-2">
+                    <input type="text" id="chat-input" class="flex-grow bg-surface-container-lowest border border-outline-variant focus:border-primary outline-none px-4 py-3 rounded-lg text-on-surface font-body-md transition-all" placeholder="Type a message..." required autocomplete="off">
+                    <button type="submit" class="bg-primary text-on-primary font-label-md px-6 py-3 rounded-lg hover:shadow-[0_0_15px_rgba(0,229,255,0.4)] transition-all flex items-center justify-center">
+                        <span class="material-symbols-outlined">send</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Global Notification Bell (fixed, always visible across all tabs) -->
+    <div id="global-notif-widget" style="display:none;" class="fixed top-5 right-6 z-[9000]">
+        <button id="notif-bell-btn" class="relative p-2 text-on-surface-variant hover:text-primary transition-colors" aria-label="Notifications">
+            <span class="material-symbols-outlined">notifications</span>
+            <span id="notif-badge" class="notif-badge">0</span>
+        </button>
+        <div id="notif-panel" class="notif-panel" style="top:calc(100% + 8px);right:0;">
+            <div class="flex items-center justify-between px-4 py-3 border-b border-outline-variant/30 bg-surface-container">
+                <h3 class="font-headline-sm text-[14px] text-on-surface">Notifications</h3>
+                <button id="mark-all-read-btn" class="text-[10px] text-primary hover:underline font-label-sm uppercase tracking-widest">Mark all read</button>
+            </div>
+            <div id="notif-list" class="overflow-y-auto flex-grow">
+                <p class="text-center text-on-surface-variant font-body-sm py-8 px-4">No notifications yet.</p>
+            </div>
         </div>
     </div>
 
