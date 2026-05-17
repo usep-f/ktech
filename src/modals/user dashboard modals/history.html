@@ -1,0 +1,354 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>KTech Solutions | Appointment History</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#3f465c",
+                        "inverse-primary": "#006875",
+                        "outline-variant": "#3b494c",
+                        "outline": "#849396",
+                        "on-surface": "#dce1fb",
+                        "surface-container-lowest": "#070d1f",
+                        "primary-fixed-dim": "#00daf3",
+                        "tertiary-fixed-dim": "#b9c7e0",
+                        "on-tertiary-container": "#4c5a6f",
+                        "surface-variant": "#2e3447",
+                        "on-tertiary": "#233144",
+                        "secondary-fixed": "#dae2fd",
+                        "inverse-on-surface": "#2a3043",
+                        "tertiary": "#e4edff",
+                        "on-surface-variant": "#bac9cc",
+                        "on-background": "#dce1fb",
+                        "on-secondary-fixed": "#131b2e",
+                        "surface-container-highest": "#2e3447",
+                        "primary-fixed": "#9cf0ff",
+                        "on-tertiary-fixed-variant": "#3a485c",
+                        "surface-container-low": "#151b2d",
+                        "error-container": "#93000a",
+                        "secondary-fixed-dim": "#bec6e0",
+                        "on-primary": "#00363d",
+                        "on-secondary-container": "#adb4ce",
+                        "on-secondary-fixed-variant": "#3f465c",
+                        "primary": "#c3f5ff",
+                        "surface-dim": "#0c1324",
+                        "surface-bright": "#33394c",
+                        "on-error-container": "#ffdad6",
+                        "tertiary-fixed": "#d5e3fd",
+                        "surface": "#0c1324",
+                        "surface-tint": "#00daf3",
+                        "surface-container": "#191f31",
+                        "inverse-surface": "#dce1fb",
+                        "secondary": "#bec6e0",
+                        "on-primary-container": "#00626e",
+                        "surface-container-high": "#23293c",
+                        "on-error": "#690005",
+                        "on-secondary": "#283044",
+                        "on-primary-fixed-variant": "#004f58",
+                        "background": "#0c1324",
+                        "on-tertiary-fixed": "#0d1c2f",
+                        "error": "#ffb4ab",
+                        "tertiary-container": "#c3d1ea",
+                        "primary-container": "#00e5ff",
+                        "on-primary-fixed": "#001f24"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "20px",
+                        "margin-desktop": "64px",
+                        "base": "8px",
+                        "nav-height": "80px",
+                        "container-max": "1280px",
+                        "margin-tablet": "32px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Hanken Grotesk"],
+                        "body-md": ["Geist"],
+                        "headline-sm": ["Hanken Grotesk"],
+                        "label-sm": ["Geist"],
+                        "body-sm": ["Geist"],
+                        "headline-xl-mobile": ["Hanken Grotesk"],
+                        "body-lg": ["Geist"],
+                        "label-md": ["Geist"],
+                        "headline-xl": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-sm": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-xl-mobile": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-xl": ["600px", {"lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #0c1324;
+            color: #dce1fb;
+            font-family: 'Geist', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(25, 31, 49, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(59, 73, 76, 0.3);
+        }
+        .sidebar-active {
+            color: #c3f5ff;
+            background: rgba(0, 229, 255, 0.1);
+            border-right: 2px solid #00e5ff;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0c1324;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3b494c;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="flex min-h-screen">
+<!-- Sidebar Navigation -->
+<aside class="hidden md:flex flex-col w-[280px] bg-surface-container-low sidebar-border h-screen sticky top-0 p-8 z-50">
+<!-- Profile Header -->
+<div class="flex items-center gap-4 mb-12">
+<div class="w-12 h-12 rounded-full overflow-hidden border-2 border-primary-container"><div class="w-full h-full bg-surface-bright flex items-center justify-center text-white font-medium">AC</div></div>
+<div>
+<p class="font-headline-sm text-headline-sm text-on-surface leading-tight">Alex Chen</p>
+
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-grow flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-label-md hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+                Appointments
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary-container/10 text-primary-container font-label-md border-r-4 border-primary-container" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+                Appointment History
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-label-md hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="manage_accounts">manage_accounts</span>Manage Profile</a>
+</nav>
+<!-- Bottom Actions -->
+<div class="flex flex-col gap-2 mt-auto pt-8 border-t border-outline-variant/30">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-label-md hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+                Home
+            </a>
+<button class="flex items-center gap-3 px-4 py-3 rounded-lg text-error font-label-md hover:bg-error-container/20 transition-all">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+                Logout
+            </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-grow overflow-y-auto bg-surface-dim">
+<!-- Header -->
+<header class="flex justify-between items-center px-margin-mobile md:px-margin-desktop h-nav-height bg-surface/70 backdrop-blur-md sticky top-0 z-40 border-b border-outline-variant/20"><div class="">
+<h1 class="font-headline-md text-headline-md text-on-surface">System History</h1>
+</div>
+<div class="flex items-center gap-6">
+<button class="relative p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-primary-container rounded-full ring-2 ring-surface"></span>
+</button>
+</div></header>
+<!-- Dashboard Content -->
+<div class="p-margin-desktop space-y-gutter max-w-container-max mx-auto w-full">
+<!-- Summary Bento Row -->
+<!-- Main History Table Section -->
+<section class="glass-panel rounded-xl overflow-hidden border border-outline-variant/30">
+<div class="p-6 border-b border-outline-variant/30 flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary-container">list_alt</span>
+<h2 class="font-headline-sm text-on-surface">Appointment Records</h2>
+</div>
+<div class="flex gap-2">
+<button class="bg-surface-container-high px-4 py-2 rounded-lg text-label-md text-on-surface-variant hover:text-primary transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">filter_list</span> Filter
+                        </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="px-8 py-4 font-label-md text-on-surface-variant border-b border-outline-variant/20 uppercase tracking-widest text-[10px]">Service Portfolio</th>
+<th class="px-8 py-4 font-label-md text-on-surface-variant border-b border-outline-variant/20 uppercase tracking-widest text-[10px]">Date &amp; Timestamp</th>
+<th class="px-8 py-4 font-label-md text-on-surface-variant border-b border-outline-variant/20 uppercase tracking-widest text-[10px]">Operational Status</th>
+<th class="px-8 py-4 font-label-md text-on-surface-variant border-b border-outline-variant/20 uppercase tracking-widest text-[10px] text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<!-- Pending -->
+<tr class="hover:bg-surface-container-high/20 transition-colors group">
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-primary-container shadow-[0_0_8px_rgba(0,229,255,0.4)]"></div>
+<span class="font-body-md text-on-surface">Kubernetes Cluster Optimization</span>
+</div>
+</td>
+<td class="px-8 py-6 text-body-sm text-on-surface-variant font-mono">2024-11-24 | 09:00 EST</td>
+<td class="px-8 py-6">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-label-sm bg-primary-container/10 text-primary border border-primary/20">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                                        Pending
+                                    </span>
+</td>
+<td class="px-8 py-6 text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Accomplished -->
+<tr class="hover:bg-surface-container-high/20 transition-colors group">
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+<span class="font-body-md text-on-surface">Legacy Database Migration</span>
+</div>
+</td>
+<td class="px-8 py-6 text-body-sm text-on-surface-variant font-mono">2024-11-20 | 14:30 EST</td>
+<td class="px-8 py-6">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-label-sm bg-secondary-container/20 text-secondary border border-secondary/20">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                                        Accomplished
+                                    </span>
+</td>
+<td class="px-8 py-6 text-right"><button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button></td>
+</tr>
+<!-- To be discussed -->
+<tr class="hover:bg-surface-container-high/20 transition-colors group">
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<span class="font-body-md text-on-surface">Security Firewall Audit</span>
+</div>
+</td>
+<td class="px-8 py-6 text-body-sm text-on-surface-variant font-mono">2024-11-28 | 11:00 EST</td>
+<td class="px-8 py-6">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-label-sm bg-tertiary-container/10 text-tertiary border border-tertiary/20">
+<span class="material-symbols-outlined text-[14px]">chat_bubble</span>
+                                        To be discussed
+                                    </span>
+</td>
+<td class="px-8 py-6 text-right"><button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button></td>
+</tr>
+<!-- Accomplished -->
+<tr class="hover:bg-surface-container-high/20 transition-colors group">
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+<span class="font-body-md text-on-surface">CI/CD Pipeline Refactoring</span>
+</div>
+</td>
+<td class="px-8 py-6 text-body-sm text-on-surface-variant font-mono">2024-11-15 | 10:00 EST</td>
+<td class="px-8 py-6">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-label-sm bg-secondary-container/20 text-secondary border border-secondary/20">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                                        Accomplished
+                                    </span>
+</td>
+<td class="px-8 py-6 text-right"><button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button></td>
+</tr>
+<!-- API Gateway Deployment -->
+<tr class="hover:bg-surface-container-high/20 transition-colors group">
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+<span class="font-body-md text-on-surface">API Gateway Deployment</span>
+</div>
+</td>
+<td class="px-8 py-6 text-body-sm text-on-surface-variant font-mono">2024-11-12 | 16:15 EST</td>
+<td class="px-8 py-6">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-label-sm bg-secondary-container/20 text-secondary border border-secondary/20">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+            Accomplished
+        </span>
+</td>
+<td class="px-8 py-6 text-right"><button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button></td>
+</tr>
+<!-- Microservices Orchestration -->
+<tr class="hover:bg-surface-container-high/20 transition-colors group">
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-primary-container shadow-[0_0_8px_rgba(0,229,255,0.4)]"></div>
+<span class="font-body-md text-on-surface">Microservices Orchestration</span>
+</div>
+</td>
+<td class="px-8 py-6 text-body-sm text-on-surface-variant font-mono">2024-12-01 | 13:00 EST</td>
+<td class="px-8 py-6">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-label-sm bg-primary-container/10 text-primary border border-primary/20">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+            Pending
+        </span>
+</td>
+<td class="px-8 py-6 text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr></tbody>
+</table>
+</div><div class="px-8 py-6 border-t border-outline-variant/30 flex flex-col sm:flex-row items-center justify-between gap-4 bg-surface-container-low/30">
+<p class="text-body-sm text-on-surface-variant">Showing 1-8 of 24 entries</p>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg border border-outline-variant/50 text-label-sm text-on-surface-variant hover:border-primary-container hover:text-primary transition-all">Previous</button>
+<div class="flex items-center gap-1">
+<button class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary-container text-on-primary-fixed font-label-md">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all font-label-md">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all font-label-md">3</button>
+</div>
+<button class="px-3 py-1.5 rounded-lg border border-outline-variant/50 text-label-sm text-on-surface-variant hover:border-primary-container hover:text-primary transition-all">Next</button>
+</div>
+</div>
+</section>
+<!-- Bottom Context Grid -->
+</div>
+<!-- Footer (Sub-contextual) -->
+</main>
+
+
+
+
+
+
+</body></html>
