@@ -174,7 +174,7 @@ import { showToast } from './toast.js';
                 <span class="material-symbols-outlined text-[20px]">visibility</span>
               </button>
             </div>
-            <p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Must be at least 12 characters and include a number.</p>
+            <p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Must be at least 8 characters long.</p>
           </div>
           <div class="flex items-start mt-4 pt-2">
             <div class="flex items-center h-5">
@@ -340,6 +340,12 @@ import { showToast } from './toast.js';
       const name = document.getElementById("reg-fullname").value;
       const email = document.getElementById("reg-email").value;
       const password = document.getElementById("reg-password").value;
+
+      if (password.length < 8) {
+        showToast("Password must be at least 8 characters long.", "error");
+        return;
+      }
+
       createUserWithEmailAndPassword(auth, email, password)
         .then(async (userCredential) => {
           const user = userCredential.user;

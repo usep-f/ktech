@@ -142,6 +142,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 
                 if (newPassword.trim() !== '') {
+                    if (newPassword.length < 8) {
+                        showToast('Password must be at least 8 characters long.', 'error');
+                        return;
+                    }
                     await updatePassword(user, newPassword);
                     showToast('Password updated successfully.', 'success');
                     document.getElementById('profile-password').value = '';
