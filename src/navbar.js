@@ -315,6 +315,7 @@ import { showToast } from './toast.js';
         .then(() => {
           closeAll();
           loginForm.reset();
+          window.location.href = "dashboard.html#appointments";
         })
         .catch(err => showToast("Login failed: " + err.message, 'error'));
     });
@@ -348,6 +349,7 @@ import { showToast } from './toast.js';
           closeAll();
           regForm.reset();
           updateAuthUI(auth.currentUser);
+          window.location.href = "dashboard.html#appointments";
         })
         .catch(err => showToast("Registration failed: " + err.message, 'error'));
     });
@@ -357,3 +359,17 @@ import { showToast } from './toast.js';
   // 9. LISTEN TO AUTH CHANGES
   // ═══════════════════════════════════════════
   onAuthStateChanged(auth, updateAuthUI);
+
+  // ═══════════════════════════════════════════
+  // 10. PAGE SPECIFIC LOGIC
+  // ═══════════════════════════════════════════
+  const heroGetStartedBtn = document.getElementById("hero-get-started-btn");
+  if (heroGetStartedBtn) {
+    heroGetStartedBtn.addEventListener("click", () => {
+      if (auth.currentUser) {
+        window.location.href = "dashboard.html#appointments";
+      } else {
+        openModal(loginModal);
+      }
+    });
+  }
