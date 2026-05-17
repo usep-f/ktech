@@ -11,38 +11,8 @@
  *   The onAuthStateChanged pattern mirrors Firebase's API deliberately.
  */
 
-(function () {
-  "use strict";
-
-  // ═══════════════════════════════════════════
-  // 1. AUTH STATE MANAGER (Firebase-compatible)
-  // ═══════════════════════════════════════════
-  const AUTH_KEY = "ktech_auth_user";
-
-  window.KTechAuth = {
-    _listeners: [],
-    get currentUser() {
-      try {
-        return JSON.parse(localStorage.getItem(AUTH_KEY)) || null;
-      } catch { return null; }
-    },
-    signIn(displayName, email) {
-      const user = { displayName, email };
-      localStorage.setItem(AUTH_KEY, JSON.stringify(user));
-      this._notify(user);
-    },
-    signOut() {
-      localStorage.removeItem(AUTH_KEY);
-      this._notify(null);
-    },
-    onAuthStateChanged(cb) {
-      this._listeners.push(cb);
-      cb(this.currentUser);          // fire immediately like Firebase
-    },
-    _notify(user) {
-      this._listeners.forEach(cb => cb(user));
-    }
-  };
+import { auth } from './firebase.js';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from 'firebase/auth';
 
   // ═══════════════════════════════════════════
   // 2. DETECT ACTIVE PAGE
@@ -274,7 +244,7 @@
       // Sign out
       document.getElementById("signout-btn").addEventListener("click", () => {
         dropdown.classList.remove("open");
-        KTechAuth.signOut();
+        signOut(auth).catch(err => console.error(err));
       });
     } else {
       area.innerHTML = `
@@ -334,10 +304,13 @@
     loginForm.addEventListener("submit", e => {
       e.preventDefault();
       const email = document.getElementById("login-email").value;
-      const name = email.split("@")[0].replace(/[._]/g, " ").replace(/\b\w/g, c => c.toUpperCase());
-      KTechAuth.signIn(name, email);
-      closeAll();
-      loginForm.reset();
+      const password = document.getElementById("login-password").value;
+      signInWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          closeAll();
+          loginForm.reset();
+        })
+        .catch(err => alert("Login failed: " + err.message));
     });
   }
 
@@ -348,15 +321,21 @@
       e.preventDefault();
       const name = document.getElementById("reg-fullname").value;
       const email = document.getElementById("reg-email").value;
-      KTechAuth.signIn(name, email);
-      closeAll();
-      regForm.reset();
+      const password = document.getElementById("reg-password").value;
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          return updateProfile(userCredential.user, { displayName: name });
+        })
+        .then(() => {
+          closeAll();
+          regForm.reset();
+          updateAuthUI(auth.currentUser);
+        })
+        .catch(err => alert("Registration failed: " + err.message));
     });
   }
 
   // ═══════════════════════════════════════════
   // 9. LISTEN TO AUTH CHANGES
   // ═══════════════════════════════════════════
-  KTechAuth.onAuthStateChanged(updateAuthUI);
-
-})();
+  onAuthStateChanged(auth, updateAuthUI);

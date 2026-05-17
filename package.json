@@ -21,5 +21,8 @@
   "description": "",
   "devDependencies": {
     "vite": "^8.0.13"
+  },
+  "dependencies": {
+    "firebase": "^12.13.0"
   }
 }
