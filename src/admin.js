@@ -30,6 +30,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 setupAppointmentsListener();
                 setupUsersListener();
                 setupNotificationsListener('admin');
+
+                // Smoothly remove loading screen
+                const loader = document.getElementById('loading-screen');
+                if (loader) {
+                    loader.style.opacity = '0';
+                    setTimeout(() => loader.remove(), 350);
+                }
             } else {
                 showToast("Unauthorized. You are not an admin.", "error");
                 await signOut(auth);

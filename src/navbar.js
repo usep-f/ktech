@@ -228,7 +228,7 @@ import { showToast } from './toast.js';
               <div class="email">${user.email || ""}</div>
             </div>
             <div class="ktech-dropdown-divider"></div>
-            <a href="dashboard.html" class="ktech-dropdown-item" style="text-decoration: none;">
+            <a href="dashboard.html" id="dashboard-link" class="ktech-dropdown-item" style="text-decoration: none;">
               <span class="material-symbols-outlined" style="font-size:18px">dashboard</span>
               Dashboard
             </a>
@@ -242,6 +242,17 @@ import { showToast } from './toast.js';
       // Avatar dropdown toggle
       const avatarBtn = document.getElementById("avatar-btn");
       const dropdown = document.getElementById("avatar-dropdown");
+      
+      // Dynamic dashboard redirection based on role
+      getDoc(doc(db, "users", user.uid)).then(userDoc => {
+        if (userDoc.exists() && userDoc.data().role === 'admin') {
+          const dashLink = document.getElementById("dashboard-link");
+          if (dashLink) {
+            dashLink.setAttribute("href", "admin.html");
+          }
+        }
+      }).catch(err => console.error("Error fetching user role for navbar:", err));
+
       avatarBtn.addEventListener("click", (e) => {
         e.stopPropagation();
         dropdown.classList.toggle("open");

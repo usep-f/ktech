@@ -21,6 +21,13 @@ document.addEventListener('DOMContentLoaded', () => {
             populateUserData(user);
             setupHistoryListener(user.uid);
             setupNotificationsListener(user.uid);
+
+            // Smoothly remove loading screen
+            const loader = document.getElementById('loading-screen');
+            if (loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => loader.remove(), 350);
+            }
         }
     });
 

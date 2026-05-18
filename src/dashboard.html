@@ -76,6 +76,27 @@
 </head>
 <body class="min-h-screen flex flex-col overflow-hidden bg-background text-on-background">
 
+    <!-- Glowing loading screen displayed immediately before auth resolution -->
+    <div id="loading-screen" style="position: fixed; inset: 0; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #0c1324; transition: opacity 0.35s ease;">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 16px;">
+            <div style="position: relative; width: 48px; height: 48px;">
+                <div style="position: absolute; inset: 0; border-radius: 50%; border: 4px solid rgba(0, 229, 255, 0.1);"></div>
+                <div style="position: absolute; inset: 0; border-radius: 50%; border: 4px solid transparent; border-top-color: #00e5ff; animation: ktech-spin 1s linear infinite;"></div>
+            </div>
+            <p style="font-family: 'Geist', sans-serif; font-size: 14px; font-weight: 500; color: #bac9cc; letter-spacing: 0.5px; animation: ktech-pulse 1.5s ease-in-out infinite;">Verifying credentials...</p>
+        </div>
+    </div>
+    <style>
+        @keyframes ktech-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes ktech-pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+    </style>
+
     <div class="flex-grow flex h-screen overflow-hidden" id="dashboard-wrapper" style="display:none;">
         <!-- Sidebar Navigation -->
         <aside class="hidden md:flex flex-col w-[280px] bg-surface-container-low sidebar-border h-full p-8 z-40 overflow-y-auto">
