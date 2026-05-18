@@ -29,13 +29,20 @@ git clone https://github.com/usep-f/ktech.git
 cd ktech
 ```
 
-### 2. Install Dependencies
+### 2. Install Frontend & Tailwind Dependencies
 
-The project uses `npm` to manage the Vite development server and the Firebase SDK.
+The project uses `npm` to manage the Vite development server, the Firebase Web SDK, and the compiled **Tailwind CSS v4** design engine. Tailwind compilation is automated via PostCSS for maximum performance and instant Hot Module Replacement (HMR).
 
+Run this from the repository root:
 ```bash
 npm install
 ```
+
+This command automatically installs:
+- **Tailwind CSS v4 & @tailwindcss/postcss** for modern, high-performance CSS compilation and automatic utility class purging.
+- **Autoprefixer & PostCSS** for vendor prefix generation.
+- **Firebase SDK** for authentication and Firestore interaction.
+- **Vite** as the supercharged bundling server.
 
 ### 3. Setup Firebase Environment Variables
 
@@ -49,20 +56,53 @@ This application requires Firebase credentials to handle authentication.
 
 ### 4. Setup Firebase Backend (Cloud Functions)
 
-The system relies on Firebase Cloud Functions to handle secure operations like account deletion and notifications.
+The system relies on backend **Firebase Cloud Functions (v1)** running on the **Node.js 20** engine. These functions handle automated event triggers (e.g., Firestore status changes, new messages) and secure administrative operations like user deletion, role provisioning, and account disabling.
 
-1. Navigate to the functions directory:
+To prepare your local workstation for backend function development and testing:
+
+#### Workstation Prerequisites
+- **Node.js Runtime**: Ensure your local workstation is running **Node.js 20** (use `nvm use 20` or install Node 20).
+- **Firebase CLI Tools**: Verify you have `firebase-tools` installed globally on your machine:
+  ```bash
+  npm install -g firebase-tools
+  ```
+- **Java Runtime Environment (JRE/JDK)**: Required if you intend to run the local emulators to test Firestore or functions locally.
+
+#### Installation & Development
+1. Navigate to the `functions` directory:
    ```bash
    cd functions
    ```
-2. Install the backend dependencies (Firebase Admin SDK):
+2. Install the backend dependencies (including the Firebase Admin and Functions SDKs):
    ```bash
    npm install
    ```
-3. Return to the root directory:
+3. Run ESLint to check for code style issues (the project utilizes Google's standard ESLint configurations):
+   ```bash
+   npm run lint
+   ```
+4. Return to the root directory:
    ```bash
    cd ..
    ```
+
+#### Local Emulation & Testing
+To test the entire web application locally with mock services (Firestore database, Auth accounts, and Cloud Functions triggers) without affecting your production project:
+1. Ensure the Firebase CLI is authenticated:
+   ```bash
+   firebase login
+   ```
+2. Launch the Firebase Emulator Suite from the root directory:
+   ```bash
+   firebase emulators:start
+   ```
+3. Open `http://localhost:4000/` in your browser to view the interactive emulator suite UI where you can inspect database writes, trigger functions, and view console logs.
+
+#### Deploying Cloud Functions
+To deploy only the backend functions to your active Firebase project, run:
+```bash
+firebase deploy --only functions
+```
 
 ### 5. Run the Development Server
 
