@@ -121,20 +121,204 @@ document.addEventListener('DOMContentLoaded', () => {
     // ═══════════════════════════════════════════
     let allAppointmentsData = [];
 
-    function setupAppointmentsListener() {
+    let apptCurrentPage = 1;
+    const apptItemsPerPage = 5;
+
+    function renderAppointmentsPage() {
         const appointmentsTbody = document.getElementById('admin-appointments-table-body');
+        if (!appointmentsTbody) return;
+
+        let appointments = allAppointmentsData || [];
+
+        const searchInput = document.getElementById('admin-appt-search');
+        const filterSelect = document.getElementById('admin-appt-filter');
         
-        // Admins can query all appointments globally without a "where" clause restriction.
+        const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+        const statusFilter = filterSelect ? filterSelect.value : 'All';
+
+        if (searchTerm || statusFilter !== 'All') {
+            appointments = appointments.filter(item => {
+                const matchesSearch = (item.userName || '').toLowerCase().includes(searchTerm) || 
+                                      (item.userEmail || '').toLowerCase().includes(searchTerm) ||
+                                      (item.userId || '').toLowerCase().includes(searchTerm) ||
+                                      (item.serviceCategory || '').toLowerCase().includes(searchTerm);
+                const matchesStatus = statusFilter === 'All' || (item.status || 'Pending') === statusFilter;
+                return matchesSearch && matchesStatus;
+            });
+        }
+
+        const totalRecords = appointments.length;
+
+        if (totalRecords === 0) {
+            appointmentsTbody.innerHTML = `
+                <tr class="hover:bg-surface-container-high/20 transition-colors group">
+                    <td colspan="5" class="px-8 py-6 text-center text-on-surface-variant font-body-md">
+                        No appointments found.
+                    </td>
+                </tr>`;
+            updateApptPaginationUI(0, 0, 0);
+            return;
+        }
+
+        const totalPages = Math.ceil(totalRecords / apptItemsPerPage);
+        if (apptCurrentPage > totalPages) apptCurrentPage = totalPages;
+        if (apptCurrentPage < 1) apptCurrentPage = 1;
+
+        const startIndex = (apptCurrentPage - 1) * apptItemsPerPage;
+        const endIndex = Math.min(startIndex + apptItemsPerPage, totalRecords);
+        const pageItems = appointments.slice(startIndex, endIndex);
+
+        appointmentsTbody.innerHTML = pageItems.map(item => {
+            let statusClass = '';
+            let dotClass = '';
+            let icon = '';
+
+            switch (item.status) {
+                case 'Accomplished':
+                    statusClass = 'bg-secondary-container/20 text-secondary border-secondary/20';
+                    dotClass = 'bg-secondary';
+                    icon = 'check_circle';
+                    break;
+                case 'WIP':
+                    statusClass = 'bg-primary-container/20 text-primary border-primary/20';
+                    dotClass = 'bg-primary animate-pulse';
+                    icon = 'build';
+                    break;
+                case 'TBD':
+                    statusClass = 'bg-tertiary-container/10 text-tertiary border-tertiary/20';
+                    dotClass = 'bg-tertiary';
+                    icon = 'chat_bubble';
+                    break;
+                case 'Denied':
+                case 'Cancelled':
+                    statusClass = 'bg-error-container/10 text-error border-error/20';
+                    dotClass = 'bg-error';
+                    icon = 'cancel';
+                    break;
+                default: // Pending
+                    statusClass = 'bg-surface-variant text-on-surface border-outline-variant';
+                    dotClass = 'bg-outline';
+                    icon = 'schedule';
+                    break;
+            }
+
+            const displayDate = item.createdAt ? new Date(item.createdAt.seconds * 1000).toLocaleDateString() : 'N/A';
+            const clientName = item.userName || 'Unnamed Client';
+            const clientSub = item.userEmail || (item.userId ? `ID: ${item.userId.substring(0, 8)}` : 'No Info');
+
+            return `
+            <tr class="hover:bg-surface-container-high/20 transition-colors group">
+                <td class="px-8 py-6">
+                    <div class="flex flex-col">
+                        <span class="font-body-md text-on-surface leading-tight">${clientName}</span>
+                        <span class="text-[11px] text-outline font-mono mt-0.5">${clientSub}</span>
+                    </div>
+                </td>
+                <td class="px-8 py-6">
+                    <div class="flex items-center gap-3">
+                        <div class="w-2 h-2 rounded-full ${dotClass}"></div>
+                        <span class="font-body-md text-on-surface">${item.serviceCategory || 'Service'}</span>
+                    </div>
+                </td>
+                <td class="px-8 py-6 text-body-sm text-on-surface-variant font-mono">${displayDate}</td>
+                <td class="px-8 py-6">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-label-sm border cursor-pointer hover:opacity-80 transition-opacity ${statusClass}" onclick="openStatusModal('${item.id}', '${item.status}')" title="Click to Change Status">
+                        <span class="material-symbols-outlined text-[14px]">${icon}</span>
+                        ${item.status || 'Pending'}
+                    </span>
+                </td>
+                <td class="px-8 py-6 text-right relative">
+                    <button class="text-on-surface-variant hover:text-primary transition-colors focus:outline-none" onclick="toggleMenu('${item.id}')">
+                        <span class="material-symbols-outlined">more_vert</span>
+                    </button>
+                    <div id="menu-${item.id}" class="hidden absolute right-8 top-12 w-48 bg-surface-container-high border border-outline-variant/50 rounded-lg shadow-xl z-50 overflow-hidden text-left">
+                        <button onclick="viewAppointment('${item.id}')" class="w-full text-left px-4 py-3 hover:bg-surface-variant/30 text-on-surface transition-colors flex items-center gap-2 font-body-sm border-b border-outline-variant/30">
+                            <span class="material-symbols-outlined text-[18px]">visibility</span> View Service
+                        </button>
+                        <button onclick="openChat('${item.id}', '${item.serviceCategory || 'Service'}')" class="w-full text-left px-4 py-3 hover:bg-surface-variant/30 text-on-surface transition-colors flex items-center gap-2 font-body-sm border-b border-outline-variant/30">
+                            <span class="material-symbols-outlined text-[18px]">chat</span> Check Message
+                        </button>
+                        <button onclick="deleteAppointment('${item.id}')" class="w-full text-left px-4 py-3 hover:bg-error-container/20 text-error transition-colors flex items-center gap-2 font-body-sm">
+                            <span class="material-symbols-outlined text-[18px]">delete</span> Delete Record
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            `;
+        }).join('');
+
+        updateApptPaginationUI(startIndex + 1, endIndex, totalRecords);
+    }
+
+    function updateApptPaginationUI(start, end, total) {
+        const startEl = document.getElementById('admin-appt-start-range');
+        const endEl = document.getElementById('admin-appt-end-range');
+        const totalEl = document.getElementById('admin-appt-total');
+        const prevBtn = document.getElementById('admin-appt-prev-btn');
+        const nextBtn = document.getElementById('admin-appt-next-btn');
+        const pagesContainer = document.getElementById('admin-appt-pages-container');
+
+        if (startEl) startEl.textContent = start;
+        if (endEl) endEl.textContent = end;
+        if (totalEl) totalEl.textContent = total;
+
+        const totalPages = Math.ceil(total / apptItemsPerPage);
+
+        if (prevBtn) prevBtn.disabled = apptCurrentPage <= 1;
+        if (nextBtn) nextBtn.disabled = apptCurrentPage >= totalPages || totalPages === 0;
+
+        if (pagesContainer) {
+            pagesContainer.innerHTML = '';
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('button');
+                btn.className = `w-9 h-9 rounded-lg font-label-md transition-all border ${
+                    i === apptCurrentPage 
+                    ? 'bg-primary text-on-primary border-primary hover:shadow-[0_0_10px_rgba(0,229,255,0.4)] font-bold' 
+                    : 'border-outline-variant/30 text-on-surface-variant hover:text-primary hover:border-primary/50'
+                }`;
+                btn.textContent = i;
+                btn.addEventListener('click', () => {
+                    apptCurrentPage = i;
+                    renderAppointmentsPage();
+                });
+                pagesContainer.appendChild(btn);
+            }
+        }
+    }
+
+    // Attach listeners
+    document.getElementById('admin-appt-prev-btn')?.addEventListener('click', () => {
+        if (apptCurrentPage > 1) {
+            apptCurrentPage--;
+            renderAppointmentsPage();
+        }
+    });
+
+    document.getElementById('admin-appt-next-btn')?.addEventListener('click', () => {
+        const totalPages = Math.ceil(allAppointmentsData.length / apptItemsPerPage);
+        if (apptCurrentPage < totalPages) {
+            apptCurrentPage++;
+            renderAppointmentsPage();
+        }
+    });
+
+    document.getElementById('admin-appt-search')?.addEventListener('input', () => {
+        apptCurrentPage = 1;
+        renderAppointmentsPage();
+    });
+
+    document.getElementById('admin-appt-filter')?.addEventListener('change', () => {
+        apptCurrentPage = 1;
+        renderAppointmentsPage();
+    });
+
+    function setupAppointmentsListener() {
         const q = query(collection(db, "appointments"));
 
         onSnapshot(q, (snapshot) => {
             if (snapshot.empty) {
-                appointmentsTbody.innerHTML = `
-                    <tr class="hover:bg-surface-container-high/20 transition-colors group">
-                        <td colspan="5" class="px-8 py-6 text-center text-on-surface-variant font-body-md">
-                            No appointments found.
-                        </td>
-                    </tr>`;
+                allAppointmentsData = [];
+                renderAppointmentsPage();
                 return;
             }
 
@@ -153,84 +337,7 @@ document.addEventListener('DOMContentLoaded', () => {
             allAppointmentsData = appointments;
             window.__adminAppointments = appointments; // Expose to global window
 
-            appointmentsTbody.innerHTML = appointments.map(item => {
-                let statusClass = '';
-                let dotClass = '';
-                let icon = '';
-
-                switch (item.status) {
-                    case 'Accomplished':
-                        statusClass = 'bg-secondary-container/20 text-secondary border-secondary/20';
-                        dotClass = 'bg-secondary';
-                        icon = 'check_circle';
-                        break;
-                    case 'WIP':
-                        statusClass = 'bg-primary-container/20 text-primary border-primary/20';
-                        dotClass = 'bg-primary animate-pulse';
-                        icon = 'build';
-                        break;
-                    case 'TBD':
-                        statusClass = 'bg-tertiary-container/10 text-tertiary border-tertiary/20';
-                        dotClass = 'bg-tertiary';
-                        icon = 'chat_bubble';
-                        break;
-                    case 'Denied':
-                    case 'Cancelled':
-                        statusClass = 'bg-error-container/10 text-error border-error/20';
-                        dotClass = 'bg-error';
-                        icon = 'cancel';
-                        break;
-                    default: // Pending
-                        statusClass = 'bg-surface-variant text-on-surface border-outline-variant';
-                        dotClass = 'bg-outline';
-                        icon = 'schedule';
-                        break;
-                }
-
-                const displayDate = item.createdAt ? new Date(item.createdAt.seconds * 1000).toLocaleDateString() : 'N/A';
-                const clientName = item.userName || 'Unnamed Client';
-                const clientSub = item.userEmail || (item.userId ? `ID: ${item.userId.substring(0, 8)}` : 'No Info');
-
-                return `
-                <tr class="hover:bg-surface-container-high/20 transition-colors group">
-                    <td class="px-8 py-6">
-                        <div class="flex flex-col">
-                            <span class="font-body-md text-on-surface leading-tight">${clientName}</span>
-                            <span class="text-[11px] text-outline font-mono mt-0.5">${clientSub}</span>
-                        </div>
-                    </td>
-                    <td class="px-8 py-6">
-                        <div class="flex items-center gap-3">
-                            <div class="w-2 h-2 rounded-full ${dotClass}"></div>
-                            <span class="font-body-md text-on-surface">${item.serviceCategory || 'Service'}</span>
-                        </div>
-                    </td>
-                    <td class="px-8 py-6 text-body-sm text-on-surface-variant font-mono">${displayDate}</td>
-                    <td class="px-8 py-6">
-                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-label-sm border cursor-pointer hover:opacity-80 transition-opacity ${statusClass}" onclick="openStatusModal('${item.id}', '${item.status}')" title="Click to Change Status">
-                            <span class="material-symbols-outlined text-[14px]">${icon}</span>
-                            ${item.status || 'Pending'}
-                        </span>
-                    </td>
-                    <td class="px-8 py-6 text-right relative">
-                        <button class="text-on-surface-variant hover:text-primary transition-colors focus:outline-none" onclick="toggleMenu('${item.id}')">
-                            <span class="material-symbols-outlined">more_vert</span>
-                        </button>
-                        <div id="menu-${item.id}" class="hidden absolute right-8 top-12 w-48 bg-surface-container-high border border-outline-variant/50 rounded-lg shadow-xl z-50 overflow-hidden text-left">
-                            <button onclick="viewAppointment('${item.id}')" class="w-full text-left px-4 py-3 hover:bg-surface-variant/30 text-on-surface transition-colors flex items-center gap-2 font-body-sm border-b border-outline-variant/30">
-                                <span class="material-symbols-outlined text-[18px]">visibility</span> View Service
-                            </button>
-                            <button onclick="openChat('${item.id}', '${item.serviceCategory || 'Service'}')" class="w-full text-left px-4 py-3 hover:bg-surface-variant/30 text-on-surface transition-colors flex items-center gap-2 font-body-sm border-b border-outline-variant/30">
-                                <span class="material-symbols-outlined text-[18px]">chat</span> Check Message
-                            </button>
-                            <button onclick="deleteAppointment('${item.id}')" class="w-full text-left px-4 py-3 hover:bg-error-container/20 text-error transition-colors flex items-center gap-2 font-body-sm">
-                                <span class="material-symbols-outlined text-[18px]">delete</span> Delete Record
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                `;
-            }).join('');
+            renderAppointmentsPage();
         });
     }
 
@@ -239,9 +346,139 @@ document.addEventListener('DOMContentLoaded', () => {
     // ═══════════════════════════════════════════
     let allUsersData = [];
 
-    function setupUsersListener() {
+    let userCurrentPage = 1;
+    const userItemsPerPage = 5;
+
+    function renderUsersPage() {
         const usersTbody = document.getElementById('admin-users-table-body');
-        
+        if (!usersTbody) return;
+
+        const users = allUsersData || [];
+        const totalRecords = users.length;
+
+        if (totalRecords === 0) {
+            usersTbody.innerHTML = `<tr><td colspan="5" class="px-8 py-6 text-center text-on-surface-variant font-body-md">No users found.</td></tr>`;
+            updateUserPaginationUI(0, 0, 0);
+            return;
+        }
+
+        const totalPages = Math.ceil(totalRecords / userItemsPerPage);
+        if (userCurrentPage > totalPages) userCurrentPage = totalPages;
+        if (userCurrentPage < 1) userCurrentPage = 1;
+
+        const startIndex = (userCurrentPage - 1) * userItemsPerPage;
+        const endIndex = Math.min(startIndex + userItemsPerPage, totalRecords);
+        const pageItems = users.slice(startIndex, endIndex);
+
+        const apptCounts = window.__adminUserApptCounts || {};
+
+        usersTbody.innerHTML = pageItems.map(user => {
+            const joinedDate = user.createdAt ? new Date(user.createdAt.seconds * 1000).toLocaleDateString() : 'N/A';
+            const roleColor = user.role === 'admin' ? 'text-primary bg-primary-container/10 border-primary/20' : 'text-on-surface-variant bg-surface-variant border-outline-variant/30';
+            const isDeleted = user.isDeleted === true;
+            const deletedBadge = isDeleted ? `<span class="inline-block ml-2 px-2 py-0.5 rounded-full text-[9px] uppercase tracking-widest bg-error-container/20 text-error border border-error/20">Deleted</span>` : '';
+            const apptCount = apptCounts[user.id] || 0;
+            
+            return `
+            <tr class="hover:bg-surface-container-high/20 transition-colors group ${isDeleted ? 'opacity-60' : ''}">
+                <td class="px-8 py-6">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-surface-container-highest border border-outline-variant/30 flex items-center justify-center text-label-sm text-primary font-bold">
+                            ${(user.name || user.email || 'U').charAt(0).toUpperCase()}
+                        </div>
+                        <div>
+                            <p class="font-body-md text-on-surface leading-tight">${user.name || 'Unnamed'}${deletedBadge}</p>
+                            <p class="text-[11px] text-outline font-mono mt-0.5">${user.email || 'No email'}</p>
+                        </div>
+                    </div>
+                </td>
+                <td class="px-8 py-6">
+                    <span class="inline-block px-3 py-1 rounded-full text-[10px] uppercase tracking-widest border ${roleColor}">
+                        ${user.role || 'client'}
+                    </span>
+                </td>
+                <td class="px-8 py-6 text-body-sm text-on-surface-variant">${joinedDate}</td>
+                <td class="px-8 py-6 text-center">
+                    <span class="inline-flex items-center gap-1 text-body-sm text-on-surface-variant">
+                        <span class="material-symbols-outlined text-[16px]">event_note</span>
+                        ${apptCount}
+                    </span>
+                </td>
+                <td class="px-8 py-6 text-right">
+                    <div class="flex items-center justify-end gap-1">
+                        <button onclick="viewUserProfile('${user.id}')" class="text-on-surface-variant hover:text-primary hover:bg-primary-container/10 p-2 rounded-lg transition-colors" title="View Profile">
+                            <span class="material-symbols-outlined text-[18px]">person</span>
+                        </button>
+                        ${user.role !== 'admin' && !isDeleted ? `
+                        <button onclick="editUserProfile('${user.id}')" class="text-on-surface-variant hover:text-tertiary hover:bg-tertiary-container/10 p-2 rounded-lg transition-colors" title="Edit User">
+                            <span class="material-symbols-outlined text-[18px]">edit</span>
+                        </button>
+                        <button onclick="deleteUserAccount('${user.id}', '${(user.name || user.email || 'this user').replace(/'/g, "\\'")}')" class="text-on-surface-variant hover:text-error hover:bg-error-container/10 p-2 rounded-lg transition-colors" title="Delete User">
+                            <span class="material-symbols-outlined text-[18px]">delete</span>
+                        </button>
+                        ` : ''}
+                    </div>
+                </td>
+            </tr>
+            `;
+        }).join('');
+
+        updateUserPaginationUI(startIndex + 1, endIndex, totalRecords);
+    }
+
+    function updateUserPaginationUI(start, end, total) {
+        const startEl = document.getElementById('admin-user-start-range');
+        const endEl = document.getElementById('admin-user-end-range');
+        const totalEl = document.getElementById('admin-user-total');
+        const prevBtn = document.getElementById('admin-user-prev-btn');
+        const nextBtn = document.getElementById('admin-user-next-btn');
+        const pagesContainer = document.getElementById('admin-user-pages-container');
+
+        if (startEl) startEl.textContent = start;
+        if (endEl) endEl.textContent = end;
+        if (totalEl) totalEl.textContent = total;
+
+        const totalPages = Math.ceil(total / userItemsPerPage);
+
+        if (prevBtn) prevBtn.disabled = userCurrentPage <= 1;
+        if (nextBtn) nextBtn.disabled = userCurrentPage >= totalPages || totalPages === 0;
+
+        if (pagesContainer) {
+            pagesContainer.innerHTML = '';
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('button');
+                btn.className = `w-9 h-9 rounded-lg font-label-md transition-all border ${
+                    i === userCurrentPage 
+                    ? 'bg-primary text-on-primary border-primary hover:shadow-[0_0_10px_rgba(0,229,255,0.4)] font-bold' 
+                    : 'border-outline-variant/30 text-on-surface-variant hover:text-primary hover:border-primary/50'
+                }`;
+                btn.textContent = i;
+                btn.addEventListener('click', () => {
+                    userCurrentPage = i;
+                    renderUsersPage();
+                });
+                pagesContainer.appendChild(btn);
+            }
+        }
+    }
+
+    // Attach listeners
+    document.getElementById('admin-user-prev-btn')?.addEventListener('click', () => {
+        if (userCurrentPage > 1) {
+            userCurrentPage--;
+            renderUsersPage();
+        }
+    });
+
+    document.getElementById('admin-user-next-btn')?.addEventListener('click', () => {
+        const totalPages = Math.ceil(allUsersData.length / userItemsPerPage);
+        if (userCurrentPage < totalPages) {
+            userCurrentPage++;
+            renderUsersPage();
+        }
+    });
+
+    function setupUsersListener() {
         onSnapshot(collection(db, "users"), async (snapshot) => {
             const users = [];
             snapshot.forEach((doc) => {
@@ -252,7 +489,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             
             if (users.length === 0) {
-                usersTbody.innerHTML = `<tr><td colspan="5" class="px-8 py-6 text-center text-on-surface-variant font-body-md">No users found.</td></tr>`;
+                allUsersData = [];
+                window.__adminUserApptCounts = {};
+                renderUsersPage();
                 return;
             }
             
@@ -260,63 +499,20 @@ document.addEventListener('DOMContentLoaded', () => {
             window.__adminUsers = users;
 
             // Get appointment counts per user
-            const apptSnapshot = await getDocs(collection(db, "appointments"));
-            const apptCounts = {};
-            apptSnapshot.forEach(d => {
-                const uid = d.data().userId;
-                if (uid) apptCounts[uid] = (apptCounts[uid] || 0) + 1;
-            });
+            try {
+                const apptSnapshot = await getDocs(collection(db, "appointments"));
+                const apptCounts = {};
+                apptSnapshot.forEach(d => {
+                    const uid = d.data().userId;
+                    if (uid) apptCounts[uid] = (apptCounts[uid] || 0) + 1;
+                });
+                window.__adminUserApptCounts = apptCounts;
+            } catch (err) {
+                console.error("Error loading user appointment counts:", err);
+                window.__adminUserApptCounts = {};
+            }
 
-            usersTbody.innerHTML = users.map(user => {
-                const joinedDate = user.createdAt ? new Date(user.createdAt.seconds * 1000).toLocaleDateString() : 'N/A';
-                const roleColor = user.role === 'admin' ? 'text-primary bg-primary-container/10 border-primary/20' : 'text-on-surface-variant bg-surface-variant border-outline-variant/30';
-                const isDeleted = user.isDeleted === true;
-                const deletedBadge = isDeleted ? `<span class="inline-block ml-2 px-2 py-0.5 rounded-full text-[9px] uppercase tracking-widest bg-error-container/20 text-error border border-error/20">Deleted</span>` : '';
-                const apptCount = apptCounts[user.id] || 0;
-                
-                return `
-                <tr class="hover:bg-surface-container-high/20 transition-colors group ${isDeleted ? 'opacity-60' : ''}">
-                    <td class="px-8 py-6">
-                        <div class="flex items-center gap-3">
-                            <div class="w-9 h-9 rounded-full bg-surface-container-highest border border-outline-variant/30 flex items-center justify-center text-label-sm text-primary font-bold">
-                                ${(user.name || user.email || 'U').charAt(0).toUpperCase()}
-                            </div>
-                            <div>
-                                <p class="font-body-md text-on-surface leading-tight">${user.name || 'Unnamed'}${deletedBadge}</p>
-                                <p class="text-[11px] text-outline font-mono">${user.email || 'No email'}</p>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="px-8 py-6">
-                        <span class="inline-block px-3 py-1 rounded-full text-[10px] uppercase tracking-widest border ${roleColor}">
-                            ${user.role || 'client'}
-                        </span>
-                    </td>
-                    <td class="px-8 py-6 text-body-sm text-on-surface-variant">${joinedDate}</td>
-                    <td class="px-8 py-6 text-center">
-                        <span class="inline-flex items-center gap-1 text-body-sm text-on-surface-variant">
-                            <span class="material-symbols-outlined text-[16px]">event_note</span>
-                            ${apptCount}
-                        </span>
-                    </td>
-                    <td class="px-8 py-6 text-right">
-                        <div class="flex items-center justify-end gap-1">
-                            <button onclick="viewUserProfile('${user.id}')" class="text-on-surface-variant hover:text-primary hover:bg-primary-container/10 p-2 rounded-lg transition-colors" title="View Profile">
-                                <span class="material-symbols-outlined text-[18px]">person</span>
-                            </button>
-                            ${user.role !== 'admin' && !isDeleted ? `
-                            <button onclick="editUserProfile('${user.id}')" class="text-on-surface-variant hover:text-tertiary hover:bg-tertiary-container/10 p-2 rounded-lg transition-colors" title="Edit User">
-                                <span class="material-symbols-outlined text-[18px]">edit</span>
-                            </button>
-                            <button onclick="deleteUserAccount('${user.id}', '${(user.name || user.email || 'this user').replace(/'/g, "\\'")}')\" class="text-on-surface-variant hover:text-error hover:bg-error-container/10 p-2 rounded-lg transition-colors" title="Delete User">
-                                <span class="material-symbols-outlined text-[18px]">delete</span>
-                            </button>
-                            ` : ''}
-                        </div>
-                    </td>
-                </tr>
-                `;
-            }).join('');
+            renderUsersPage();
         });
     }
 

@@ -167,6 +167,20 @@
                                 <span class="material-symbols-outlined text-primary-container">dns</span>
                                 <h2 class="font-headline-sm text-on-surface">All Service Requests</h2>
                             </div>
+                            <div class="flex items-center gap-3 w-full md:w-auto">
+                                <div class="relative flex-1 md:w-64">
+                                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+                                    <input type="text" id="admin-appt-search" placeholder="Search ID, service, or client..." class="pl-10 pr-4 py-2 w-full bg-surface-container-high border border-outline-variant/30 rounded-lg text-body-sm text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all">
+                                </div>
+                                <select id="admin-appt-filter" class="px-4 py-2 bg-surface-container-high border border-outline-variant/30 rounded-lg text-body-sm text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all">
+                                    <option value="All">All Statuses</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Approved">Approved</option>
+                                    <option value="In Progress">In Progress</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="overflow-x-auto bg-surface">
                             <table class="w-full text-left border-collapse">
@@ -187,6 +201,23 @@
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <!-- Appointments Pagination Controls -->
+                        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 p-6 border-t border-outline-variant/30 bg-surface-container/50">
+                            <div class="text-body-sm text-outline">
+                                Showing <span id="admin-appt-start-range" class="font-bold text-on-surface">0</span> to <span id="admin-appt-end-range" class="font-bold text-on-surface">0</span> of <span id="admin-appt-total" class="font-bold text-on-surface">0</span> requests
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button id="admin-appt-prev-btn" class="flex items-center justify-center p-2 rounded-lg border border-outline-variant/30 text-on-surface-variant hover:text-primary disabled:opacity-30 disabled:pointer-events-none transition-colors">
+                                    <span class="material-symbols-outlined text-[20px]">chevron_left</span>
+                                </button>
+                                <div class="flex items-center gap-1.5" id="admin-appt-pages-container">
+                                    <!-- Dynamic page numbers -->
+                                </div>
+                                <button id="admin-appt-next-btn" class="flex items-center justify-center p-2 rounded-lg border border-outline-variant/30 text-on-surface-variant hover:text-primary disabled:opacity-30 disabled:pointer-events-none transition-colors">
+                                    <span class="material-symbols-outlined text-[20px]">chevron_right</span>
+                                </button>
+                            </div>
                         </div>
                     </section>
                 </div>
@@ -220,6 +251,23 @@
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <!-- Users Pagination Controls -->
+                        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 p-6 border-t border-outline-variant/30 bg-surface-container/50">
+                            <div class="text-body-sm text-outline">
+                                Showing <span id="admin-user-start-range" class="font-bold text-on-surface">0</span> to <span id="admin-user-end-range" class="font-bold text-on-surface">0</span> of <span id="admin-user-total" class="font-bold text-on-surface">0</span> users
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button id="admin-user-prev-btn" class="flex items-center justify-center p-2 rounded-lg border border-outline-variant/30 text-on-surface-variant hover:text-primary disabled:opacity-30 disabled:pointer-events-none transition-colors">
+                                    <span class="material-symbols-outlined text-[20px]">chevron_left</span>
+                                </button>
+                                <div class="flex items-center gap-1.5" id="admin-user-pages-container">
+                                    <!-- Dynamic page numbers -->
+                                </div>
+                                <button id="admin-user-next-btn" class="flex items-center justify-center p-2 rounded-lg border border-outline-variant/30 text-on-surface-variant hover:text-primary disabled:opacity-30 disabled:pointer-events-none transition-colors">
+                                    <span class="material-symbols-outlined text-[20px]">chevron_right</span>
+                                </button>
+                            </div>
                         </div>
                     </section>
                 </div>

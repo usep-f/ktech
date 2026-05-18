@@ -352,40 +352,49 @@ document.addEventListener('DOMContentLoaded', () => {
         const historyTbody = document.getElementById('history-table-body');
         if (!historyTbody) return;
 
-        const q = query(
-            collection(db, "appointments"), 
-            where("userId", "==", userId)
-            // Note: to use orderBy("createdAt", "desc") with where(), you may need a composite index in Firestore.
-            // For now, we'll fetch and sort in memory if needed, or rely on default ordering.
-        );
+        let historyCurrentPage = 1;
+        const historyItemsPerPage = 5;
 
-        onSnapshot(q, (snapshot) => {
-            if (snapshot.empty) {
+        function renderHistoryPage() {
+            let appointments = window.__appointments || [];
+
+            const searchInput = document.getElementById('user-appt-search');
+            const filterSelect = document.getElementById('user-appt-filter');
+            
+            const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+            const statusFilter = filterSelect ? filterSelect.value : 'All';
+
+            if (searchTerm || statusFilter !== 'All') {
+                appointments = appointments.filter(item => {
+                    const matchesSearch = (item.serviceCategory || '').toLowerCase().includes(searchTerm) || 
+                                          (item.specifics || '').toLowerCase().includes(searchTerm);
+                    const matchesStatus = statusFilter === 'All' || (item.status || 'Pending') === statusFilter;
+                    return matchesSearch && matchesStatus;
+                });
+            }
+
+            const totalRecords = appointments.length;
+
+            if (totalRecords === 0) {
                 historyTbody.innerHTML = `
                     <tr class="hover:bg-surface-container-high/20 transition-colors group">
                         <td colspan="4" class="px-8 py-6 text-center text-on-surface-variant font-body-md">
                             No appointments found.
                         </td>
                     </tr>`;
+                updateHistoryPaginationUI(0, 0, 0);
                 return;
             }
 
-            const appointments = [];
-            snapshot.forEach((doc) => {
-                appointments.push({ id: doc.id, ...doc.data() });
-            });
+            const totalPages = Math.ceil(totalRecords / historyItemsPerPage);
+            if (historyCurrentPage > totalPages) historyCurrentPage = totalPages;
+            if (historyCurrentPage < 1) historyCurrentPage = 1;
 
-            // Sort by createdAt descending locally
-            appointments.sort((a, b) => {
-                const timeA = a.createdAt?.seconds || 0;
-                const timeB = b.createdAt?.seconds || 0;
-                return timeB - timeA;
-            });
+            const startIndex = (historyCurrentPage - 1) * historyItemsPerPage;
+            const endIndex = Math.min(startIndex + historyItemsPerPage, totalRecords);
+            const pageItems = appointments.slice(startIndex, endIndex);
 
-            // Make appointments array globally accessible for the modal functions
-            window.__appointments = appointments;
-
-            historyTbody.innerHTML = appointments.map(item => {
+            historyTbody.innerHTML = pageItems.map(item => {
                 let statusClass = '';
                 let dotClass = '';
                 let icon = '';
@@ -465,6 +474,100 @@ document.addEventListener('DOMContentLoaded', () => {
                 </tr>
                 `;
             }).join('');
+
+            updateHistoryPaginationUI(startIndex + 1, endIndex, totalRecords);
+        }
+
+        function updateHistoryPaginationUI(start, end, total) {
+            const startEl = document.getElementById('pagination-start-range');
+            const endEl = document.getElementById('pagination-end-range');
+            const totalEl = document.getElementById('pagination-total-records');
+            const prevBtn = document.getElementById('pagination-prev-btn');
+            const nextBtn = document.getElementById('pagination-next-btn');
+            const pagesContainer = document.getElementById('pagination-pages-container');
+
+            if (startEl) startEl.textContent = start;
+            if (endEl) endEl.textContent = end;
+            if (totalEl) totalEl.textContent = total;
+
+            const totalPages = Math.ceil(total / historyItemsPerPage);
+
+            if (prevBtn) prevBtn.disabled = historyCurrentPage <= 1;
+            if (nextBtn) nextBtn.disabled = historyCurrentPage >= totalPages || totalPages === 0;
+
+            if (pagesContainer) {
+                pagesContainer.innerHTML = '';
+                for (let i = 1; i <= totalPages; i++) {
+                    const btn = document.createElement('button');
+                    btn.className = `w-9 h-9 rounded-lg font-label-md transition-all border ${
+                        i === historyCurrentPage 
+                        ? 'bg-primary text-on-primary border-primary hover:shadow-[0_0_10px_rgba(0,229,255,0.4)] font-bold' 
+                        : 'border-outline-variant/30 text-on-surface-variant hover:text-primary hover:border-primary/50'
+                    }`;
+                    btn.textContent = i;
+                    btn.addEventListener('click', () => {
+                        historyCurrentPage = i;
+                        renderHistoryPage();
+                    });
+                    pagesContainer.appendChild(btn);
+                }
+            }
+        }
+
+        // Attach click listeners to prev/next buttons
+        document.getElementById('pagination-prev-btn')?.addEventListener('click', () => {
+            if (historyCurrentPage > 1) {
+                historyCurrentPage--;
+                renderHistoryPage();
+            }
+        });
+
+        document.getElementById('pagination-next-btn')?.addEventListener('click', () => {
+            const totalPages = Math.ceil((window.__appointments || []).length / historyItemsPerPage);
+            if (historyCurrentPage < totalPages) {
+                historyCurrentPage++;
+                renderHistoryPage();
+            }
+        });
+
+        document.getElementById('user-appt-search')?.addEventListener('input', () => {
+            historyCurrentPage = 1;
+            renderHistoryPage();
+        });
+
+        document.getElementById('user-appt-filter')?.addEventListener('change', () => {
+            historyCurrentPage = 1;
+            renderHistoryPage();
+        });
+
+        const q = query(
+            collection(db, "appointments"), 
+            where("userId", "==", userId)
+        );
+
+        onSnapshot(q, (snapshot) => {
+            if (snapshot.empty) {
+                window.__appointments = [];
+                renderHistoryPage();
+                return;
+            }
+
+            const appointments = [];
+            snapshot.forEach((doc) => {
+                appointments.push({ id: doc.id, ...doc.data() });
+            });
+
+            // Sort by createdAt descending locally
+            appointments.sort((a, b) => {
+                const timeA = a.createdAt?.seconds || 0;
+                const timeB = b.createdAt?.seconds || 0;
+                return timeB - timeA;
+            });
+
+            // Make appointments array globally accessible for the modal functions
+            window.__appointments = appointments;
+
+            renderHistoryPage();
         }, (error) => {
             console.error("Error fetching appointments:", error);
             historyTbody.innerHTML = `
