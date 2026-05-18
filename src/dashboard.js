@@ -178,8 +178,30 @@ document.addEventListener('DOMContentLoaded', () => {
         const password = await showPrompt('Please enter your password to confirm account deletion:', 'password');
         if (!password) return;
 
+        let loaderOverlay = null;
         try {
             const credential = EmailAuthProvider.credential(user.email, password);
+            
+            // Create premium non-closeable deleting loader overlay
+            loaderOverlay = document.createElement('div');
+            loaderOverlay.className = 'fixed inset-0 z-[10000] flex flex-col items-center justify-center p-6 bg-[#070d1f]/95 backdrop-blur-md opacity-0 transition-opacity duration-300 pointer-events-auto';
+            loaderOverlay.innerHTML = `
+                <div class="flex flex-col items-center gap-6">
+                    <div class="relative w-20 h-20 flex items-center justify-center">
+                        <div class="absolute inset-0 rounded-full border-4 border-error/20"></div>
+                        <div class="absolute inset-0 rounded-full border-4 border-error border-t-transparent animate-spin"></div>
+                        <span class="material-symbols-outlined text-error text-3xl animate-pulse">delete_forever</span>
+                    </div>
+                    <div class="text-center max-w-sm">
+                        <h3 class="text-2xl font-bold text-error font-headline-md mb-2">Deleting Account</h3>
+                        <p class="text-[#bac9cc] font-body-sm leading-relaxed">Permanently removing your identity, cloud infrastructure, and configurations. Please do not close your browser...</p>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(loaderOverlay);
+            loaderOverlay.offsetHeight; 
+            loaderOverlay.classList.remove('opacity-0');
+
             await reauthenticateWithCredential(user, credential);
             
             // Delete user doc from Firestore
@@ -190,9 +212,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             await deleteUser(user);
-            showToast('Your account has been deleted.', 'success');
+            
+            // Queue success toast in localStorage for index.html navbar
+            localStorage.setItem('ktech_account_deleted', 'true');
+            
             window.location.replace('index.html');
         } catch (error) {
+            if (loaderOverlay) {
+                loaderOverlay.classList.add('opacity-0');
+                setTimeout(() => loaderOverlay.remove(), 300);
+            }
             showToast('Error deleting account: ' + error.message, 'error');
         }
     });

@@ -280,35 +280,84 @@ import { showToast } from './toast.js';
   // ═══════════════════════════════════════════
   const loginModal = document.getElementById("login-modal");
   const registerModal = document.getElementById("register-modal");
+  let isAuthProcessing = false;
 
   function openModal(m) { if (m) { m.classList.add("open"); document.body.style.overflow = "hidden"; } }
-  function closeModal(m) { if (m) { m.classList.remove("open"); document.body.style.overflow = ""; } }
-  function closeAll() { closeModal(loginModal); closeModal(registerModal); }
+  function closeModal(m) { if (isAuthProcessing) return; if (m) { m.classList.remove("open"); document.body.style.overflow = ""; } }
+  function closeAll() { if (isAuthProcessing) return; closeModal(loginModal); closeModal(registerModal); }
+
+  function setAuthLoading(formElement, isLoading) {
+    isAuthProcessing = isLoading;
+    const modal = formElement.closest('.modal-overlay');
+    if (!modal) return;
+    const closeBtn = modal.querySelector('.modal-close-btn');
+    const inputs = formElement.querySelectorAll('input, button, [type="checkbox"], a');
+
+    if (isLoading) {
+      if (closeBtn) {
+        closeBtn.classList.add('opacity-30', 'pointer-events-none');
+        closeBtn.disabled = true;
+      }
+      inputs.forEach(el => {
+        el.disabled = true;
+        el.classList.add('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
+      });
+      const submitBtn = formElement.querySelector('button[type="submit"]');
+      if (submitBtn) {
+        submitBtn.dataset.originalHtml = submitBtn.innerHTML;
+        submitBtn.innerHTML = `<span class="animate-spin inline-block w-5 h-5 border-2 border-current border-t-transparent rounded-full mr-2"></span> Processing...`;
+      }
+    } else {
+      if (closeBtn) {
+        closeBtn.classList.remove('opacity-30', 'pointer-events-none');
+        closeBtn.disabled = false;
+      }
+      inputs.forEach(el => {
+        el.disabled = false;
+        el.classList.remove('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
+      });
+      const submitBtn = formElement.querySelector('button[type="submit"]');
+      if (submitBtn && submitBtn.dataset.originalHtml) {
+        submitBtn.innerHTML = submitBtn.dataset.originalHtml;
+      }
+    }
+  }
 
   // Close buttons
   document.querySelectorAll(".modal-close-btn").forEach(btn =>
-    btn.addEventListener("click", closeAll)
+    btn.addEventListener("click", () => { if (!isAuthProcessing) closeAll(); })
   );
 
   // Backdrop click
   [loginModal, registerModal].forEach(m => {
-    if (m) m.addEventListener("click", e => { if (e.target === m) closeAll(); });
+    if (m) m.addEventListener("click", e => { if (e.target === m && !isAuthProcessing) closeAll(); });
   });
 
   // Escape
-  document.addEventListener("keydown", e => { if (e.key === "Escape") closeAll(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && !isAuthProcessing) closeAll(); });
 
   // Switch modals
   document.querySelectorAll(".switch-to-register").forEach(a =>
-    a.addEventListener("click", e => { e.preventDefault(); closeModal(loginModal); setTimeout(() => openModal(registerModal), 200); })
+    a.addEventListener("click", e => {
+      if (isAuthProcessing) return;
+      e.preventDefault();
+      closeModal(loginModal);
+      setTimeout(() => openModal(registerModal), 200);
+    })
   );
   document.querySelectorAll(".switch-to-login").forEach(a =>
-    a.addEventListener("click", e => { e.preventDefault(); closeModal(registerModal); setTimeout(() => openModal(loginModal), 200); })
+    a.addEventListener("click", e => {
+      if (isAuthProcessing) return;
+      e.preventDefault();
+      closeModal(registerModal);
+      setTimeout(() => openModal(loginModal), 200);
+    })
   );
 
   // Toggle password visibility
   document.querySelectorAll(".toggle-password").forEach(btn =>
     btn.addEventListener("click", () => {
+      if (isAuthProcessing) return;
       const input = btn.closest(".relative").querySelector("input");
       const icon = btn.querySelector(".material-symbols-outlined");
       if (input.type === "password") { input.type = "text"; icon.textContent = "visibility_off"; }
@@ -323,23 +372,20 @@ import { showToast } from './toast.js';
       e.preventDefault();
       const email = document.getElementById("login-email").value;
       const password = document.getElementById("login-password").value;
+      
+      setAuthLoading(loginForm, true);
+
       signInWithEmailAndPassword(auth, email, password)
         .then(async (userCredential) => {
+          setAuthLoading(loginForm, false);
           closeAll();
           loginForm.reset();
-          
-          try {
-              const userDoc = await getDoc(doc(db, "users", userCredential.user.uid));
-              if (userDoc.exists() && userDoc.data().role === 'admin') {
-                  window.location.href = "admin.html#appointments";
-              } else {
-                  window.location.href = "dashboard.html#appointments";
-              }
-          } catch (e) {
-              window.location.href = "dashboard.html#appointments";
-          }
+          showToast("Logged in successfully!", "success");
         })
-        .catch(err => showToast("Login failed: " + err.message, 'error'));
+        .catch(err => {
+          setAuthLoading(loginForm, false);
+          showToast("Login failed: " + err.message, 'error');
+        });
     });
   }
 
@@ -356,6 +402,8 @@ import { showToast } from './toast.js';
         showToast("Password must be at least 8 characters long.", "error");
         return;
       }
+
+      setAuthLoading(regForm, true);
 
       createUserWithEmailAndPassword(auth, email, password)
         .then(async (userCredential) => {
@@ -374,12 +422,16 @@ import { showToast } from './toast.js';
           return user;
         })
         .then(() => {
+          setAuthLoading(regForm, false);
           closeAll();
           regForm.reset();
           updateAuthUI(auth.currentUser);
-          window.location.href = "dashboard.html#appointments";
+          showToast("Account created successfully!", "success");
         })
-        .catch(err => showToast("Registration failed: " + err.message, 'error'));
+        .catch(err => {
+          setAuthLoading(regForm, false);
+          showToast("Registration failed: " + err.message, 'error');
+        });
     });
   }
 
@@ -387,6 +439,15 @@ import { showToast } from './toast.js';
   // 9. LISTEN TO AUTH CHANGES
   // ═══════════════════════════════════════════
   onAuthStateChanged(auth, updateAuthUI);
+
+  // Check if account deletion toast is queued
+  if (localStorage.getItem('ktech_account_deleted') === 'true') {
+    localStorage.removeItem('ktech_account_deleted');
+    // Slight delay to allow DOM/styles to load smoothly
+    setTimeout(() => {
+      showToast('Your account has been successfully deleted.', 'success');
+    }, 500);
+  }
 
   // ═══════════════════════════════════════════
   // 10. PAGE SPECIFIC LOGIC

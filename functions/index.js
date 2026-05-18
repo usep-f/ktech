@@ -24,45 +24,55 @@ async function isAdmin(context) {
 // Accomplished and Denied appointments remain untouched.
 exports.onUserDeletedTrigger = functions.auth.user().onDelete(async (user) => {
     const uid = user.uid;
-    console.log(`User ${uid} deleted. Triggering cleanup cascade...`);
+    console.log(`User ${uid} deleted. Triggering cleanup cascade (Option 3)...`);
 
     const batch = db.batch();
     const protectedStatuses = ['Accomplished', 'Denied', 'Cancelled'];
 
-    // 1. Mark only active/pending appointments as Cancelled (preserve Accomplished, Denied, already Cancelled)
+    // Get the user document first to extract their latest display details
+    const userDocRef = db.collection('users').doc(uid);
+    const userDoc = await userDocRef.get();
+    
+    let userName = user.displayName || user.email || 'Unnamed Client';
+    let userEmail = user.email || 'No email';
+    
+    if (userDoc.exists) {
+        const userData = userDoc.data();
+        if (userData.name) userName = userData.name;
+        if (userData.email) userEmail = userData.email;
+    }
+
+    // 1. Mark active/pending appointments as Cancelled, AND denormalize userName and userEmail on ALL appointments for this user.
     const appointmentsSnapshot = await db.collection('appointments').where('userId', '==', uid).get();
     let cancelledCount = 0;
     let preservedCount = 0;
 
     appointmentsSnapshot.forEach((doc) => {
         const currentStatus = doc.data().status;
+        const updateData = {
+            userName: userName,
+            userEmail: userEmail,
+            updatedAt: admin.firestore.FieldValue.serverTimestamp()
+        };
+
         if (!protectedStatuses.includes(currentStatus)) {
-            batch.update(doc.ref, {
-                status: 'Cancelled',
-                cancelReason: 'User account deleted',
-                updatedAt: admin.firestore.FieldValue.serverTimestamp()
-            });
+            updateData.status = 'Cancelled';
+            updateData.cancelReason = 'User account deleted';
             cancelledCount++;
         } else {
             preservedCount++;
         }
+
+        batch.update(doc.ref, updateData);
     });
 
-    // 2. Soft-delete: mark user doc as deleted instead of removing it
-    // This preserves user info for historical record-keeping
-    const userDocRef = db.collection('users').doc(uid);
-    const userDoc = await userDocRef.get();
-
+    // 2. Physical delete: permanently remove the user document from the users collection
     if (userDoc.exists) {
-        batch.update(userDocRef, {
-            isDeleted: true,
-            deletedAt: admin.firestore.FieldValue.serverTimestamp(),
-            status: 'deleted'
-        });
+        batch.delete(userDocRef);
     }
 
     await batch.commit();
-    console.log(`Cleanup for user ${uid}: ${cancelledCount} appointments cancelled, ${preservedCount} preserved (Accomplished/Denied/Cancelled).`);
+    console.log(`Cleanup for user ${uid}: ${cancelledCount} appointments cancelled, ${preservedCount} preserved. User document deleted permanently.`);
 });
 
 // 3. Admin User Management (Delete / Change Password / Update Profile)

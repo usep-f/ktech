@@ -188,13 +188,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 const displayDate = item.createdAt ? new Date(item.createdAt.seconds * 1000).toLocaleDateString() : 'N/A';
-                // Just use first 8 characters of UID to save space if no email available
-                const clientIdentifier = item.userId ? item.userId.substring(0, 8) : 'Unknown';
+                const clientName = item.userName || 'Unnamed Client';
+                const clientSub = item.userEmail || (item.userId ? `ID: ${item.userId.substring(0, 8)}` : 'No Info');
 
                 return `
                 <tr class="hover:bg-surface-container-high/20 transition-colors group">
-                    <td class="px-8 py-6 text-body-sm font-mono text-on-surface-variant">
-                        ${clientIdentifier}...
+                    <td class="px-8 py-6">
+                        <div class="flex flex-col">
+                            <span class="font-body-md text-on-surface leading-tight">${clientName}</span>
+                            <span class="text-[11px] text-outline font-mono mt-0.5">${clientSub}</span>
+                        </div>
                     </td>
                     <td class="px-8 py-6">
                         <div class="flex items-center gap-3">
