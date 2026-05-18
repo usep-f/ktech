@@ -17,24 +17,24 @@ import { doc, setDoc, serverTimestamp, getDoc } from 'firebase/firestore';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import { showToast } from './toast.js';
 
-  // ═══════════════════════════════════════════
-  // 2. DETECT ACTIVE PAGE
-  // ═══════════════════════════════════════════
-  const path = window.location.pathname.split("/").pop() || "index.html";
-  const activePage = path === "" ? "index.html" : path;
+// ═══════════════════════════════════════════
+// 2. DETECT ACTIVE PAGE
+// ═══════════════════════════════════════════
+const path = window.location.pathname.split("/").pop() || "index.html";
+const activePage = path === "" ? "index.html" : path;
 
-  function navLinkClass(href) {
-    if (href === activePage) {
-      return "text-primary font-bold border-b-2 border-primary pb-1";
-    }
-    return "text-on-surface-variant font-label-md hover:text-primary transition-colors duration-200";
+function navLinkClass(href) {
+  if (href === activePage) {
+    return "text-primary font-bold border-b-2 border-primary pb-1";
   }
+  return "text-on-surface-variant font-label-md hover:text-primary transition-colors duration-200";
+}
 
-  // ═══════════════════════════════════════════
-  // 3. INJECT CSS
-  // ═══════════════════════════════════════════
-  const style = document.createElement("style");
-  style.textContent = `
+// ═══════════════════════════════════════════
+// 3. INJECT CSS
+// ═══════════════════════════════════════════
+const style = document.createElement("style");
+style.textContent = `
     .modal-overlay{position:fixed;inset:0;z-index:100;background:rgba(7,13,31,.85);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .35s ease}
     .modal-overlay.open{opacity:1;pointer-events:auto}
     .modal-card{transform:translateY(30px) scale(.96);filter:blur(4px);transition:transform .4s cubic-bezier(.16,1,.3,1),filter .4s cubic-bezier(.16,1,.3,1)}
@@ -50,37 +50,54 @@ import { showToast } from './toast.js';
     .ktech-dropdown-header .name{font-weight:600;font-size:14px;color:#dce1fb}
     .ktech-dropdown-header .email{font-size:12px;color:#849396;margin-top:2px}
   `;
-  document.head.appendChild(style);
+document.head.appendChild(style);
 
-  // ═══════════════════════════════════════════
-  // 4. BUILD NAVBAR HTML
-  // ═══════════════════════════════════════════
-  function buildNavbar() {
-    return `
-    <header class="fixed top-0 w-full h-[80px] z-50 bg-surface/70 backdrop-blur-md border-b border-outline-variant/30 shadow-sm">
-      <div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop h-nav-height w-full max-w-container-max mx-auto">
-        <div class="text-headline-sm font-headline-sm font-bold text-on-surface">KTech Solutions</div>
-        <nav class="hidden md:flex space-x-gutter">
+// ═══════════════════════════════════════════
+// 4. BUILD NAVBAR HTML
+// ═══════════════════════════════════════════
+function buildNavbar() {
+  return `
+    <header class="fixed top-0 w-full h-[80px] z-50 bg-surface/70 backdrop-blur-md border-b border-outline-variant/30 shadow-sm transition-colors duration-300">
+      <div class="flex justify-between items-center px-margin-mobile min-[1070px]:px-margin-desktop h-nav-height w-full max-w-container-max mx-auto">
+        <div class="flex-1 flex justify-start text-headline-sm font-headline-sm font-bold text-on-surface whitespace-nowrap">
+          KTech Solutions
+        </div>
+        <nav class="hidden min-[1000px]:flex flex-1 justify-center space-x-gutter">
           <a class="${navLinkClass("index.html")}" href="index.html">Home</a>
           <a class="${navLinkClass("aboutus.html")}" href="aboutus.html">About Us</a>
           <a class="${navLinkClass("services.html")}" href="services.html">Services</a>
           <a class="${navLinkClass("contact.html")}" href="contact.html">Contact</a>
         </nav>
-        <div class="hidden md:flex items-center space-x-base" id="nav-auth-area">
-          <!-- Auth area injected by updateAuthUI -->
+        <div class="flex-1 flex justify-end items-center space-x-base">
+          <div class="hidden min-[1000px]:flex items-center justify-end" id="nav-auth-area">
+            <!-- Auth area injected by updateAuthUI -->
+          </div>
+          <button class="min-[1000px]:hidden text-on-surface p-2 transition-transform duration-300" id="mobile-menu-btn">
+            <span class="material-symbols-outlined transition-transform duration-300" id="mobile-menu-icon">menu</span>
+          </button>
         </div>
-        <button class="md:hidden text-on-surface p-2" id="mobile-menu-btn">
-          <span class="material-symbols-outlined">menu</span>
-        </button>
+      </div>
+      
+      <!-- MOBILE MENU -->
+      <div id="mobile-menu" class="min-[1070px]:hidden absolute top-[80px] left-0 w-full bg-surface/95 backdrop-blur-md border-b border-outline-variant/30 shadow-lg hidden flex-col px-6 py-6">
+        <nav class="flex flex-col space-y-6 mb-6">
+          <a class="${navLinkClass("index.html")} text-lg" href="index.html">Home</a>
+          <a class="${navLinkClass("aboutus.html")} text-lg" href="aboutus.html">About Us</a>
+          <a class="${navLinkClass("services.html")} text-lg" href="services.html">Services</a>
+          <a class="${navLinkClass("contact.html")} text-lg" href="contact.html">Contact</a>
+        </nav>
+        <div class="flex flex-col space-y-4" id="mobile-auth-area">
+          <!-- Mobile auth area injected by updateAuthUI -->
+        </div>
       </div>
     </header>`;
-  }
+}
 
-  // ═══════════════════════════════════════════
-  // 5. BUILD MODALS HTML
-  // ═══════════════════════════════════════════
-  function buildModals() {
-    return `
+// ═══════════════════════════════════════════
+// 5. BUILD MODALS HTML
+// ═══════════════════════════════════════════
+function buildModals() {
+  return `
     <!-- LOGIN MODAL -->
     <div class="modal-overlay" id="login-modal">
       <div class="modal-card bg-surface-container-low border border-outline-variant/50 rounded-lg w-full max-w-[480px] shadow-2xl relative overflow-hidden flex flex-col">
@@ -199,276 +216,356 @@ import { showToast } from './toast.js';
         </div>
       </div>
     </div>`;
-  }
+}
 
-  // ═══════════════════════════════════════════
-  // 6. INJECT INTO DOM
-  // ═══════════════════════════════════════════
-  const navRoot = document.getElementById("navbar-root");
-  const modalRoot = document.getElementById("modal-root");
+// ═══════════════════════════════════════════
+// 6. INJECT INTO DOM
+// ═══════════════════════════════════════════
+const navRoot = document.getElementById("navbar-root");
+const modalRoot = document.getElementById("modal-root");
 
-  if (navRoot) navRoot.innerHTML = buildNavbar();
-  if (modalRoot) modalRoot.innerHTML = buildModals();
+if (navRoot) navRoot.innerHTML = buildNavbar();
+if (modalRoot) modalRoot.innerHTML = buildModals();
 
-  // ═══════════════════════════════════════════
-  // 7. AUTH UI UPDATER
-  // ═══════════════════════════════════════════
-  function updateAuthUI(user) {
-    const area = document.getElementById("nav-auth-area");
-    if (!area) return;
+// Mobile Menu Logic
+const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+const mobileMenu = document.getElementById("mobile-menu");
+const mobileMenuIcon = document.getElementById("mobile-menu-icon");
 
-    if (user) {
-      const initial = (user.displayName || user.email || "U").charAt(0).toUpperCase();
-      area.innerHTML = `
-        <div class="relative">
-          <div class="ktech-avatar" id="avatar-btn" title="${user.displayName || user.email}">${initial}</div>
-          <div class="ktech-dropdown" id="avatar-dropdown">
-            <div class="ktech-dropdown-header">
-              <div class="name">${user.displayName || "User"}</div>
-              <div class="email">${user.email || ""}</div>
+if (mobileMenuBtn && mobileMenu && mobileMenuIcon) {
+  mobileMenuBtn.addEventListener("click", () => {
+    const isHidden = mobileMenu.classList.contains("hidden");
+    if (isHidden) {
+      mobileMenu.classList.remove("hidden");
+      mobileMenu.classList.add("flex");
+      mobileMenuIcon.textContent = "close";
+      mobileMenuIcon.style.transform = "rotate(90deg)";
+    } else {
+      mobileMenu.classList.add("hidden");
+      mobileMenu.classList.remove("flex");
+      mobileMenuIcon.textContent = "menu";
+      mobileMenuIcon.style.transform = "rotate(0deg)";
+    }
+  });
+}
+
+// Close avatar dropdown when clicking outside
+document.addEventListener("click", () => {
+  const dropdown = document.getElementById("avatar-dropdown");
+  if (dropdown) dropdown.classList.remove("open");
+});
+
+// ═══════════════════════════════════════════
+// 7. AUTH UI UPDATER
+// ═══════════════════════════════════════════
+function updateAuthUI(user) {
+  const desktopArea = document.getElementById("nav-auth-area");
+  const mobileArea = document.getElementById("mobile-auth-area");
+
+  if (user) {
+    const initial = (user.displayName || user.email || "U").charAt(0).toUpperCase();
+
+    if (desktopArea) {
+      desktopArea.innerHTML = `
+          <div class="relative">
+            <div class="ktech-avatar" id="avatar-btn" title="${user.displayName || user.email}">${initial}</div>
+            <div class="ktech-dropdown" id="avatar-dropdown">
+              <div class="ktech-dropdown-header">
+                <div class="name">${user.displayName || "User"}</div>
+                <div class="email">${user.email || ""}</div>
+              </div>
+              <div class="ktech-dropdown-divider"></div>
+              <a href="dashboard.html" id="dashboard-link" class="ktech-dropdown-item" style="text-decoration: none;">
+                <span class="material-symbols-outlined" style="font-size:18px">dashboard</span>
+                Dashboard
+              </a>
+              <div class="ktech-dropdown-item" id="signout-btn">
+                <span class="material-symbols-outlined" style="font-size:18px">logout</span>
+                Sign Out
+              </div>
             </div>
-            <div class="ktech-dropdown-divider"></div>
-            <a href="dashboard.html" id="dashboard-link" class="ktech-dropdown-item" style="text-decoration: none;">
-              <span class="material-symbols-outlined" style="font-size:18px">dashboard</span>
-              Dashboard
-            </a>
-            <div class="ktech-dropdown-item" id="signout-btn">
-              <span class="material-symbols-outlined" style="font-size:18px">logout</span>
-              Sign Out
-            </div>
-          </div>
-        </div>`;
+          </div>`;
 
       // Avatar dropdown toggle
       const avatarBtn = document.getElementById("avatar-btn");
       const dropdown = document.getElementById("avatar-dropdown");
-      
-      // Dynamic dashboard redirection based on role
-      getDoc(doc(db, "users", user.uid)).then(userDoc => {
-        if (userDoc.exists() && userDoc.data().role === 'admin') {
-          const dashLink = document.getElementById("dashboard-link");
-          if (dashLink) {
-            dashLink.setAttribute("href", "admin.html");
-          }
-        }
-      }).catch(err => console.error("Error fetching user role for navbar:", err));
 
       avatarBtn.addEventListener("click", (e) => {
         e.stopPropagation();
         dropdown.classList.toggle("open");
       });
-      document.addEventListener("click", () => dropdown.classList.remove("open"));
 
       // Sign out
       document.getElementById("signout-btn").addEventListener("click", () => {
         dropdown.classList.remove("open");
         signOut(auth).catch(err => console.error(err));
       });
-    } else {
-      area.innerHTML = `
-        <button id="open-login-btn" class="font-label-md text-label-md text-primary border border-primary px-6 py-3 rounded hover:bg-primary/10 hover:scale-[1.02] transition-all duration-300 h-[48px] flex items-center justify-center">
-          Login
-        </button>`;
+    }
 
-      // Wire login button
+    if (mobileArea) {
+      mobileArea.innerHTML = `
+          <div class="border-t border-outline-variant/30 pt-6">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="ktech-avatar cursor-default hover:transform-none hover:shadow-none" style="pointer-events: none;">${initial}</div>
+              <div>
+                <div class="text-on-surface font-semibold text-lg">${user.displayName || "User"}</div>
+                <div class="text-on-surface-variant text-sm">${user.email || ""}</div>
+              </div>
+            </div>
+            <div class="flex flex-col space-y-4">
+              <a href="dashboard.html" id="mobile-dashboard-link" class="flex items-center gap-3 text-on-surface-variant hover:text-primary transition-colors">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="font-label-md text-lg">Dashboard</span>
+              </a>
+              <button id="mobile-signout-btn" class="flex items-center gap-3 text-on-surface-variant hover:text-error transition-colors w-full text-left">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="font-label-md text-lg">Sign Out</span>
+              </button>
+            </div>
+          </div>`;
+
+      document.getElementById("mobile-signout-btn").addEventListener("click", () => {
+        signOut(auth).catch(err => console.error(err));
+      });
+    }
+
+    // Dynamic dashboard redirection based on role
+    getDoc(doc(db, "users", user.uid)).then(userDoc => {
+      if (userDoc.exists() && userDoc.data().role === 'admin') {
+        const dashLink = document.getElementById("dashboard-link");
+        const mobileDashLink = document.getElementById("mobile-dashboard-link");
+        if (dashLink) dashLink.setAttribute("href", "admin.html");
+        if (mobileDashLink) mobileDashLink.setAttribute("href", "admin.html");
+      }
+    }).catch(err => console.error("Error fetching user role for navbar:", err));
+
+  } else {
+    if (desktopArea) {
+      desktopArea.innerHTML = `
+          <button id="open-login-btn" class="font-label-md text-label-md text-primary border border-primary px-6 py-3 rounded hover:bg-primary/10 hover:scale-[1.02] transition-all duration-300 h-[48px] flex items-center justify-center">
+            Login
+          </button>`;
       document.getElementById("open-login-btn").addEventListener("click", () => openModal(loginModal));
     }
-  }
 
-  // ═══════════════════════════════════════════
-  // 8. MODAL LOGIC
-  // ═══════════════════════════════════════════
-  const loginModal = document.getElementById("login-modal");
-  const registerModal = document.getElementById("register-modal");
-  let isAuthProcessing = false;
-
-  function openModal(m) { if (m) { m.classList.add("open"); document.body.style.overflow = "hidden"; } }
-  function closeModal(m) { if (isAuthProcessing) return; if (m) { m.classList.remove("open"); document.body.style.overflow = ""; } }
-  function closeAll() { if (isAuthProcessing) return; closeModal(loginModal); closeModal(registerModal); }
-
-  function setAuthLoading(formElement, isLoading) {
-    isAuthProcessing = isLoading;
-    const modal = formElement.closest('.modal-overlay');
-    if (!modal) return;
-    const closeBtn = modal.querySelector('.modal-close-btn');
-    const inputs = formElement.querySelectorAll('input, button, [type="checkbox"], a');
-
-    if (isLoading) {
-      if (closeBtn) {
-        closeBtn.classList.add('opacity-30', 'pointer-events-none');
-        closeBtn.disabled = true;
-      }
-      inputs.forEach(el => {
-        el.disabled = true;
-        el.classList.add('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
+    if (mobileArea) {
+      mobileArea.innerHTML = `
+          <div class="border-t border-outline-variant/30 pt-6 flex flex-col space-y-4">
+            <button id="mobile-open-login-btn" class="w-full font-label-md text-label-md text-primary border border-primary px-6 py-3 rounded hover:bg-primary/10 transition-all duration-300 h-[48px] flex items-center justify-center">
+              Login
+            </button>
+          </div>`;
+      document.getElementById("mobile-open-login-btn").addEventListener("click", () => {
+        const mobileMenu = document.getElementById("mobile-menu");
+        if (mobileMenu && !mobileMenu.classList.contains("hidden")) {
+          mobileMenu.classList.add("hidden");
+          mobileMenu.classList.remove("flex");
+          const icon = document.getElementById("mobile-menu-icon");
+          if (icon) {
+            icon.textContent = "menu";
+            icon.style.transform = "rotate(0deg)";
+          }
+        }
+        openModal(loginModal);
       });
-      const submitBtn = formElement.querySelector('button[type="submit"]');
-      if (submitBtn) {
-        submitBtn.dataset.originalHtml = submitBtn.innerHTML;
-        submitBtn.innerHTML = `<span class="animate-spin inline-block w-5 h-5 border-2 border-current border-t-transparent rounded-full mr-2"></span> Processing...`;
-      }
-    } else {
-      if (closeBtn) {
-        closeBtn.classList.remove('opacity-30', 'pointer-events-none');
-        closeBtn.disabled = false;
-      }
-      inputs.forEach(el => {
-        el.disabled = false;
-        el.classList.remove('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
-      });
-      const submitBtn = formElement.querySelector('button[type="submit"]');
-      if (submitBtn && submitBtn.dataset.originalHtml) {
-        submitBtn.innerHTML = submitBtn.dataset.originalHtml;
-      }
     }
   }
+}
 
-  // Close buttons
-  document.querySelectorAll(".modal-close-btn").forEach(btn =>
-    btn.addEventListener("click", () => { if (!isAuthProcessing) closeAll(); })
-  );
+// ═══════════════════════════════════════════
+// 8. MODAL LOGIC
+// ═══════════════════════════════════════════
+const loginModal = document.getElementById("login-modal");
+const registerModal = document.getElementById("register-modal");
+let isAuthProcessing = false;
 
-  // Backdrop click
-  [loginModal, registerModal].forEach(m => {
-    if (m) m.addEventListener("click", e => { if (e.target === m && !isAuthProcessing) closeAll(); });
+function openModal(m) { if (m) { m.classList.add("open"); document.body.style.overflow = "hidden"; } }
+function closeModal(m) { if (isAuthProcessing) return; if (m) { m.classList.remove("open"); document.body.style.overflow = ""; } }
+function closeAll() { if (isAuthProcessing) return; closeModal(loginModal); closeModal(registerModal); }
+
+function setAuthLoading(formElement, isLoading) {
+  isAuthProcessing = isLoading;
+  const modal = formElement.closest('.modal-overlay');
+  if (!modal) return;
+  const closeBtn = modal.querySelector('.modal-close-btn');
+  const inputs = formElement.querySelectorAll('input, button, [type="checkbox"], a');
+
+  if (isLoading) {
+    if (closeBtn) {
+      closeBtn.classList.add('opacity-30', 'pointer-events-none');
+      closeBtn.disabled = true;
+    }
+    inputs.forEach(el => {
+      el.disabled = true;
+      el.classList.add('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
+    });
+    const submitBtn = formElement.querySelector('button[type="submit"]');
+    if (submitBtn) {
+      submitBtn.dataset.originalHtml = submitBtn.innerHTML;
+      submitBtn.innerHTML = `<span class="animate-spin inline-block w-5 h-5 border-2 border-current border-t-transparent rounded-full mr-2"></span> Processing...`;
+    }
+  } else {
+    if (closeBtn) {
+      closeBtn.classList.remove('opacity-30', 'pointer-events-none');
+      closeBtn.disabled = false;
+    }
+    inputs.forEach(el => {
+      el.disabled = false;
+      el.classList.remove('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
+    });
+    const submitBtn = formElement.querySelector('button[type="submit"]');
+    if (submitBtn && submitBtn.dataset.originalHtml) {
+      submitBtn.innerHTML = submitBtn.dataset.originalHtml;
+    }
+  }
+}
+
+// Close buttons
+document.querySelectorAll(".modal-close-btn").forEach(btn =>
+  btn.addEventListener("click", () => { if (!isAuthProcessing) closeAll(); })
+);
+
+// Backdrop click
+[loginModal, registerModal].forEach(m => {
+  if (m) m.addEventListener("click", e => { if (e.target === m && !isAuthProcessing) closeAll(); });
+});
+
+// Escape
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !isAuthProcessing) closeAll(); });
+
+// Switch modals
+document.querySelectorAll(".switch-to-register").forEach(a =>
+  a.addEventListener("click", e => {
+    if (isAuthProcessing) return;
+    e.preventDefault();
+    closeModal(loginModal);
+    setTimeout(() => openModal(registerModal), 200);
+  })
+);
+document.querySelectorAll(".switch-to-login").forEach(a =>
+  a.addEventListener("click", e => {
+    if (isAuthProcessing) return;
+    e.preventDefault();
+    closeModal(registerModal);
+    setTimeout(() => openModal(loginModal), 200);
+  })
+);
+
+// Toggle password visibility
+document.querySelectorAll(".toggle-password").forEach(btn =>
+  btn.addEventListener("click", () => {
+    if (isAuthProcessing) return;
+    const input = btn.closest(".relative").querySelector("input");
+    const icon = btn.querySelector(".material-symbols-outlined");
+    if (input.type === "password") { input.type = "text"; icon.textContent = "visibility_off"; }
+    else { input.type = "password"; icon.textContent = "visibility"; }
+  })
+);
+
+// Login form submit
+const loginForm = document.getElementById("login-form");
+if (loginForm) {
+  loginForm.addEventListener("submit", e => {
+    e.preventDefault();
+    const email = document.getElementById("login-email").value;
+    const password = document.getElementById("login-password").value;
+
+    setAuthLoading(loginForm, true);
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then(async (userCredential) => {
+        setAuthLoading(loginForm, false);
+        closeAll();
+        loginForm.reset();
+        showToast("Logged in successfully!", "success");
+      })
+      .catch(err => {
+        setAuthLoading(loginForm, false);
+        showToast("Login failed: " + err.message, 'error');
+      });
   });
+}
 
-  // Escape
-  document.addEventListener("keydown", e => { if (e.key === "Escape" && !isAuthProcessing) closeAll(); });
+// Register form submit
+const regForm = document.getElementById("register-form");
+if (regForm) {
+  regForm.addEventListener("submit", e => {
+    e.preventDefault();
+    const name = document.getElementById("reg-fullname").value;
+    const email = document.getElementById("reg-email").value;
+    const password = document.getElementById("reg-password").value;
 
-  // Switch modals
-  document.querySelectorAll(".switch-to-register").forEach(a =>
-    a.addEventListener("click", e => {
-      if (isAuthProcessing) return;
-      e.preventDefault();
-      closeModal(loginModal);
-      setTimeout(() => openModal(registerModal), 200);
-    })
-  );
-  document.querySelectorAll(".switch-to-login").forEach(a =>
-    a.addEventListener("click", e => {
-      if (isAuthProcessing) return;
-      e.preventDefault();
-      closeModal(registerModal);
-      setTimeout(() => openModal(loginModal), 200);
-    })
-  );
+    if (password.length < 8) {
+      showToast("Password must be at least 8 characters long.", "error");
+      return;
+    }
 
-  // Toggle password visibility
-  document.querySelectorAll(".toggle-password").forEach(btn =>
-    btn.addEventListener("click", () => {
-      if (isAuthProcessing) return;
-      const input = btn.closest(".relative").querySelector("input");
-      const icon = btn.querySelector(".material-symbols-outlined");
-      if (input.type === "password") { input.type = "text"; icon.textContent = "visibility_off"; }
-      else { input.type = "password"; icon.textContent = "visibility"; }
-    })
-  );
+    setAuthLoading(regForm, true);
 
-  // Login form submit
-  const loginForm = document.getElementById("login-form");
-  if (loginForm) {
-    loginForm.addEventListener("submit", e => {
-      e.preventDefault();
-      const email = document.getElementById("login-email").value;
-      const password = document.getElementById("login-password").value;
-      
-      setAuthLoading(loginForm, true);
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(async (userCredential) => {
+        const user = userCredential.user;
+        await updateProfile(user, { displayName: name });
 
-      signInWithEmailAndPassword(auth, email, password)
-        .then(async (userCredential) => {
-          setAuthLoading(loginForm, false);
-          closeAll();
-          loginForm.reset();
-          showToast("Logged in successfully!", "success");
-        })
-        .catch(err => {
-          setAuthLoading(loginForm, false);
-          showToast("Login failed: " + err.message, 'error');
+        // Create user document in Firestore
+        await setDoc(doc(db, "users", user.uid), {
+          uid: user.uid,
+          name: name,
+          email: email,
+          role: 'client',
+          createdAt: serverTimestamp()
         });
-    });
-  }
 
-  // Register form submit
-  const regForm = document.getElementById("register-form");
-  if (regForm) {
-    regForm.addEventListener("submit", e => {
-      e.preventDefault();
-      const name = document.getElementById("reg-fullname").value;
-      const email = document.getElementById("reg-email").value;
-      const password = document.getElementById("reg-password").value;
+        return user;
+      })
+      .then(() => {
+        setAuthLoading(regForm, false);
+        closeAll();
+        regForm.reset();
+        updateAuthUI(auth.currentUser);
+        showToast("Account created successfully!", "success");
+      })
+      .catch(err => {
+        setAuthLoading(regForm, false);
+        showToast("Registration failed: " + err.message, 'error');
+      });
+  });
+}
 
-      if (password.length < 8) {
-        showToast("Password must be at least 8 characters long.", "error");
-        return;
-      }
+// ═══════════════════════════════════════════
+// 9. LISTEN TO AUTH CHANGES
+// ═══════════════════════════════════════════
+onAuthStateChanged(auth, updateAuthUI);
 
-      setAuthLoading(regForm, true);
+// Check if account deletion toast is queued
+if (localStorage.getItem('ktech_account_deleted') === 'true') {
+  localStorage.removeItem('ktech_account_deleted');
+  // Slight delay to allow DOM/styles to load smoothly
+  setTimeout(() => {
+    showToast('Your account has been successfully deleted.', 'success');
+  }, 500);
+}
 
-      createUserWithEmailAndPassword(auth, email, password)
-        .then(async (userCredential) => {
-          const user = userCredential.user;
-          await updateProfile(user, { displayName: name });
-          
-          // Create user document in Firestore
-          await setDoc(doc(db, "users", user.uid), {
-            uid: user.uid,
-            name: name,
-            email: email,
-            role: 'client',
-            createdAt: serverTimestamp()
-          });
-
-          return user;
-        })
-        .then(() => {
-          setAuthLoading(regForm, false);
-          closeAll();
-          regForm.reset();
-          updateAuthUI(auth.currentUser);
-          showToast("Account created successfully!", "success");
-        })
-        .catch(err => {
-          setAuthLoading(regForm, false);
-          showToast("Registration failed: " + err.message, 'error');
-        });
-    });
-  }
-
-  // ═══════════════════════════════════════════
-  // 9. LISTEN TO AUTH CHANGES
-  // ═══════════════════════════════════════════
-  onAuthStateChanged(auth, updateAuthUI);
-
-  // Check if account deletion toast is queued
-  if (localStorage.getItem('ktech_account_deleted') === 'true') {
-    localStorage.removeItem('ktech_account_deleted');
-    // Slight delay to allow DOM/styles to load smoothly
-    setTimeout(() => {
-      showToast('Your account has been successfully deleted.', 'success');
-    }, 500);
-  }
-
-  // ═══════════════════════════════════════════
-  // 10. PAGE SPECIFIC LOGIC
-  // ═══════════════════════════════════════════
-  const heroGetStartedBtn = document.getElementById("hero-get-started-btn");
-  if (heroGetStartedBtn) {
-    heroGetStartedBtn.addEventListener("click", () => {
-      if (auth.currentUser) {
-        getDoc(doc(db, "users", auth.currentUser.uid)).then(docSnap => {
-            if (docSnap.exists() && docSnap.data().role === 'admin') {
-                window.location.href = "admin.html#appointments";
-            } else {
-                window.location.href = "dashboard.html#appointments";
-            }
-        }).catch(() => {
-            window.location.href = "dashboard.html#appointments";
-        });
-      } else {
-        openModal(loginModal);
-      }
-    });
-  }
+// ═══════════════════════════════════════════
+// 10. PAGE SPECIFIC LOGIC
+// ═══════════════════════════════════════════
+const heroGetStartedBtn = document.getElementById("hero-get-started-btn");
+if (heroGetStartedBtn) {
+  heroGetStartedBtn.addEventListener("click", () => {
+    if (auth.currentUser) {
+      getDoc(doc(db, "users", auth.currentUser.uid)).then(docSnap => {
+        if (docSnap.exists() && docSnap.data().role === 'admin') {
+          window.location.href = "admin.html#appointments";
+        } else {
+          window.location.href = "dashboard.html#appointments";
+        }
+      }).catch(() => {
+        window.location.href = "dashboard.html#appointments";
+      });
+    } else {
+      openModal(loginModal);
+    }
+  });
+}
 
 
