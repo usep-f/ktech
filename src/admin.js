@@ -240,15 +240,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const usersTbody = document.getElementById('admin-users-table-body');
         
         onSnapshot(collection(db, "users"), async (snapshot) => {
-            if (snapshot.empty) {
+            const users = [];
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                if (data.isDeleted !== true) {
+                    users.push({ id: doc.id, ...data });
+                }
+            });
+            
+            if (users.length === 0) {
                 usersTbody.innerHTML = `<tr><td colspan="5" class="px-8 py-6 text-center text-on-surface-variant font-body-md">No users found.</td></tr>`;
                 return;
             }
-
-            const users = [];
-            snapshot.forEach((doc) => {
-                users.push({ id: doc.id, ...doc.data() });
-            });
             
             allUsersData = users;
             window.__adminUsers = users;

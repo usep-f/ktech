@@ -15,7 +15,8 @@ export function setupNotificationsListener(recipientId) {
     const panel      = document.getElementById('notif-panel');
     const badge      = document.getElementById('notif-badge');
     const listEl     = document.getElementById('notif-list');
-    const markAllBtn = document.getElementById('mark-all-read-btn');
+    const markAllBtn  = document.getElementById('mark-all-read-btn');
+    const clearAllBtn = document.getElementById('clear-all-notifs-btn');
 
     if (!bellBtn || !panel) return;
 
@@ -52,6 +53,29 @@ export function setupNotificationsListener(recipientId) {
         const batch = writeBatch(db);
         snapshot.forEach((docSnap) => {
             batch.update(doc(db, 'notifications', docSnap.id), { read: true });
+        });
+        await batch.commit();
+    });
+
+    // Clear all notifications completely
+    clearAllBtn?.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        const snapshot = await new Promise((resolve) => {
+            const q = query(
+                collection(db, 'notifications'),
+                where('recipientId', '==', recipientId)
+            );
+            const unsub = onSnapshot(q, (snap) => {
+                unsub();
+                resolve(snap);
+            });
+        });
+
+        if (snapshot.empty) return;
+
+        const batch = writeBatch(db);
+        snapshot.forEach((docSnap) => {
+            batch.delete(doc(db, 'notifications', docSnap.id));
         });
         await batch.commit();
     });
