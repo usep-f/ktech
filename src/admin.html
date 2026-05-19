@@ -8,6 +8,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
     <style>
+        @keyframes tabFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .tab-section.block {
+            animation: tabFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
         body {
             background-color: #0c1324;
             color: #dce1fb;
@@ -53,6 +66,20 @@
         }
         .sidebar-link-inactive:hover {
             background-color: #23293c;
+        }
+
+        /* Glass Panel Styling with Premium Contrast Shadow */
+        .glass-panel {
+            background: rgba(25, 31, 49, 0.45);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(59, 73, 76, 0.35);
+            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.6);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .glass-panel:hover {
+            box-shadow: 0 25px 50px -15px rgba(0, 0, 0, 0.8), 0 0 40px -5px rgba(0, 229, 255, 0.05);
+            border-color: rgba(0, 229, 255, 0.25);
         }
 
         /* Notification Panel */
@@ -160,26 +187,29 @@
                         </div>
                     </div>
                 </header>
-                <div class="p-margin-desktop space-y-gutter max-w-container-max mx-auto w-full">
+                <div class="p-margin-mobile md:p-margin-tablet lg:p-margin-desktop space-y-gutter max-w-container-max mx-auto w-full">
                     <section class="glass-panel rounded-xl overflow-hidden border border-outline-variant/30">
-                        <div class="p-6 border-b border-outline-variant/30 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-surface-container">
+                        <div class="p-6 border-b border-outline-variant/30 flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-surface-container flex-wrap">
                             <div class="flex items-center gap-4">
                                 <span class="material-symbols-outlined text-primary-container">dns</span>
                                 <h2 class="font-headline-sm text-on-surface">All Service Requests</h2>
                             </div>
-                            <div class="flex items-center gap-3 w-full md:w-auto">
-                                <div class="relative flex-1 md:w-64">
+                            <div class="flex items-center gap-3 w-full lg:w-auto">
+                                <div class="relative flex-1 lg:w-64">
                                     <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
                                     <input type="text" id="admin-appt-search" placeholder="Search ID, service, or client..." class="pl-10 pr-4 py-2 w-full bg-surface-container-high border border-outline-variant/30 rounded-lg text-body-sm text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all">
                                 </div>
-                                <select id="admin-appt-filter" class="px-4 py-2 bg-surface-container-high border border-outline-variant/30 rounded-lg text-body-sm text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all">
-                                    <option value="All">All Statuses</option>
-                                    <option value="Pending">Pending</option>
-                                    <option value="Approved">Approved</option>
-                                    <option value="In Progress">In Progress</option>
-                                    <option value="Completed">Completed</option>
-                                    <option value="Cancelled">Cancelled</option>
-                                </select>
+                                <div class="relative">
+                                    <select id="admin-appt-filter" class="pl-4 pr-10 py-2 bg-surface-container-high border border-outline-variant/30 rounded-lg text-body-sm text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all appearance-none cursor-pointer">
+                                        <option value="All">All Statuses</option>
+                                        <option value="Pending">Pending</option>
+                                        <option value="Approved">Approved</option>
+                                        <option value="In Progress">In Progress</option>
+                                        <option value="Completed">Completed</option>
+                                        <option value="Cancelled">Cancelled</option>
+                                    </select>
+                                    <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-outline text-[18px]">expand_more</span>
+                                </div>
                             </div>
                         </div>
                         <div class="overflow-x-auto bg-surface">
@@ -229,9 +259,47 @@
                     <div>
                         <h1 class="font-headline-md text-headline-md text-on-surface">Client Management</h1>
                     </div>
+                    <div class="flex items-center gap-4 relative">
+                        <button class="notif-bell-btn relative p-2 text-on-surface-variant hover:text-primary transition-colors" aria-label="Notifications">
+                            <span class="material-symbols-outlined">notifications</span>
+                            <span class="notif-badge">0</span>
+                        </button>
+                        <div class="notif-panel">
+                            <div class="flex items-center justify-between px-4 py-3 border-b border-outline-variant/30 bg-surface-container">
+                                <h3 class="font-headline-sm text-[14px] text-on-surface">Admin Notifications</h3>
+                                <div class="flex gap-3">
+                                    <button class="mark-all-read-btn text-[10px] text-primary hover:underline font-label-sm uppercase tracking-widest">Mark all read</button>
+                                    <button class="clear-all-notifs-btn text-[10px] text-error hover:underline font-label-sm uppercase tracking-widest">Clear all</button>
+                                </div>
+                            </div>
+                            <div class="notif-list overflow-y-auto flex-grow">
+                                <p class="text-center text-on-surface-variant font-body-sm py-8 px-4">No new notifications.</p>
+                            </div>
+                        </div>
+                    </div>
                 </header>
-                <div class="p-margin-desktop space-y-gutter max-w-container-max mx-auto w-full">
+                <div class="p-margin-mobile md:p-margin-tablet lg:p-margin-desktop space-y-gutter max-w-container-max mx-auto w-full">
                     <section class="glass-panel rounded-xl overflow-hidden border border-outline-variant/30">
+                        <div class="p-6 border-b border-outline-variant/30 flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-surface-container flex-wrap">
+                            <div class="flex items-center gap-4">
+                                <span class="material-symbols-outlined text-primary-container">group</span>
+                                <h2 class="font-headline-sm text-on-surface">All Registered Users</h2>
+                            </div>
+                            <div class="flex items-center gap-3 w-full lg:w-auto">
+                                <div class="relative flex-1 lg:w-64">
+                                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+                                    <input type="text" id="admin-user-search" placeholder="Search name, email, or ID..." class="pl-10 pr-4 py-2 w-full bg-surface-container-high border border-outline-variant/30 rounded-lg text-body-sm text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all">
+                                </div>
+                                <div class="relative">
+                                    <select id="admin-user-filter" class="pl-4 pr-10 py-2 bg-surface-container-high border border-outline-variant/30 rounded-lg text-body-sm text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all appearance-none cursor-pointer">
+                                        <option value="All">All Roles</option>
+                                        <option value="admin">Admin</option>
+                                        <option value="client">Client</option>
+                                    </select>
+                                    <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-outline text-[18px]">expand_more</span>
+                                </div>
+                            </div>
+                        </div>
                         <div class="overflow-x-auto bg-surface">
                             <table class="w-full text-left border-collapse">
                                 <thead>
@@ -279,9 +347,27 @@
                     <div>
                         <h1 class="font-headline-md text-headline-md text-on-surface">Data Export</h1>
                     </div>
+                    <div class="flex items-center gap-4 relative">
+                        <button class="notif-bell-btn relative p-2 text-on-surface-variant hover:text-primary transition-colors" aria-label="Notifications">
+                            <span class="material-symbols-outlined">notifications</span>
+                            <span class="notif-badge">0</span>
+                        </button>
+                        <div class="notif-panel">
+                            <div class="flex items-center justify-between px-4 py-3 border-b border-outline-variant/30 bg-surface-container">
+                                <h3 class="font-headline-sm text-[14px] text-on-surface">Admin Notifications</h3>
+                                <div class="flex gap-3">
+                                    <button class="mark-all-read-btn text-[10px] text-primary hover:underline font-label-sm uppercase tracking-widest">Mark all read</button>
+                                    <button class="clear-all-notifs-btn text-[10px] text-error hover:underline font-label-sm uppercase tracking-widest">Clear all</button>
+                                </div>
+                            </div>
+                            <div class="notif-list overflow-y-auto flex-grow">
+                                <p class="text-center text-on-surface-variant font-body-sm py-8 px-4">No new notifications.</p>
+                            </div>
+                        </div>
+                    </div>
                 </header>
-                <div class="p-margin-desktop max-w-4xl mx-auto w-full py-12">
-                    <div class="bg-surface-container rounded-2xl p-8 border border-outline-variant/30 text-center">
+                <div class="p-margin-mobile md:p-margin-tablet lg:p-margin-desktop max-w-4xl mx-auto w-full py-12">
+                    <div class="glass-panel rounded-2xl p-8 text-center">
                         <span class="material-symbols-outlined text-6xl text-primary mb-4">download</span>
                         <h2 class="font-headline-sm text-on-surface mb-2">Export Master Database</h2>
                         <p class="font-body-md text-on-surface-variant mb-8 max-w-lg mx-auto">Download a comprehensive CSV export of all appointments, their current statuses, and client IDs for external reporting.</p>
@@ -327,14 +413,17 @@
                 </button>
             </div>
             <div class="p-gutter flex flex-col gap-6">
-                <select id="new-status-select" class="w-full bg-surface-container-lowest border border-outline-variant focus:border-primary outline-none py-3 px-4 text-on-surface font-body-md rounded-lg">
-                    <option value="Pending">Pending</option>
-                    <option value="WIP">WIP (Work In Progress)</option>
-                    <option value="TBD">TBD (To Be Discussed)</option>
-                    <option value="Accomplished">Accomplished</option>
-                    <option value="Denied">Denied</option>
-                    <option value="Cancelled">Cancelled</option>
-                </select>
+                <div class="relative">
+                    <select id="new-status-select" class="w-full bg-surface-container-lowest border border-outline-variant focus:border-primary outline-none py-3 pl-4 pr-12 appearance-none text-on-surface font-body-md rounded-lg cursor-pointer">
+                        <option value="Pending">Pending</option>
+                        <option value="WIP">WIP (Work In Progress)</option>
+                        <option value="TBD">TBD (To Be Discussed)</option>
+                        <option value="Accomplished">Accomplished</option>
+                        <option value="Denied">Denied</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                    <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-outline">expand_more</span>
+                </div>
                 <button id="save-status-btn" class="w-full bg-primary text-on-primary font-label-md px-6 py-3 rounded-lg hover:shadow-[0_0_15px_rgba(0,229,255,0.4)] transition-all">
                     Save Status
                 </button>

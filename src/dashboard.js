@@ -453,22 +453,23 @@ document.addEventListener('DOMContentLoaded', () => {
                             ${item.status || 'Pending'}
                         </span>
                     </td>
-                    <td class="px-8 py-6 text-right relative">
-                        <button class="text-on-surface-variant hover:text-primary transition-colors focus:outline-none" onclick="toggleMenu('${item.id}')">
-                            <span class="material-symbols-outlined">more_vert</span>
-                        </button>
-                        <div id="menu-${item.id}" class="hidden absolute right-8 top-12 w-48 bg-surface-container-high border border-outline-variant/50 rounded-lg shadow-xl z-50 overflow-hidden text-left">
-                            <button onclick="viewAppointment('${item.id}')" class="w-full text-left px-4 py-3 hover:bg-surface-variant/30 text-on-surface transition-colors flex items-center gap-2 font-body-sm border-b border-outline-variant/30">
-                                <span class="material-symbols-outlined text-[18px]">visibility</span> View Service
+                    <td class="px-8 py-6 text-right">
+                        <div class="flex items-center justify-end gap-1">
+                            <button onclick="viewAppointment('${item.id}')" class="text-on-surface-variant hover:text-primary hover:bg-primary-container/10 p-2 rounded-lg transition-colors" title="View Service">
+                                <span class="material-symbols-outlined text-[18px]">visibility</span>
                             </button>
-                            <button onclick="openChat('${item.id}', '${item.serviceCategory || 'Service'}')" class="w-full text-left px-4 py-3 hover:bg-surface-variant/30 text-on-surface transition-colors flex items-center gap-2 font-body-sm border-b border-outline-variant/30">
-                                <span class="material-symbols-outlined text-[18px]">chat</span> Check Message
+                            <button onclick="openChat('${item.id}', '${item.serviceCategory || 'Service'}')" class="text-on-surface-variant hover:text-secondary hover:bg-secondary-container/10 p-2 rounded-lg transition-colors" title="Check Message">
+                                <span class="material-symbols-outlined text-[18px]">chat</span>
                             </button>
-                            ${item.status !== 'Cancelled' && item.status !== 'Accomplished' ? `
-                            <button onclick="cancelAppointment('${item.id}')" class="w-full text-left px-4 py-3 hover:bg-error-container/20 text-error transition-colors flex items-center gap-2 font-body-sm">
-                                <span class="material-symbols-outlined text-[18px]">cancel</span> Cancel Service
+                            ${item.status !== 'Cancelled' && item.status !== 'Denied' && item.status !== 'Accomplished' ? `
+                            <button onclick="cancelAppointment('${item.id}')" class="text-on-surface-variant hover:text-error hover:bg-error-container/10 p-2 rounded-lg transition-colors" title="Cancel Service">
+                                <span class="material-symbols-outlined text-[18px]">cancel</span>
                             </button>
-                            ` : ''}
+                            ` : `
+                            <button disabled class="text-on-surface-variant/30 cursor-not-allowed p-2 rounded-lg" title="Cannot Cancel">
+                                <span class="material-symbols-outlined text-[18px] opacity-40">cancel</span>
+                            </button>
+                            `}
                         </div>
                     </td>
                 </tr>

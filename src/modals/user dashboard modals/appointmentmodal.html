@@ -112,11 +112,14 @@
             color: #dce1fb;
         }
         .bento-card {
-            border: 1px solid #334155;
-            transition: border-color 0.2s ease;
+            border: 1px solid rgba(59, 73, 76, 0.4);
+            box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .bento-card:hover {
-            border-color: #c3f5ff;
+            border-color: rgba(0, 229, 255, 0.3);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 30px -5px rgba(0, 229, 255, 0.06);
+            transform: translateY(-2px);
         }
         ::-webkit-scrollbar {
             width: 6px;
@@ -177,7 +180,7 @@
 </div>
 </header>
 <!-- Content Canvas -->
-<div class="p-margin-desktop max-w-[1200px] mx-auto w-full grid grid-cols-1 lg:grid-cols-3 gap-gutter items-start">
+<div class="p-margin-mobile md:p-margin-tablet lg:p-margin-desktop max-w-[1200px] mx-auto w-full grid grid-cols-1 lg:grid-cols-3 gap-gutter items-start">
 <!-- Booking Form (Left/Center) -->
 <div class="lg:col-span-2 space-y-8">
 <!-- Service Selection -->
@@ -190,7 +193,7 @@
 <div class="group">
 <label class="block font-label-md text-label-md text-on-surface-variant mb-2">Service Category</label>
 <div class="relative">
-<select class="w-full bg-surface-container-lowest border-b border-outline-variant focus:border-primary outline-none py-3 px-4 appearance-none text-on-surface font-body-md rounded-t-lg"><option selected="">Web Development</option><option>App Development</option><option>Networking</option><option>Hardware Support</option></select>
+<select class="w-full bg-surface-container-lowest border-b border-outline-variant focus:border-primary outline-none py-3 pl-4 pr-12 appearance-none text-on-surface font-body-md rounded-t-lg"><option selected="">Web Development</option><option>App Development</option><option>Networking</option><option>Hardware Support</option></select>
 <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-outline" data-icon="expand_more">expand_more</span>
 </div>
 </div>

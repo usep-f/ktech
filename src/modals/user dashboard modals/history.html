@@ -113,9 +113,16 @@
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
         .glass-panel {
-            background: rgba(25, 31, 49, 0.7);
+            background: rgba(25, 31, 49, 0.45);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(59, 73, 76, 0.3);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(59, 73, 76, 0.35);
+            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.6);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .glass-panel:hover {
+            box-shadow: 0 25px 50px -15px rgba(0, 0, 0, 0.8), 0 0 40px -5px rgba(0, 229, 255, 0.05);
+            border-color: rgba(0, 229, 255, 0.25);
         }
         .sidebar-active {
             color: #c3f5ff;
@@ -183,11 +190,11 @@
 </button>
 </div></header>
 <!-- Dashboard Content -->
-<div class="p-margin-desktop space-y-gutter max-w-container-max mx-auto w-full">
+<div class="p-margin-mobile md:p-margin-tablet lg:p-margin-desktop space-y-gutter max-w-container-max mx-auto w-full">
 <!-- Summary Bento Row -->
 <!-- Main History Table Section -->
 <section class="glass-panel rounded-xl overflow-hidden border border-outline-variant/30">
-<div class="p-6 border-b border-outline-variant/30 flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="p-6 border-b border-outline-variant/30 flex flex-col md:flex-row md:items-center justify-between gap-4 flex-wrap">
 <div class="flex items-center gap-4">
 <span class="material-symbols-outlined text-primary-container">list_alt</span>
 <h2 class="font-headline-sm text-on-surface">Appointment Records</h2>
@@ -225,9 +232,17 @@
                                     </span>
 </td>
 <td class="px-8 py-6 text-right">
-<button class="text-on-surface-variant hover:text-primary transition-colors">
-<span class="material-symbols-outlined">more_vert</span>
-</button>
+    <div class="flex items-center justify-end gap-1">
+        <button class="text-on-surface-variant hover:text-primary hover:bg-primary-container/10 p-2 rounded-lg transition-colors" title="View Service">
+            <span class="material-symbols-outlined text-[18px]">visibility</span>
+        </button>
+        <button class="text-on-surface-variant hover:text-secondary hover:bg-secondary-container/10 p-2 rounded-lg transition-colors" title="Check Message">
+            <span class="material-symbols-outlined text-[18px]">chat</span>
+        </button>
+        <button class="text-on-surface-variant hover:text-error hover:bg-error-container/10 p-2 rounded-lg transition-colors" title="Cancel Service">
+            <span class="material-symbols-outlined text-[18px]">cancel</span>
+        </button>
+    </div>
 </td>
 </tr>
 <!-- Accomplished -->
@@ -245,9 +260,17 @@
                                         Accomplished
                                     </span>
 </td>
-<td class="px-8 py-6 text-right"><button class="text-on-surface-variant hover:text-primary transition-colors">
-<span class="material-symbols-outlined">more_vert</span>
-</button></td>
+<td class="px-8 py-6 text-right">
+    <div class="flex items-center justify-end gap-1">
+        <button class="text-on-surface-variant hover:text-primary hover:bg-primary-container/10 p-2 rounded-lg transition-colors" title="View Service">
+            <span class="material-symbols-outlined text-[18px]">visibility</span>
+        </button>
+        <button class="text-on-surface-variant hover:text-secondary hover:bg-secondary-container/10 p-2 rounded-lg transition-colors" title="Check Message">
+            <span class="material-symbols-outlined text-[18px]">chat</span>
+        </button>
+        <div class="w-9 h-9"></div>
+    </div>
+</td>
 </tr>
 <!-- To be discussed -->
 <tr class="hover:bg-surface-container-high/20 transition-colors group">
@@ -264,9 +287,19 @@
                                         To be discussed
                                     </span>
 </td>
-<td class="px-8 py-6 text-right"><button class="text-on-surface-variant hover:text-primary transition-colors">
-<span class="material-symbols-outlined">more_vert</span>
-</button></td>
+<td class="px-8 py-6 text-right">
+    <div class="flex items-center justify-end gap-1">
+        <button class="text-on-surface-variant hover:text-primary hover:bg-primary-container/10 p-2 rounded-lg transition-colors" title="View Service">
+            <span class="material-symbols-outlined text-[18px]">visibility</span>
+        </button>
+        <button class="text-on-surface-variant hover:text-secondary hover:bg-secondary-container/10 p-2 rounded-lg transition-colors" title="Check Message">
+            <span class="material-symbols-outlined text-[18px]">chat</span>
+        </button>
+        <button class="text-on-surface-variant hover:text-error hover:bg-error-container/10 p-2 rounded-lg transition-colors" title="Cancel Service">
+            <span class="material-symbols-outlined text-[18px]">cancel</span>
+        </button>
+    </div>
+</td>
 </tr>
 <!-- Accomplished -->
 <tr class="hover:bg-surface-container-high/20 transition-colors group">
@@ -283,9 +316,17 @@
                                         Accomplished
                                     </span>
 </td>
-<td class="px-8 py-6 text-right"><button class="text-on-surface-variant hover:text-primary transition-colors">
-<span class="material-symbols-outlined">more_vert</span>
-</button></td>
+<td class="px-8 py-6 text-right">
+    <div class="flex items-center justify-end gap-1">
+        <button class="text-on-surface-variant hover:text-primary hover:bg-primary-container/10 p-2 rounded-lg transition-colors" title="View Service">
+            <span class="material-symbols-outlined text-[18px]">visibility</span>
+        </button>
+        <button class="text-on-surface-variant hover:text-secondary hover:bg-secondary-container/10 p-2 rounded-lg transition-colors" title="Check Message">
+            <span class="material-symbols-outlined text-[18px]">chat</span>
+        </button>
+        <div class="w-9 h-9"></div>
+    </div>
+</td>
 </tr>
 <!-- API Gateway Deployment -->
 <tr class="hover:bg-surface-container-high/20 transition-colors group">
@@ -302,9 +343,17 @@
             Accomplished
         </span>
 </td>
-<td class="px-8 py-6 text-right"><button class="text-on-surface-variant hover:text-primary transition-colors">
-<span class="material-symbols-outlined">more_vert</span>
-</button></td>
+<td class="px-8 py-6 text-right">
+    <div class="flex items-center justify-end gap-1">
+        <button class="text-on-surface-variant hover:text-primary hover:bg-primary-container/10 p-2 rounded-lg transition-colors" title="View Service">
+            <span class="material-symbols-outlined text-[18px]">visibility</span>
+        </button>
+        <button class="text-on-surface-variant hover:text-secondary hover:bg-secondary-container/10 p-2 rounded-lg transition-colors" title="Check Message">
+            <span class="material-symbols-outlined text-[18px]">chat</span>
+        </button>
+        <div class="w-9 h-9"></div>
+    </div>
+</td>
 </tr>
 <!-- Microservices Orchestration -->
 <tr class="hover:bg-surface-container-high/20 transition-colors group">
@@ -322,9 +371,17 @@
         </span>
 </td>
 <td class="px-8 py-6 text-right">
-<button class="text-on-surface-variant hover:text-primary transition-colors">
-<span class="material-symbols-outlined">more_vert</span>
-</button>
+    <div class="flex items-center justify-end gap-1">
+        <button class="text-on-surface-variant hover:text-primary hover:bg-primary-container/10 p-2 rounded-lg transition-colors" title="View Service">
+            <span class="material-symbols-outlined text-[18px]">visibility</span>
+        </button>
+        <button class="text-on-surface-variant hover:text-secondary hover:bg-secondary-container/10 p-2 rounded-lg transition-colors" title="Check Message">
+            <span class="material-symbols-outlined text-[18px]">chat</span>
+        </button>
+        <button class="text-on-surface-variant hover:text-error hover:bg-error-container/10 p-2 rounded-lg transition-colors" title="Cancel Service">
+            <span class="material-symbols-outlined text-[18px]">cancel</span>
+        </button>
+    </div>
 </td>
 </tr></tbody>
 </table>
